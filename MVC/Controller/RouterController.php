@@ -25,6 +25,9 @@
                     $value->resolve();
                     return;
                 }
+                if ($matches>$maxAnswer) {
+                    $maxAnswer = $matches;
+                }
             }
             if ($maxAnswer<=1) {
                 if (isset($this->noPathFunc)) {
