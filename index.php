@@ -1,17 +1,30 @@
 <?php
-    error_reporting(E_ALL | E_WARNING | E_NOTICE);
-    ini_set('display_errors', 1);
-
-    //require 'MVC/Model/Route.php';
-    
     $loadFolders = array('utility','MVC/*');
     
+
     foreach ($loadFolders as $folder) {
         foreach (glob( __DIR__ . '/'.$folder.'/*.php') as $file) {
             require($file);   
         } 
     }
 
+    if ($settings['showErrors']) {
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+    } else {
+        error_reporting(0);
+        ini_set('display_errors', 0);
+    }
+
+    $neededExtensions = array('php_pdo_mysql');
+    foreach($neededExtensions as $extension) {
+        if (!extension_loaded($extension)) {
+            if ($settings['showErrors']) {
+                die($extension." not enabled. <br />");
+            }
+            http_response_code(500);
+        }
+    }
 
     use Controller\Router;
     use Model\Route;
