@@ -18,7 +18,7 @@
     
     $router = new Router();
 
-    $router->addRoute(new Route("aa/[0-9]+",function(){
+    $router->addRoute(new Route("aa/[0-9]",function(){
         echo "found 0-9";
     },"GET"));
 

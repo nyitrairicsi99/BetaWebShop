@@ -55,7 +55,7 @@
                 foreach ($routeCheck as &$value) {
                     if ($i>0) {
                         $str = $value;
-                        $pattern = "/".$route->route[$i]."/i";
+                        $pattern = "/".$route->route[$i]."+/";
                         if ($route->route[$i]=="") {
                             if ($str!="") {
                                 return 1;
