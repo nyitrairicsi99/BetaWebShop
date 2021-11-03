@@ -14,7 +14,7 @@
             $this->func = $func;
         }
 
-        public function resolve() {
-            ($this->func)();
+        public function resolve($route) {
+            ($this->func)($route);
         }
     }

@@ -41,15 +41,17 @@
     //Hardcoded routes
     $router = new Router();
 
-    $router->addRoute(new Route("aa/[0-9]",function(){
+    $router->addRoute(new Route("aa/[0-9]",function($routeVarArr){
         echo "found 0-9";
+        print_r($routeVarArr);
     },"GET"));
 
-    $router->addRoute(new Route("",function(){
-        echo "home";
+    $router->addRoute(new Route("",function($routeVarArr){
+        echo "home ";
+        print_r($routeVarArr);
     },"GET"));
 
-    $router->addRoute(new Route("admin",function(){
+    $router->addRoute(new Route("admin",function($routeVarArr){
         echo "admin";
     },"GET"));
 
@@ -58,7 +60,8 @@
     });
 
     $router->setMethodNotFound(function(){
-        echo "no method";
+        http_response_code(405);
+        exit;
     });
 
     $router->resolveRoute();

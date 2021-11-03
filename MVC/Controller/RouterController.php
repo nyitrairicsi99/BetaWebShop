@@ -19,10 +19,13 @@
             $target = formatRoute($_REQUEST['q']);
             $method = $_SERVER['REQUEST_METHOD'];
             $maxAnswer = 0;
+            //check for all routes created, if matches with the target
             foreach ($this->routes as &$value) {
                 $matches = $this->isRequestMatch($value,$target,$method);
                 if ($matches==3) {
-                    $value->resolve();
+                    $routeArr = explode("/",$target);
+                    array_splice($routeArr,0,1);
+                    $value->resolve($routeArr);
                     return;
                 }
                 if ($matches>$maxAnswer) {
