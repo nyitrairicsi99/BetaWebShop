@@ -27,6 +27,8 @@
     }
 
     use Controller\DatabaseConnection;
+    use Controller\StoreController;
+    use Controller\AdminController;
     use Controller\Router;
     use Model\Route;
 
@@ -41,18 +43,20 @@
     //Hardcoded routes
     $router = new Router();
 
-    $router->addRoute(new Route("aa/[0-9]",function($routeVarArr){
-        echo "found 0-9";
-        print_r($routeVarArr);
+    $router->addRoute(new Route("",function($routeVarArr){
+        new StoreController(1);
     },"GET"));
 
-    $router->addRoute(new Route("",function($routeVarArr){
-        echo "home ";
-        print_r($routeVarArr);
+    $router->addRoute(new Route("[0-9]",function($routeVarArr){
+        new StoreController($routeVarArr[0]);
     },"GET"));
 
     $router->addRoute(new Route("admin",function($routeVarArr){
-        echo "admin";
+        new AdminController('statistics');
+    },"GET"));
+
+    $router->addRoute(new Route("admin/[a-z]",function($routeVarArr){
+        new AdminController($routeVarArr[1]);
     },"GET"));
 
     $router->setPathNotFound(function(){
