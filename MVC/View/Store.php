@@ -3,9 +3,9 @@
 
     class Store
     {
-        public function __construct()
+        public function __construct($text)
         {
-            //echo __DIR__;
+            echo $text;
         }
     }
     

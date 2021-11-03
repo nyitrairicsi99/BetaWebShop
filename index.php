@@ -47,6 +47,10 @@
         new StoreController(1);
     },"GET"));
 
+    $router->addRoute(new Route("main",function($routeVarArr){
+        new StoreController(1);
+    },"GET"));
+
     $router->addRoute(new Route("[0-9]",function($routeVarArr){
         new StoreController($routeVarArr[0]);
     },"GET"));
