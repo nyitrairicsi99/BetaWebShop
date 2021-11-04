@@ -12,6 +12,7 @@
                 $price = $product->price;
                 $sign = $product->currency->sign;
                 $picture = $product->gallery->first;
+                $url = $product->url;
                 include __DIR__ . "/themes/" . $theme . "/store/item.html";
             }
             include __DIR__ . "/themes/" . $theme . "/store/after_items.html";

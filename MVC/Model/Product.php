@@ -7,12 +7,14 @@
         public $price;
         public $currency;
         public $gallery;
+        public $url;
 
-        public function __construct($name,$price,$currency,$gallery)
+        public function __construct($name,$price,$currency,$gallery,$url)
         {
             $this->name = $name;
             $this->price = $price;
             $this->currency = $currency;
             $this->gallery = $gallery;
+            $this->url = $GLOBALS['settings']['root_folder'] . "/" . $url;
         }
     }

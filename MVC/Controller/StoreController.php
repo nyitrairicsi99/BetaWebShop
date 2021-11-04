@@ -10,6 +10,7 @@
     
     use View\Header;
     use View\Store;
+    use View\Search;
     use View\Navbar;
     
     class StoreController
@@ -42,20 +43,21 @@
             $testgallery3->addImage("https://shoestore.io/wp-content/uploads/2020/09/air-jordan-3-retro-bg-gs-powder-blue-dk-pwdr-blue-wht-blck-wlf-gry-011858_1-1024x730-1.jpg");
 
             $products = array(
-                new Product("Air Jordan XXXVI „Psychic Energy”",150,$eur,$testgallery),
-                new Product("Adidas Yeezy 350 V2 Cipő „Citrin”",20000,$huf,$testgallery),
-                new Product("Air Jordan XXXVI „Psychic Energy”",200,$eur,$testgallery),
-                new Product("Adidas Yeezy 350 V2 Cipő „Citrin”",10000,$huf,$testgallery2),
-                new Product("Air Jordan XXXVI „Psychic Energy”",300,$eur,$testgallery2),
-                new Product("Adidas Yeezy 350 V2 Cipő „Citrin”",15000,$huf,$testgallery2),
-                new Product("Air Jordan XXXVI „Psychic Energy”",100,$eur,$testgallery),
-                new Product("Adidas Yeezy 350 V2 Cipő „Citrin”",30000,$huf,$testgallery2),
-                new Product("Air Jordan XXXVI „Psychic Energy”",100,$eur,$testgallery),
-                new Product("Adidas Yeezy 350 V2 Cipő „Citrin”",30000,$huf,$testgallery2),
-                new Product("Air Jordan 3 Cipő „Retro Powder Blue”",26990,$huf,$testgallery3),
+                new Product("Air Jordan XXXVI „Psychic Energy”",150,$eur,$testgallery,"products/1"),
+                new Product("Adidas Yeezy 350 V2 Cipő „Citrin”",20000,$huf,$testgallery,"products/1"),
+                new Product("Air Jordan XXXVI „Psychic Energy”",200,$eur,$testgallery,"products/1"),
+                new Product("Adidas Yeezy 350 V2 Cipő „Citrin”",10000,$huf,$testgallery2,"products/1"),
+                new Product("Air Jordan XXXVI „Psychic Energy”",300,$eur,$testgallery2,"products/1"),
+                new Product("Adidas Yeezy 350 V2 Cipő „Citrin”",15000,$huf,$testgallery2,"products/1"),
+                new Product("Air Jordan XXXVI „Psychic Energy”",100,$eur,$testgallery,"products/1"),
+                new Product("Adidas Yeezy 350 V2 Cipő „Citrin”",30000,$huf,$testgallery2,"products/1"),
+                new Product("Air Jordan XXXVI „Psychic Energy”",100,$eur,$testgallery,"products/1"),
+                new Product("Adidas Yeezy 350 V2 Cipő „Citrin”",30000,$huf,$testgallery2,"products/1"),
+                new Product("Air Jordan 3 Cipő „Retro Powder Blue”",26990,$huf,$testgallery3,"products/1"),
             );
 
 
+            new Search();
             new Store($page,$products,9,10);
         }
     }
