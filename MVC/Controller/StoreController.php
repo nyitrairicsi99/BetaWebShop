@@ -53,7 +53,7 @@
             );
 
 
-            new Store($page,$products,1,10);
+            new Store($page,$products,9,10);
         }
     }
     
