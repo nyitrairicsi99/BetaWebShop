@@ -1,5 +1,17 @@
-@media screen and (max-width: 992px) {
-    nav div#imgcontainer {
+@media screen and (max-width: 768px) {
+    section#storemain div#products {
+        width: 100%;
+        padding-top: 0;
+    }
+    
+    section#storemain div#products .storeitem {
+        display: inline-block;
+        width: calc(100% - 10px);
+        height: 300px
+    }
+
+    section#storemain div#products .storeitem div#image .trapezoid {
         display: none;
     }
+    
 }

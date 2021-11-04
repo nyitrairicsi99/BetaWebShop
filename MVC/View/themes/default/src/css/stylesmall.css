@@ -1,0 +1,25 @@
+@media screen and (max-width: 992px) {
+    nav div#imgcontainer {
+        display: none;
+    }
+
+    section#storemain {
+        width: calc(100% - 10px);
+        max-width: calc(100% - 60px);
+        min-width: calc(100% - 60px);
+        margin-top: 10px;
+    }
+
+    section#searchbar {
+        width: 400px;
+        margin-top: 10px;
+    }
+
+    section#searchbar input[type=text] {
+        width: 350px;
+    }
+
+    section#storemain div#products {
+        width: 735px;
+    }
+}

@@ -44,14 +44,14 @@
     $router = new Router();
 
     $router->addRoute(new Route("",function($routeVarArr){
-        new StoreController(1);
+        redirect("main/1");
     },"GET"));
 
     $router->addRoute(new Route("main",function($routeVarArr){
-        new StoreController(1);
+        redirect("main/1");
     },"GET"));
 
-    $router->addRoute(new Route("[0-9]",function($routeVarArr){
+    $router->addRoute(new Route("main/[0-9]",function($routeVarArr){
         new StoreController($routeVarArr[0]);
     },"GET"));
 
