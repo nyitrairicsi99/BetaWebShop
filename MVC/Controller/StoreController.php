@@ -38,6 +38,8 @@
             $testgallery->addImage("https://shoestore.io/wp-content/uploads/2020/09/149295_03-1024x730-1.jpg");
             $testgallery2 = new Gallery();
             $testgallery2->addImage("https://media.kohlsimg.com/is/image/kohls/3478017_Gray?wid=600&hei=600&op_sharpen=1");
+            $testgallery3 = new Gallery();
+            $testgallery3->addImage("https://shoestore.io/wp-content/uploads/2020/09/air-jordan-3-retro-bg-gs-powder-blue-dk-pwdr-blue-wht-blck-wlf-gry-011858_1-1024x730-1.jpg");
 
             $products = array(
                 new Product("Air Jordan XXXVI „Psychic Energy”",150,$eur,$testgallery),
@@ -50,6 +52,7 @@
                 new Product("Adidas Yeezy 350 V2 Cipő „Citrin”",30000,$huf,$testgallery2),
                 new Product("Air Jordan XXXVI „Psychic Energy”",100,$eur,$testgallery),
                 new Product("Adidas Yeezy 350 V2 Cipő „Citrin”",30000,$huf,$testgallery2),
+                new Product("Air Jordan 3 Cipő „Retro Powder Blue”",26990,$huf,$testgallery3),
             );
 
 
