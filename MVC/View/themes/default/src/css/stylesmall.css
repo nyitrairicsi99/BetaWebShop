@@ -22,4 +22,17 @@
     section#storemain div#products {
         width: 735px;
     }
+    
+    /**/
+    section#imagecontainer {
+        width: 50%;
+    }
+    
+    section#storemain.product {
+        height: 500px;
+    }
+    
+    section#storemain div.carousel-inner {
+        height: 500px;
+    }
 }

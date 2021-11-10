@@ -30,6 +30,7 @@
     use Controller\StoreController;
     use Controller\AdminController;
     use Controller\Router;
+    use Controller\ProductController;
     use Model\Route;
 
     
@@ -53,6 +54,11 @@
 
     $router->addRoute(new Route("main/[0-9]",function($routeVarArr){
         new StoreController($routeVarArr[0]);
+    },"GET"));
+
+    
+    $router->addRoute(new Route("product/[0-9]",function($routeVarArr){
+        new ProductController($routeVarArr[0]);
     },"GET"));
 
     $router->addRoute(new Route("admin",function($routeVarArr){
