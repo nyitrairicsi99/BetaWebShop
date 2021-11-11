@@ -14,4 +14,25 @@
         display: none;
     }
     
+    section#storemain.product {
+        height: calc(100% - 100px);
+    }
+
+    section#imagecontainer {
+        width: 100%;
+        float: right;
+    }
+    section#detailscontainer {
+        position: relative;
+        left: 0;
+        width: 100%;
+    }
+    
+    section#storemain div.carousel-inner {
+        height: 400px;
+    }
+    
+    section#storemain.product p,section#storemain.product h1 {
+        max-height: fit-content;
+    }
 }
