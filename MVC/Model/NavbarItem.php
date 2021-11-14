@@ -5,10 +5,12 @@
         public $title = "";
         public $link = "";
         public $active = false;
-        public function __construct($title,$link,$active)
+        public $icon = "";
+        public function __construct($title,$link,$active,$icon = "fas fa-times")
         {
             $this->title = $title;
-            $this->link = $link;
+            $this->link = $GLOBALS['settings']['root_folder'] . "/" . $link;
             $this->active = $active;
+            $this->icon = $icon;
         }
     }
