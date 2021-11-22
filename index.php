@@ -28,18 +28,12 @@
         }
     }
 
-    use Controller\DatabaseConnection;
     use Controller\StoreController;
     use Controller\AdminController;
     use Controller\UserController;
     use Controller\Router;
     use Controller\ProductController;
     use Model\Route;
-    
-    
-    //Database connection for requests
-    $pdo = new DatabaseConnection();
-    $pdo = $pdo->connection;
 
 
 
@@ -47,11 +41,11 @@
     $router = new Router();
 
     $router->addRoute(new Route("",function($routeVarArr){
-        redirect("main/1");
+        redirect("main/1",$_GET);
     },"GET"));
 
     $router->addRoute(new Route("main",function($routeVarArr){
-        redirect("main/1");
+        redirect("main/1",$_GET);
     },"GET"));
 
     $router->addRoute(new Route("main/[0-9]",function($routeVarArr){

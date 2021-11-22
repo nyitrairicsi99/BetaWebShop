@@ -38,8 +38,9 @@
             }
             include __DIR__ . "/themes/" . $theme . "/navbar/after_menus.html";
             //include __DIR__ . "/themes/" . $theme . "/navbar/profile.html";
-            //include __DIR__ . "/themes/" . $theme . "/navbar/profile_admin.html";
-            if (UserController::$islogged) {
+            if (UserController::$islogged && UserController::$loggedUser->rank->hasPermission('admin_access')) {
+                include __DIR__ . "/themes/" . $theme . "/navbar/profile_admin.html";
+            } else if (UserController::$islogged) {
                 include __DIR__ . "/themes/" . $theme . "/navbar/profile.html";
             } else {
                 include __DIR__ . "/themes/" . $theme . "/navbar/profile_notlogged.html";

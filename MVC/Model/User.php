@@ -10,8 +10,7 @@
         public $firstname;
         public $lastname;
         public $address;
-        public function __construct($username)
+        public function __construct()
         {
-            $this->username = $username;
         }
     }
