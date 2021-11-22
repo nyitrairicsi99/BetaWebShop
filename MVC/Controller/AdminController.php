@@ -8,7 +8,7 @@
     {
         public function __construct($page)
         {
-            new Header("Webshop store site");
+            new Header("Admin site");
             new Admin($page);
         }
     }

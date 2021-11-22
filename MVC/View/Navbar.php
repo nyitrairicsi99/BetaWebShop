@@ -34,8 +34,8 @@
                 }
             }
             include __DIR__ . "/themes/" . $theme . "/navbar/after_menus.html";
-            include __DIR__ . "/themes/" . $theme . "/navbar/profile.html";
-            //include __DIR__ . "/themes/" . $theme . "/navbar/profile_admin.html";
+            //include __DIR__ . "/themes/" . $theme . "/navbar/profile.html";
+            include __DIR__ . "/themes/" . $theme . "/navbar/profile_admin.html";
             include __DIR__ . "/themes/" . $theme . "/navbar/after.html";
         }
 

@@ -16,7 +16,6 @@
             include __DIR__ . "/themes/" . $theme . "/admin/sidenav/before.html";
 
             $navbar = array(
-                new NavbarItem("Vissza a bolthoz","main",false,"fas fa-shopping-cart"),
                 new NavbarItem("Statisztikák","admin/statistics",false,"fas fa-chart-area"),
                 new NavbarItem("Kuponok","admin/coupons",false,"fas fa-sticky-note"),
                 new NavbarItem("Termékek","admin/products",false,"fas fa-bars"),
@@ -27,6 +26,7 @@
                 new NavbarItem("Tiltások","admin/bans",false,"fas fa-ban"),
                 new NavbarItem("Beállítások","admin/settings",false,"fas fa-cog"),
                 new NavbarItem("Bővítmények","admin/addons",false,"fas fa-puzzle-piece"),
+                new NavbarItem("Vissza a bolthoz","main",false,"fas fa-shopping-cart"),
             );
             
             foreach($navbar as $item) {
@@ -38,7 +38,28 @@
             }
             include __DIR__ . "/themes/" . $theme . "/admin/sidenav/after.html";
 
-            echo "<div>".$page."</div>";
+            echo "<div class='adminpage'><div class='admincontent'><div class='tableholder'>";
+
+            switch ($page) {
+                case "users":
+                    include __DIR__ . "/themes/" . $theme . "/admin/users/before.html";
+                    include __DIR__ . "/themes/" . $theme . "/admin/users/header.html";
+                    $id = "1";
+                    $name = "William Johnson";
+                    $lastactive = "2021-11-21";
+                    include __DIR__ . "/themes/" . $theme . "/admin/users/row.html";
+                    include __DIR__ . "/themes/" . $theme . "/admin/users/after.html";
+                    break;
+                default:
+                   echo "Admin page not set.";
+            }
+            $pageTarget = 1;
+            $active = "active";
+            $maxpage = 3;
+            echo "</div>";
+            include __DIR__ . "/themes/" . $theme . "/admin/pagination/index.html";
+            echo "</div></div>";
+            //echo "<div class='adminpage'>".$page."</div>";
         }
     }
     

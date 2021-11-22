@@ -180,3 +180,34 @@ section#productbottom {
 section#storemain div.carousel-inner {
     height: 400px;
 }
+
+div.adminpage {
+    width: calc(100% - 280px);
+    margin-left: 280px;
+    height: 100%;
+    padding-top: 1%;
+}
+
+div.admincontent {
+    background-color: white;
+    width: 80%;
+    min-width: 712px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 98%;
+}
+
+div.admincontent nav {
+    position: absolute;
+    bottom: 15px;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    left: 280px;
+}
+
+div.admincontent div.tableholder {
+    height: calc(100% - 70px);
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
