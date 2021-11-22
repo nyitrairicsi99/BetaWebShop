@@ -34,6 +34,10 @@ nav .navbar {
     background-color: #eeeeee!important;
 }
 
+nav .navbar .dropdown-menu button {
+    width: 100%;
+}
+
 section#searchbar {
     width: 500px;
     margin-top: 30px;

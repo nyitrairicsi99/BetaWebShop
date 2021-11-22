@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     $loadFolders = array('utility','MVC/*');
     foreach ($loadFolders as $folder) {
         foreach (glob( __DIR__ . '/'.$folder.'/*.php') as $file) {
@@ -29,16 +31,16 @@
     use Controller\DatabaseConnection;
     use Controller\StoreController;
     use Controller\AdminController;
+    use Controller\UserController;
     use Controller\Router;
     use Controller\ProductController;
     use Model\Route;
-
     
     
     //Database connection for requests
     $pdo = new DatabaseConnection();
     $pdo = $pdo->connection;
-    
+
 
 
     //Hardcoded routes
@@ -69,6 +71,25 @@
         new AdminController($routeVarArr[1]);
     },"GET"));
 
+    $router->addRoute(new Route("admin/[a-z]/[0-9]",function($routeVarArr){
+        new AdminController($routeVarArr[1]);
+    },"GET"));
+
+    $router->addRoute(new Route("logout",function($routeVarArr){
+        UserController::getInstance();
+        UserController::logout();
+    },"GET"));
+
+    $router->addRoute(new Route("login",function($routeVarArr){
+        UserController::getInstance();
+        UserController::login();
+    },"POST"));
+
+    $router->addRoute(new Route("register",function($routeVarArr){
+        UserController::getInstance();
+        UserController::register();
+    },"POST"));
+
     $router->setPathNotFound(function(){
         echo "no path";
     });
@@ -79,6 +100,5 @@
     });
 
     $router->resolveRoute();
-
 
 ?>

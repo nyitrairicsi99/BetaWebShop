@@ -1,6 +1,8 @@
 <?php
     namespace View;
 
+    use Controller\UserController;
+
     class Navbar
     {
         private $structure = array();
@@ -9,6 +11,7 @@
         public function __construct($pageTitle)
         {
             $this->pageTitle = $pageTitle;
+            UserController::getInstance();
         }
 
         public function create() {
@@ -35,7 +38,12 @@
             }
             include __DIR__ . "/themes/" . $theme . "/navbar/after_menus.html";
             //include __DIR__ . "/themes/" . $theme . "/navbar/profile.html";
-            include __DIR__ . "/themes/" . $theme . "/navbar/profile_admin.html";
+            //include __DIR__ . "/themes/" . $theme . "/navbar/profile_admin.html";
+            if (UserController::$islogged) {
+                include __DIR__ . "/themes/" . $theme . "/navbar/profile.html";
+            } else {
+                include __DIR__ . "/themes/" . $theme . "/navbar/profile_notlogged.html";
+            }
             include __DIR__ . "/themes/" . $theme . "/navbar/after.html";
         }
 

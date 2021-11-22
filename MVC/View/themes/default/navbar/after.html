@@ -1,3 +1,68 @@
         </div>
     </div>
 </nav>
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Bejelentkezés</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+                <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/login" method="post">
+                    <div class="form-group">
+                        <label for="username">Felhasználónév</label>
+                        <input type="text" class="form-control" id="username" placeholder="Felhasználónév" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Jelszó</label>
+                        <input type="password" class="form-control" id="password" placeholder="Jelszó" name="password">
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberme">
+                        <label class="form-check-label" for="rememberMe">Bejelentkezve maradok</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Bejelentkezés</button>
+                </form>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="regModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="regModalLabel">Regisztráció</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+                <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/register" method="post">
+                    <div class="form-group">
+                        <label for="email">Felhasználónév</label>
+                        <input type="email" class="form-control" id="email" placeholder="E-mail cím" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Felhasználónév</label>
+                        <input type="text" class="form-control" id="username" placeholder="Felhasználónév" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Jelszó</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="password2">Jelszó újra</label>
+                        <input type="password" class="form-control" id="password2" placeholder="Password" name="password2">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Regisztráció</button>
+                </form>
+        </div>
+        </div>
+    </div>
+</div>
