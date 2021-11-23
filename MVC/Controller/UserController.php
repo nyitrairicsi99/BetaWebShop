@@ -54,7 +54,7 @@
                 ':username' => $username
             ]);
             $users = $statement->fetchAll(PDO::FETCH_ASSOC);
-            if ($users) {
+            if ($users && sizeof($users)==1) {
                 $user = $users[0];
                 if (hashMatches($password,$user['password'])) {
                     self::$loggedUser = new User();

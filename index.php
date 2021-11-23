@@ -58,15 +58,15 @@
     },"GET"));
 
     $router->addRoute(new Route("admin",function($routeVarArr){
-        new AdminController('statistics');
+        new AdminController('statistics',1);
     },"GET"));
 
     $router->addRoute(new Route("admin/[a-z]",function($routeVarArr){
-        new AdminController($routeVarArr[1]);
+        new AdminController($routeVarArr[1],1);
     },"GET"));
 
     $router->addRoute(new Route("admin/[a-z]/[0-9]",function($routeVarArr){
-        new AdminController($routeVarArr[1]);
+        new AdminController($routeVarArr[1],intval($routeVarArr[2]));
     },"GET"));
 
     $router->addRoute(new Route("logout",function($routeVarArr){
