@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2021. Nov 22. 23:45
+-- Létrehozás ideje: 2021. Nov 26. 16:55
 -- Kiszolgáló verziója: 10.4.20-MariaDB
 -- PHP verzió: 8.0.8
 
@@ -47,6 +47,16 @@ CREATE TABLE `addresses` (
   `house_numbers_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- A tábla adatainak kiíratása `addresses`
+--
+
+INSERT INTO `addresses` (`id`, `cities_id`, `streets_id`, `house_numbers_id`) VALUES
+(1, 1, 1, 1),
+(2, 4, 2, 2),
+(3, 5, 2, 2),
+(4, 6, 3, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -79,9 +89,19 @@ CREATE TABLE `categories` (
 
 CREATE TABLE `cities` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
   `postcodes_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- A tábla adatainak kiíratása `cities`
+--
+
+INSERT INTO `cities` (`id`, `name`, `postcodes_id`) VALUES
+(1, 'Pécs', 1),
+(4, 'Edenderry', 4),
+(5, 'Edenderry', 5),
+(6, 'Gádoros', 6);
 
 -- --------------------------------------------------------
 
@@ -104,8 +124,17 @@ CREATE TABLE `currencies` (
 
 CREATE TABLE `house_numbers` (
   `id` int(11) NOT NULL,
-  `number` varchar(255) DEFAULT NULL
+  `number` varchar(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- A tábla adatainak kiíratása `house_numbers`
+--
+
+INSERT INTO `house_numbers` (`id`, `number`) VALUES
+(1, '10'),
+(2, '44'),
+(3, '3/A');
 
 -- --------------------------------------------------------
 
@@ -163,11 +192,20 @@ CREATE TABLE `order_states` (
 
 CREATE TABLE `people` (
   `id` int(11) NOT NULL,
-  `phone_number` varchar(255) DEFAULT NULL,
+  `phone_number` varchar(16) DEFAULT NULL,
   `addresses_id` int(11) DEFAULT NULL,
-  `first_name` varchar(255) DEFAULT NULL,
-  `last_name` varchar(255) DEFAULT NULL
+  `first_name` varchar(32) DEFAULT NULL,
+  `last_name` varchar(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- A tábla adatainak kiíratása `people`
+--
+
+INSERT INTO `people` (`id`, `phone_number`, `addresses_id`, `first_name`, `last_name`) VALUES
+(1, '+36308961902', 1, 'Richard', 'Nyitrai'),
+(2, '0894972172', 3, 'Istvan', 'Magashegyi'),
+(3, '+36721234567', 4, 'Zoltán', 'Vámosi');
 
 -- --------------------------------------------------------
 
@@ -209,8 +247,18 @@ CREATE TABLE `phrases` (
 
 CREATE TABLE `postcodes` (
   `id` int(11) NOT NULL,
-  `postcode` int(11) DEFAULT NULL
+  `postcode` varchar(16) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- A tábla adatainak kiíratása `postcodes`
+--
+
+INSERT INTO `postcodes` (`id`, `postcode`) VALUES
+(1, '7632'),
+(4, '0'),
+(5, 'R45W328'),
+(6, '5932');
 
 -- --------------------------------------------------------
 
@@ -317,8 +365,17 @@ CREATE TABLE `settings` (
 
 CREATE TABLE `streets` (
   `id` int(11) NOT NULL,
-  `street` varchar(255) DEFAULT NULL
+  `street` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- A tábla adatainak kiíratása `streets`
+--
+
+INSERT INTO `streets` (`id`, `street`) VALUES
+(1, 'Gadó u.'),
+(2, 'st Patriks Wood'),
+(3, 'Bajcsy-Zsilinszky utca');
 
 -- --------------------------------------------------------
 
@@ -377,8 +434,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `people_id`, `ranks_id`) VALUES
-(15, 'William', '$2y$10$7828jPg2RgqPfP0.4r7D0OLF3FQ0ANHiy26lk9wVZcJ//PwAseMZe', 'nyitrairicsi99@gmail.com', NULL, 1),
-(16, 'admin', '$2y$10$4S9.ZJpgj2fXNjdQndjt6u7Fy/m6inFXN8rcyBQ6jkrr2fMHpt2Yy', 'test@freemail.hu', NULL, 2);
+(15, 'William', '$2y$10$7828jPg2RgqPfP0.4r7D0OLF3FQ0ANHiy26lk9wVZcJ//PwAseMZe', 'nyitrairicsi99@gmail.com', 1, 1),
+(16, 'admin', '$2y$10$SMYAAdK13CdymG1AKcVDhemXJoKiY9CBVdQrDM8J2oTBNm0GVBbtu', 'admin@webshop.hu', 2, 2),
+(17, 'user123', '$2y$10$m0r5URVj.osEQ4cEenjLcOn68S/Sg1Yxtw.QrUseGODuxLcB152Wi', 'valami@valami.hu', 3, 2);
 
 --
 -- Indexek a kiírt táblákhoz
