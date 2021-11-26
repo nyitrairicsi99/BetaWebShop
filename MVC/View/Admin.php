@@ -5,8 +5,14 @@
 
     class Admin
     {
-        public function __construct($page,$details,$selectedPage,$maxpage)
+        public function __construct($page,$details = [],$selectedPage = 1,$maxpage = 1)
         {
+            
+            if ($selectedPage==0) {
+                $maxpage = 1;
+                $selectedPage = 1;
+            }
+
             $theme = "default";
             
             if (!is_dir(__DIR__ . "/themes/" . $theme . "/admin/".$page)) {
@@ -33,12 +39,15 @@
                 $url = $item->link;
                 $name = $item->title;
                 $icon = $item->icon;
-                $active = ($GLOBALS['settings']['root_folder']."/admin/".$page==$url) ? "active" : "";
+                $active = "";
+                if ($GLOBALS['settings']['root_folder']."/admin/".$page==$url || $GLOBALS['settings']['root_folder']."/admin/".$page."s"==$url) {
+                    $active = "active";
+                }
                 include __DIR__ . "/themes/" . $theme . "/admin/sidenav/row.html";
             }
             include __DIR__ . "/themes/" . $theme . "/admin/sidenav/after.html";
-
-            echo "<div class='adminpage'><div class='admincontent'><div class='tableholder'>";
+            $onepage = $maxpage==1 ? 'onepage' : '';
+            echo "<div class='adminpage'><div class='admincontent'><div class='tableholder $onepage'>";
 
             switch ($page) {
                 case "users":
@@ -53,31 +62,46 @@
                     include __DIR__ . "/themes/" . $theme . "/admin/users/after.html";
                     break;
                 case "user":
-                    include __DIR__ . "/themes/" . $theme . "/admin/user/before.html";
+                    $id = $details['id'];
+                    $username = $details['username'];
+                    $email = $details['email'];
+                    $postcode = $details['postcode'];
+                    $city = $details['city'];
+                    $street = $details['street'];
+                    $house_number = $details['house_number'];
+                    $phone = $details['phone'];
+                    $first_name = $details['first_name'];
+                    $last_name = $details['last_name'];
+                    
+                    include __DIR__ . "/themes/" . $theme . "/admin/user/user_before.html";
+                    foreach($details['ranks'] as $rank) {
+                        $selected = $rank['id']==$details['rank'] ? 'selected' : '';
+                        $name = $rank['name'];
+                        include __DIR__ . "/themes/" . $theme . "/admin/user/rankrow.html";
+                    }
+                    include __DIR__ . "/themes/" . $theme . "/admin/user/user_after.html";
+                    include __DIR__ . "/themes/" . $theme . "/admin/user/personal.html";
                     break;
                 default:
                    echo "Admin page not set.";
             }
 
             echo "</div>";
-            if ($selectedPage==0) {
+            if ($maxpage!=1) {
                 $pageTarget = 1;
-                $maxpage = 1;
-                $selectedPage = 1;
-            }
-            $pageTargetUrl = $GLOBALS['settings']['root_folder']."/admin/".$page."/1";
-            include __DIR__ . "/themes/" . $theme . "/admin/pagination/before.html";
-            for ($i=$selectedPage-2;$i<$selectedPage+3;$i++){
-                $pageTarget = $i;
-                $pageTargetUrl = $GLOBALS['settings']['root_folder']."/admin/".$page."/".$pageTarget;
-                if ($pageTarget>0 && $pageTarget<=$maxpage) {
-                    $active = $selectedPage==$i ? "active" : "";
-                    include __DIR__ . "/themes/" . $theme . "/admin/pagination/row.html";
+                $pageTargetUrl = $GLOBALS['settings']['root_folder']."/admin/".$page."/1";
+                include __DIR__ . "/themes/" . $theme . "/admin/pagination/before.html";
+                for ($i=$selectedPage-2;$i<$selectedPage+3;$i++){
+                    $pageTarget = $i;
+                    $pageTargetUrl = $GLOBALS['settings']['root_folder']."/admin/".$page."/".$pageTarget;
+                    if ($pageTarget>0 && $pageTarget<=$maxpage) {
+                        $active = $selectedPage==$i ? "active" : "";
+                        include __DIR__ . "/themes/" . $theme . "/admin/pagination/row.html";
+                    }
                 }
+                $pageTargetUrl = $GLOBALS['settings']['root_folder']."/admin/".$page."/".$maxpage;
+                include __DIR__ . "/themes/" . $theme . "/admin/pagination/after.html";
             }
-            $pageTargetUrl = $GLOBALS['settings']['root_folder']."/admin/".$page."/".$maxpage;
-            include __DIR__ . "/themes/" . $theme . "/admin/pagination/after.html";
-
             echo "</div></div>";
             //echo "<div class='adminpage'>".$page."</div>";
         }

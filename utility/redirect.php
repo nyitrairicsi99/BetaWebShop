@@ -5,5 +5,5 @@
                 $url .= "&".$key."=".$value;
             }
         }
-        header('Location: '.$url);
+        header('Location: '.$GLOBALS['settings']['root_folder'].'/'.$url);
     }

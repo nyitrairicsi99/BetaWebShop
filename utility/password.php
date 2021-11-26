@@ -2,9 +2,8 @@
     /**
      * passwordsAcceptable
      *
-     * @param  Route $route 
-     * @param  string $routeStr
-     * @param  string $method
+     * @param  string $password1 
+     * @param  string $password2
      * @return number 
      * Checks if the given 2 passwords are strong enought, and matches.
      * Error codes:

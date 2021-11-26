@@ -215,3 +215,8 @@ div.admincontent div.tableholder {
     overflow-x: hidden;
     overflow-y: scroll;
 }
+
+div.admincontent div.tableholder.onepage {
+    height: 100%;
+    padding: 15px;
+}

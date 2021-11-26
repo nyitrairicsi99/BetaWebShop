@@ -16,6 +16,8 @@
                 self::$loggedUser = unserialize($_SESSION["loggedUser"]);
                 self::$islogged = true;
             } else {
+                self::$loggedUser = new User();
+                self::$loggedUser->rank = new Rank('user');
                 self::$islogged = false;
             }
         }

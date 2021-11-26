@@ -30,6 +30,7 @@
 
     use Controller\StoreController;
     use Controller\AdminController;
+    use Controller\AdminActionController;
     use Controller\UserController;
     use Controller\Router;
     use Controller\ProductController;
@@ -37,7 +38,6 @@
 
 
 
-    //Hardcoded routes
     $router = new Router();
 
     $router->addRoute(new Route("",function($routeVarArr){
@@ -68,6 +68,11 @@
     $router->addRoute(new Route("admin/[a-z]/[0-9]",function($routeVarArr){
         new AdminController($routeVarArr[1],intval($routeVarArr[2]));
     },"GET"));
+
+    $router->addRoute(new Route("[a-z]/[0-9]",function($routeVarArr){
+        $action = $_POST['action'];
+        new AdminActionController($routeVarArr[0],intval($routeVarArr[1]),$action,"POST");
+    },"POST"));
 
     $router->addRoute(new Route("logout",function($routeVarArr){
         UserController::getInstance();
