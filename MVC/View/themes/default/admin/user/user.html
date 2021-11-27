@@ -24,4 +24,30 @@
         <label for="rankLabel" class="col-2">Rang</label>
         <div class="col-10">
             <select class="form-control" name="rank" id="rankLabel">
-              
+                <?php echo $this->createRanks($details); ?>
+            </select>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <input class="btn btn-primary col-4" type="submit" value="Mentés">
+            </div>
+        </div>
+    </div>
+    <br />
+</form>
+<hr />
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/user/<?php echo $id ?>" method="post">
+    <div class="form-group row">
+        <input type="hidden" id="action" name="action" value="password">
+        <label for="password" class="col-2 col-form-label col-form-label">Jelszó</label>
+        <div class="col-7">
+            <input type="password" class="form-control form-control" id="password" name="password" placeholder="Jelszó">
+        </div>
+        <div class="col-2">
+            <input class="btn btn-primary" type="submit" value="Megváltoztatás">
+        </div>
+    </div>
+</form>
+<hr />

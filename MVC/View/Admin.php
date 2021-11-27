@@ -73,13 +73,7 @@
                     $first_name = $details['first_name'];
                     $last_name = $details['last_name'];
                     
-                    include __DIR__ . "/themes/" . $theme . "/admin/user/user_before.html";
-                    foreach($details['ranks'] as $rank) {
-                        $selected = $rank['id']==$details['rank'] ? 'selected' : '';
-                        $name = $rank['name'];
-                        include __DIR__ . "/themes/" . $theme . "/admin/user/rankrow.html";
-                    }
-                    include __DIR__ . "/themes/" . $theme . "/admin/user/user_after.html";
+                    include __DIR__ . "/themes/" . $theme . "/admin/user/user.html";
                     include __DIR__ . "/themes/" . $theme . "/admin/user/personal.html";
                     break;
                 default:
@@ -89,21 +83,33 @@
             echo "</div>";
             if ($maxpage!=1) {
                 $pageTarget = 1;
-                $pageTargetUrl = $GLOBALS['settings']['root_folder']."/admin/".$page."/1";
-                include __DIR__ . "/themes/" . $theme . "/admin/pagination/before.html";
-                for ($i=$selectedPage-2;$i<$selectedPage+3;$i++){
-                    $pageTarget = $i;
-                    $pageTargetUrl = $GLOBALS['settings']['root_folder']."/admin/".$page."/".$pageTarget;
-                    if ($pageTarget>0 && $pageTarget<=$maxpage) {
-                        $active = $selectedPage==$i ? "active" : "";
-                        include __DIR__ . "/themes/" . $theme . "/admin/pagination/row.html";
-                    }
-                }
-                $pageTargetUrl = $GLOBALS['settings']['root_folder']."/admin/".$page."/".$maxpage;
-                include __DIR__ . "/themes/" . $theme . "/admin/pagination/after.html";
+                $pageTargetUrlMin = $GLOBALS['settings']['root_folder']."/admin/".$page."/1";
+                $pageTargetUrlMax = $GLOBALS['settings']['root_folder']."/admin/".$page."/".$maxpage;
+                include __DIR__ . "/themes/" . $theme . "/admin/pagination/pagination.html";
             }
             echo "</div></div>";
             //echo "<div class='adminpage'>".$page."</div>";
+        }
+
+        private function createRanks($details) {
+            $theme = 'default';
+            foreach($details['ranks'] as $rank) {
+                $selected = $rank['id']==$details['rank'] ? 'selected' : '';
+                $name = $rank['name'];
+                include __DIR__ . "/themes/" . $theme . "/admin/user/rankrow.html";
+            }
+        }
+
+        private function createRows($selectedPage,$maxpage,$page) {
+            $theme = 'default';
+            for ($i=$selectedPage-2;$i<$selectedPage+3;$i++){
+                $pageTarget = $i;
+                $pageTargetUrl = $GLOBALS['settings']['root_folder']."/admin/".$page."/".$pageTarget;
+                if ($pageTarget>0 && $pageTarget<=$maxpage) {
+                    $active = $selectedPage==$i ? "active" : "";
+                    include __DIR__ . "/themes/" . $theme . "/admin/pagination/row.html";
+                }
+            }
         }
     }
     

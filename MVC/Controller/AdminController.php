@@ -10,7 +10,7 @@
     {
         public function __construct($page,$selectedPage)
         {
-            $itemsOnPage = 20;
+            $itemsOnPage = 1;
 
             UserController::getInstance();
             DatabaseConnection::getInstance();

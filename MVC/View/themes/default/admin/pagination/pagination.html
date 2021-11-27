@@ -1,0 +1,17 @@
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+        <a class="page-link" href="<?php echo  $pageTargetUrlMin; ?>" aria-label="First">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Első</span>
+        </a>
+        </li>
+        <?php $this->createRows($selectedPage,$maxpage,$page)?>
+        <li class="page-item">
+            <a class="page-link" href="<?php echo  $pageTargetUrlMax; ?>" aria-label="Last">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Utolsó</span>
+            </a>
+        </li>
+    </ul>
+</nav>
