@@ -2,20 +2,10 @@
     <section id="imagecontainer">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                <?php $this->createIndicators(); ?>
             </ol>
             <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100" src="..." alt="First slide">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="..." alt="Second slide">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="..." alt="Third slide">
-            </div>
+                <?php $this->createImages(); ?>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -28,13 +18,10 @@
         </div>
     </section>
     <section id="detailscontainer">
-        <h1>aaaaaaaaaaaa</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        <h1><?php echo $name; ?></h1>
+        <p><?php echo $description; ?></p>
         <section id="productbottom">
-            <h5>20.000Ft</h5>
+            <h5><?php echo $price; ?><?php echo $sign; ?></h5>
             <button type="button" class="btn btn-primary">Kosárhoz ad</button>
         </section>
     </section>
-</section>
-
-  

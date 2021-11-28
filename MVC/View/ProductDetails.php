@@ -3,27 +3,36 @@
 
     class ProductDetails
     {
+        private $product;
+        private $theme;
+
         public function __construct($product)
         {
-            $theme = "default";
-            include __DIR__ . "/themes/" . $theme . "/product/before.html";
-            $active = "active";
-            foreach ($product->gallery->images as $image) {
-                include __DIR__ . "/themes/" . $theme . "/product/indicatorrow.html";
-                $active = "";
-            }
-            include __DIR__ . "/themes/" . $theme . "/product/after_indicators.html";
-            $active = "active";
-            foreach ($product->gallery->images as $url) {
-                include __DIR__ . "/themes/" . $theme . "/product/imagerow.html";
-                $active = "";
-            }
+            $this->theme = "default";
+            $this->product = $product;
 
-            $name = $product->name;
-            $description = $product->description;
-            $price = $product->price;
-            $sign = $product->currency->sign;
-            include __DIR__ . "/themes/" . $theme . "/product/after_images.html";
+            $name = $this->product->name;
+            $description = $this->product->description;
+            $price = $this->product->price;
+            $sign = $this->product->currency->sign;
+
+            include __DIR__ . "/themes/" . $this->theme . "/product/product.html";
+        }
+
+        private function createIndicators() {
+            $active = "active";
+            foreach ($this->product->gallery->images as $image) {
+                include __DIR__ . "/themes/" . $this->theme . "/product/indicatorrow.html";
+                $active = "";
+            }
+        }
+
+        private function createImages() {
+            $active = "active";
+            foreach ($this->product->gallery->images as $url) {
+                include __DIR__ . "/themes/" . $this->theme . "/product/imagerow.html";
+                $active = "";
+            }
         }
     }
     
