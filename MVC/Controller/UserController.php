@@ -3,7 +3,6 @@
 
     use Model\Rank;
     use Model\User;
-    use Controller\DatabaseConnection;
     use PDO;
 
     class UserController {

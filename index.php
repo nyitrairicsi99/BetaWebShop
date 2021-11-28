@@ -34,11 +34,77 @@
     use Controller\UserController;
     use Controller\Router;
     use Controller\ProductController;
+    use Controller\DatabaseConnection;
     use Model\Route;
 
 
+    DatabaseConnection::getInstance();
+    $pdo = DatabaseConnection::$connection;
 
     $router = new Router();
+
+    $sql = '
+    SELECT
+        main.id as main_id,
+        sub.id as sub_id,
+        sub.name as name,
+        sub.short as short
+    FROM 
+        categories as main
+    RIGHT JOIN
+        categories as sub 
+    ON
+        main.id=sub.parentcategory
+    WHERE
+        sub.display_navbar=1
+    ORDER BY
+        sub.parentcategory
+    DESC;
+    ';
+
+    $statement = $pdo->prepare($sql);
+    $statement->execute();
+
+    $categories = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($categories) {
+        $orderedcategories = [];
+        foreach ($categories as $category) {
+            $main = $category['main_id'];
+            $sub = $category['sub_id'];
+            $name = $category['name'];
+            $short = $category['short'];
+            if (!in_array($sub,$orderedcategories) && isset($main)) {
+                if (!isset($orderedcategories[$main])) {
+                    $orderedcategories[$main] = [];
+                }
+                array_push($orderedcategories[$main],$short);
+            } else {
+                if (isset($orderedcategories[$sub])) {
+                    foreach ($orderedcategories[$sub] as $path) {
+                        $router->addRoute(new Route($path,function($routeVarArr){
+                            new StoreController($routeVarArr[0]);
+                        },"GET"));
+
+                        $router->addRoute(new Route($path."/[0-9]",function($routeVarArr){
+                            new StoreController($routeVarArr[0]);
+                        },"GET"));
+                    }
+                } else {
+                    $path = $short;
+                    $router->addRoute(new Route($path,function($routeVarArr){
+                        new StoreController($routeVarArr[0]);
+                    },"GET"));
+
+                    $router->addRoute(new Route($path."/[0-9]",function($routeVarArr){
+                        new StoreController($routeVarArr[0]);
+                    },"GET"));
+                }
+            }
+        }
+    }
+
+
 
     $router->addRoute(new Route("",function($routeVarArr){
         redirect("main/1",$_GET);

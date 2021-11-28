@@ -12,25 +12,67 @@
     use View\Store;
     use View\Search;
     use View\Navbar;
+
+    use PDO;
     
     class StoreController
     {
         public function __construct($page)
         {
+            DatabaseConnection::getInstance();
+            $pdo = DatabaseConnection::$connection;
+
+
             new Header("Webshop store site");
             $navbar = new Navbar("Beta Webshop");
 
             $navbar->addItem(new NavbarItem("Főoldal","main",true));
-            $navbar->addItem(new NavbarDropdown("Menüpontok",array(
-                new NavbarItem("Menüpont #1","menu1",false),
-                new NavbarItem("Menüpont #2","menu2",false),
-                new NavbarItem("Menüpont #3","menu3",false),
-            )));
-            $navbar->addItem(new NavbarDropdown("Menüpontok2",array(
-                new NavbarItem("Menüpont #21","menu21",false),
-                new NavbarItem("Menüpont #22","menu22",false),
-                new NavbarItem("Menüpont #23","menu23",false),
-            )));
+            
+            $sql = '
+            SELECT
+                main.id as main_id,
+                sub.id as sub_id,
+                sub.name as name,
+                sub.short as short
+            FROM 
+                categories as main
+            RIGHT JOIN
+                categories as sub 
+            ON
+                main.id=sub.parentcategory
+            WHERE
+                sub.display_navbar=1
+            ORDER BY
+                sub.parentcategory
+            DESC;
+            ';
+
+            $statement = $pdo->prepare($sql);
+            $statement->execute();
+
+            $categories = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($categories) {
+                $orderedcategories = [];
+                foreach ($categories as $category) {
+                    $main = $category['main_id'];
+                    $sub = $category['sub_id'];
+                    $name = $category['name'];
+                    $short = $category['short'];
+                    if (!in_array($sub,$orderedcategories) && isset($main)) {
+                        if (!isset($orderedcategories[$main])) {
+                            $orderedcategories[$main] = [];
+                        }
+                        array_push($orderedcategories[$main],new NavbarItem($name,$short,false));
+                    } else {
+                        if (isset($orderedcategories[$sub])) {
+                            $navbar->addItem(new NavbarDropdown($name,$orderedcategories[$sub]));
+                        } else {
+                            $navbar->addItem(new NavbarItem($name,$short,false));
+                        }
+                    }
+                }
+            }
             $navbar->create();
 
             $desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
