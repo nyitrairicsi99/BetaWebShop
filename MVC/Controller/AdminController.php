@@ -134,60 +134,42 @@
                                 }
                             }
 
-                            /*
-                            
-                            SELECT
-                                users.id as id,
-                                users.username as username,
-                                users.email as email,
-                                people.postcode as postcode,
-                                people.city as city,
-                                people.street as street,
-                                people.house_number as house_number,
-                                people.phone as phone,
-                                people.first_name as first_name,
-                                people.last_name as last_name
-                            FROM
-                                users
-                            LEFT JOIN 
-                                (SELECT
-                                    postcodes.postcode as postcode,
-                                    cities.name as city,
-                                    streets.street as street,
-                                    house_numbers.number as house_number,
-                                    people.phone_number as phone,
-                                    people.first_name as first_name,
-                                    people.last_name as last_name,
-                                    people.id as id
-                                FROM
-                                    `postcodes`,
-                                    `cities`,
-                                    `streets`,
-                                    `house_numbers`,
-                                    `addresses`,
-                                    `people`
-                                WHERE
-                                    postcodes.id = cities.postcodes_id AND
-                                    cities.id = addresses.cities_id AND
-                                    streets.id = addresses.streets_id AND
-                                    house_numbers.id = addresses.house_numbers_id AND
-                                    addresses.id=people.addresses_id
-                                ) as people
-                            ON
-                                people.id = users.people_id
-                            WHERE
-                                users.id=15;
-                            
-                            */
-
-
-
                         } else {
                             redirect("admin/users");
                         }
                         break;
+                    case 'settings':
+                        $sql = "SELECT `themes_id`, `languages_id`, `license_hash`, `webshop_name`, `root_directory` FROM `settings`";
+                        $statement = $pdo->prepare($sql);
+                        $statement->execute();
+
+                        $settings = $statement->fetch(PDO::FETCH_ASSOC);
+                        if ($settings) {
+                            $details['shopname'] = $settings['webshop_name'];
+                            $details['theme'] = $settings['themes_id'];
+                        }
+
+                        $details['themes'] = [];
+
+                        $sql = 'SELECT id,name FROM themes';
+
+                        $statement = $pdo->query($sql);
+
+                        $statement->execute();
+
+                        $themes = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                        if ($themes) {
+                            foreach ($themes as $theme) {
+                                array_push($details['themes'],[
+                                    "id" => $theme['id'],
+                                    "name" => $theme['name'],
+                                ]);
+                            }
+                        }
+
+                        break;
                     default:
-                        # code...
                         break;
                 }
                 

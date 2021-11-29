@@ -1,5 +1,7 @@
 <?php
     namespace View;
+    
+    use Controller\SettingsController;
 
     class Store
     {
@@ -8,7 +10,8 @@
 
         public function __construct($text,$products,$page,$maxpage)
         {
-            $this->theme = "default";
+            SettingsController::getInstance();
+            $this->theme = SettingsController::$theme;
             $this->products = $products;
             $this->page = $page;
             $this->maxpage = $maxpage;

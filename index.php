@@ -28,13 +28,16 @@
         }
     }
 
+    //singletons
+    use Controller\UserController;
+    use Controller\SettingsController;
+    use Controller\DatabaseConnection;
+    //normal classes
     use Controller\StoreController;
     use Controller\AdminController;
     use Controller\AdminActionController;
-    use Controller\UserController;
     use Controller\Router;
     use Controller\ProductController;
-    use Controller\DatabaseConnection;
     use Model\Route;
 
 
@@ -138,6 +141,11 @@
     $router->addRoute(new Route("[a-z]/[0-9]",function($routeVarArr){
         $action = $_POST['action'];
         new AdminActionController($routeVarArr[0],intval($routeVarArr[1]),$action,"POST");
+    },"POST"));
+
+    $router->addRoute(new Route("[a-z]",function($routeVarArr){
+        $action = $_POST['action'];
+        new AdminActionController($routeVarArr[0],0,$action,"POST");
     },"POST"));
 
     $router->addRoute(new Route("logout",function($routeVarArr){

@@ -1,0 +1,28 @@
+<h1>Webáruház adatok</h1>
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post">
+    <br />
+    <input type="hidden" id="action" name="action" value="updatetheme">
+    <div class="form-group row">
+        <label for="themeLabel" class="col-2">Téma</label>
+        <div class="col-8">
+            <select class="form-control" name="theme" id="themeLabel">
+                <?php $this->createThemes($details); ?>
+            </select>
+        </div>
+        <div class="col text">
+            <input class="btn btn-primary col" type="submit" value="Mentés">
+        </div>
+    </div>
+</form>
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post">
+    <input type="hidden" id="action" name="action" value="updatename">
+    <div class="form-group row">
+        <label for="name" class="col-2">Név</label>
+        <div class="col-8">
+            <input type="text" class="form-control form-control" id="name" name="name" placeholder="Név" value="<?php echo $shopname; ?>">
+        </div>
+        <div class="col text">
+            <input class="btn btn-primary col" type="submit" value="Mentés">
+        </div>
+    </div>
+</form>

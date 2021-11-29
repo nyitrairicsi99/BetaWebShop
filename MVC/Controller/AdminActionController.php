@@ -225,7 +225,50 @@
                                 "success" => "Sikeres művelet."
                             ]);
 
+                            break;
+                        case 'updatename':
+                            $name = $_POST['name'];
+                            if (isset($name)) {
+                                $sql = 'UPDATE `settings` SET `webshop_name`=:name';
+        
+                                $statement = $pdo->prepare($sql);
+        
+                                $statement->execute([
+                                    ':name' => $name,
+                                ]);
+        
+                                redirect("admin/".$page,[
+                                    "success" => "Sikeres művelet."
+                                ]);
+                            } else {
+                                redirect("admin/".$page,[
+                                    "error" => "Hiányzó paraméterek."
+                                ]);
+                            }
+                            break;
+                        case 'updatetheme':
+                            $theme = $_POST['theme'];
+                            if (isset($theme)) {
+                                $sql = '
+                                    UPDATE
+                                        settings
+                                    SET 
+                                        themes_id=(SELECT id FROM themes WHERE name=:theme)
+                                ';
 
+                                $statement = $pdo->prepare($sql);
+                                $statement->execute([
+                                    ':theme' => $theme
+                                ]);
+                                
+                                redirect("admin/".$page,[
+                                    "success" => "Sikeres művelet."
+                                ]);
+                            } else {
+                                redirect("admin/".$page,[
+                                    "error" => "Hiányzó paraméterek."
+                                ]);
+                            }
                             break;
                         default:
                             break;

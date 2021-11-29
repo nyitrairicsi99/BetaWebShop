@@ -2,6 +2,7 @@
     namespace View;
 
     use Controller\UserController;
+    use Controller\SettingsController;
 
     class Navbar
     {
@@ -12,7 +13,8 @@
         public function __construct($pageTitle)
         {
             $this->pageTitle = $pageTitle;
-            $this->theme = "default";
+            SettingsController::getInstance();
+            $this->theme = SettingsController::$theme;
 
             UserController::getInstance();
         }

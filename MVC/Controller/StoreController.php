@@ -22,9 +22,12 @@
             DatabaseConnection::getInstance();
             $pdo = DatabaseConnection::$connection;
 
+            
+            SettingsController::getInstance();
+            $shopname = SettingsController::$shopname;
 
-            new Header("Webshop store site");
-            $navbar = new Navbar("Beta Webshop");
+            new Header($shopname);
+            $navbar = new Navbar($shopname);
 
             $navbar->addItem(new NavbarItem("Főoldal","main",true));
             

@@ -76,6 +76,10 @@
                     include __DIR__ . "/themes/" . $theme . "/admin/user/user.html";
                     include __DIR__ . "/themes/" . $theme . "/admin/user/personal.html";
                     break;
+                case "settings":
+                    $shopname = $details['shopname'];
+                    include __DIR__ . "/themes/" . $theme . "/admin/settings/settings.html";
+                    break;
                 default:
                    echo "Admin page not set.";
             }
@@ -109,6 +113,15 @@
                     $active = $selectedPage==$i ? "active" : "";
                     include __DIR__ . "/themes/" . $theme . "/admin/pagination/row.html";
                 }
+            }
+        }
+
+        private function createThemes($details) {
+            $theme = 'default';
+            foreach($details['themes'] as $t) {
+                $selected = $t['id']==$details['theme'] ? 'selected' : '';
+                $name = $t['name'];
+                include __DIR__ . "/themes/" . $theme . "/admin/settings/themerow.html";
             }
         }
     }

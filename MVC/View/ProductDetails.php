@@ -8,7 +8,8 @@
 
         public function __construct($product)
         {
-            $this->theme = "default";
+            SettingsController::getInstance();
+            $this->theme = SettingsController::$theme;
             $this->product = $product;
 
             $name = $this->product->name;
