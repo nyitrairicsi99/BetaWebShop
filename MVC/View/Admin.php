@@ -51,15 +51,7 @@
 
             switch ($page) {
                 case "users":
-                    include __DIR__ . "/themes/" . $theme . "/admin/users/before.html";
-                    include __DIR__ . "/themes/" . $theme . "/admin/users/header.html";
-                    foreach ($details as $row) {
-                        $id = $row['id'];
-                        $username = $row['username'];
-                        $email = $row['email'];
-                        include __DIR__ . "/themes/" . $theme . "/admin/users/row.html";
-                    }
-                    include __DIR__ . "/themes/" . $theme . "/admin/users/after.html";
+                    include __DIR__ . "/themes/" . $theme . "/admin/users/users.html";
                     break;
                 case "user":
                     $id = $details['id'];
@@ -93,6 +85,16 @@
             }
             echo "</div></div>";
             //echo "<div class='adminpage'>".$page."</div>";
+        }
+
+        private function createUsers($details) {
+            $theme = "default";
+            foreach ($details as $row) {
+                $id = $row['id'];
+                $username = $row['username'];
+                $email = $row['email'];
+                include __DIR__ . "/themes/" . $theme . "/admin/users/row.html";
+            }
         }
 
         private function createRanks($details) {
