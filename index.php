@@ -143,24 +143,26 @@
         new AdminActionController($routeVarArr[0],intval($routeVarArr[1]),$action,"POST");
     },"POST"));
 
-    $router->addRoute(new Route("[a-z]",function($routeVarArr){
-        $action = $_POST['action'];
-        new AdminActionController($routeVarArr[0],0,$action,"POST");
-    },"POST"));
-
     $router->addRoute(new Route("logout",function($routeVarArr){
         UserController::getInstance();
         UserController::logout();
     },"GET"));
 
-    $router->addRoute(new Route("login",function($routeVarArr){
-        UserController::getInstance();
-        UserController::login();
-    },"POST"));
-
-    $router->addRoute(new Route("register",function($routeVarArr){
-        UserController::getInstance();
-        UserController::register();
+    $router->addRoute(new Route("[a-z]",function($routeVarArr){
+        switch ($routeVarArr[0]) {
+            case 'login':
+                UserController::getInstance();
+                UserController::login();
+                break;
+            case 'register':
+                UserController::getInstance();
+                UserController::register();
+                break;
+            default:
+                $action = $_POST['action'];
+                new AdminActionController($routeVarArr[0],0,$action,"POST");
+                break;
+        }
     },"POST"));
 
     $router->setPathNotFound(function(){
