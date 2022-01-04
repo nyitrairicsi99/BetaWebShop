@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2021. Nov 26. 16:55
+-- Létrehozás ideje: 2022. Jan 04. 16:38
 -- Kiszolgáló verziója: 10.4.20-MariaDB
 -- PHP verzió: 8.0.8
 
@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Tábla szerkezet ehhez a táblához `2fa_codes`
 --
 
+DROP TABLE IF EXISTS `2fa_codes`;
 CREATE TABLE `2fa_codes` (
   `id` int(11) NOT NULL,
   `code` varchar(255) DEFAULT NULL,
@@ -40,6 +41,7 @@ CREATE TABLE `2fa_codes` (
 -- Tábla szerkezet ehhez a táblához `addresses`
 --
 
+DROP TABLE IF EXISTS `addresses`;
 CREATE TABLE `addresses` (
   `id` int(11) NOT NULL,
   `cities_id` int(11) DEFAULT NULL,
@@ -63,6 +65,7 @@ INSERT INTO `addresses` (`id`, `cities_id`, `streets_id`, `house_numbers_id`) VA
 -- Tábla szerkezet ehhez a táblához `bans`
 --
 
+DROP TABLE IF EXISTS `bans`;
 CREATE TABLE `bans` (
   `id` int(11) NOT NULL,
   `users_id` int(11) DEFAULT NULL,
@@ -75,11 +78,28 @@ CREATE TABLE `bans` (
 -- Tábla szerkezet ehhez a táblához `categories`
 --
 
+DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
+  `parentcategory` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `short` varchar(255) DEFAULT NULL
+  `short` varchar(255) DEFAULT NULL,
+  `display_navbar` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- A tábla adatainak kiíratása `categories`
+--
+
+INSERT INTO `categories` (`id`, `parentcategory`, `name`, `short`, `display_navbar`) VALUES
+(1, NULL, 'Shoes', 'shoes', 1),
+(2, 1, 'Boots', 'boots', 1),
+(3, 1, 'Sandals', 'sandals', 1),
+(4, NULL, 'Books', 'books', 1),
+(5, 4, 'Fantasy', 'fantasy', 1),
+(6, 4, 'Horror', 'horror', 1),
+(7, NULL, 'Games', 'games', 1),
+(8, 4, 'Action', 'action', 1);
 
 -- --------------------------------------------------------
 
@@ -87,6 +107,7 @@ CREATE TABLE `categories` (
 -- Tábla szerkezet ehhez a táblához `cities`
 --
 
+DROP TABLE IF EXISTS `cities`;
 CREATE TABLE `cities` (
   `id` int(11) NOT NULL,
   `name` varchar(64) DEFAULT NULL,
@@ -109,6 +130,7 @@ INSERT INTO `cities` (`id`, `name`, `postcodes_id`) VALUES
 -- Tábla szerkezet ehhez a táblához `currencies`
 --
 
+DROP TABLE IF EXISTS `currencies`;
 CREATE TABLE `currencies` (
   `id` int(11) NOT NULL,
   `shortname` varchar(255) DEFAULT NULL,
@@ -122,6 +144,7 @@ CREATE TABLE `currencies` (
 -- Tábla szerkezet ehhez a táblához `house_numbers`
 --
 
+DROP TABLE IF EXISTS `house_numbers`;
 CREATE TABLE `house_numbers` (
   `id` int(11) NOT NULL,
   `number` varchar(6) DEFAULT NULL
@@ -142,6 +165,7 @@ INSERT INTO `house_numbers` (`id`, `number`) VALUES
 -- Tábla szerkezet ehhez a táblához `installed_plugins`
 --
 
+DROP TABLE IF EXISTS `installed_plugins`;
 CREATE TABLE `installed_plugins` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -154,6 +178,7 @@ CREATE TABLE `installed_plugins` (
 -- Tábla szerkezet ehhez a táblához `languages`
 --
 
+DROP TABLE IF EXISTS `languages`;
 CREATE TABLE `languages` (
   `id` int(11) NOT NULL,
   `shortname` varchar(255) DEFAULT NULL,
@@ -166,6 +191,7 @@ CREATE TABLE `languages` (
 -- Tábla szerkezet ehhez a táblához `orders`
 --
 
+DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `state_id` int(11) DEFAULT NULL,
@@ -179,6 +205,7 @@ CREATE TABLE `orders` (
 -- Tábla szerkezet ehhez a táblához `order_states`
 --
 
+DROP TABLE IF EXISTS `order_states`;
 CREATE TABLE `order_states` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL
@@ -190,6 +217,7 @@ CREATE TABLE `order_states` (
 -- Tábla szerkezet ehhez a táblához `people`
 --
 
+DROP TABLE IF EXISTS `people`;
 CREATE TABLE `people` (
   `id` int(11) NOT NULL,
   `phone_number` varchar(16) DEFAULT NULL,
@@ -213,6 +241,7 @@ INSERT INTO `people` (`id`, `phone_number`, `addresses_id`, `first_name`, `last_
 -- Tábla szerkezet ehhez a táblához `permissions`
 --
 
+DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions` (
   `id` int(11) NOT NULL,
   `name` varchar(32) DEFAULT NULL,
@@ -232,6 +261,7 @@ INSERT INTO `permissions` (`id`, `name`, `description`) VALUES
 -- Tábla szerkezet ehhez a táblához `phrases`
 --
 
+DROP TABLE IF EXISTS `phrases`;
 CREATE TABLE `phrases` (
   `id` int(11) NOT NULL,
   `languages_id` int(11) DEFAULT NULL,
@@ -245,6 +275,7 @@ CREATE TABLE `phrases` (
 -- Tábla szerkezet ehhez a táblához `postcodes`
 --
 
+DROP TABLE IF EXISTS `postcodes`;
 CREATE TABLE `postcodes` (
   `id` int(11) NOT NULL,
   `postcode` varchar(16) DEFAULT NULL
@@ -266,6 +297,7 @@ INSERT INTO `postcodes` (`id`, `postcode`) VALUES
 -- Tábla szerkezet ehhez a táblához `products`
 --
 
+DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -286,6 +318,7 @@ CREATE TABLE `products` (
 -- Tábla szerkezet ehhez a táblához `product_images`
 --
 
+DROP TABLE IF EXISTS `product_images`;
 CREATE TABLE `product_images` (
   `id` int(11) NOT NULL,
   `products_id` int(11) DEFAULT NULL,
@@ -298,6 +331,7 @@ CREATE TABLE `product_images` (
 -- Tábla szerkezet ehhez a táblához `product_order`
 --
 
+DROP TABLE IF EXISTS `product_order`;
 CREATE TABLE `product_order` (
   `id` int(11) NOT NULL,
   `products_id` int(11) DEFAULT NULL,
@@ -311,6 +345,7 @@ CREATE TABLE `product_order` (
 -- Tábla szerkezet ehhez a táblához `ranks`
 --
 
+DROP TABLE IF EXISTS `ranks`;
 CREATE TABLE `ranks` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL
@@ -330,6 +365,7 @@ INSERT INTO `ranks` (`id`, `name`) VALUES
 -- Tábla szerkezet ehhez a táblához `rank_permission`
 --
 
+DROP TABLE IF EXISTS `rank_permission`;
 CREATE TABLE `rank_permission` (
   `id` int(11) NOT NULL,
   `ranks_id` int(11) DEFAULT NULL,
@@ -349,6 +385,7 @@ INSERT INTO `rank_permission` (`id`, `ranks_id`, `permissions_id`) VALUES
 -- Tábla szerkezet ehhez a táblához `settings`
 --
 
+DROP TABLE IF EXISTS `settings`;
 CREATE TABLE `settings` (
   `themes_id` int(11) DEFAULT NULL,
   `languages_id` int(11) DEFAULT NULL,
@@ -357,12 +394,20 @@ CREATE TABLE `settings` (
   `root_directory` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- A tábla adatainak kiíratása `settings`
+--
+
+INSERT INTO `settings` (`themes_id`, `languages_id`, `license_hash`, `webshop_name`, `root_directory`) VALUES
+(2, NULL, NULL, 'Szakdolgozat webshop', NULL);
+
 -- --------------------------------------------------------
 
 --
 -- Tábla szerkezet ehhez a táblához `streets`
 --
 
+DROP TABLE IF EXISTS `streets`;
 CREATE TABLE `streets` (
   `id` int(11) NOT NULL,
   `street` varchar(64) DEFAULT NULL
@@ -383,6 +428,7 @@ INSERT INTO `streets` (`id`, `street`) VALUES
 -- Tábla szerkezet ehhez a táblához `themes`
 --
 
+DROP TABLE IF EXISTS `themes`;
 CREATE TABLE `themes` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -390,12 +436,21 @@ CREATE TABLE `themes` (
   `version` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- A tábla adatainak kiíratása `themes`
+--
+
+INSERT INTO `themes` (`id`, `name`, `folder`, `version`) VALUES
+(1, 'Default', 'default', '1.0'),
+(2, 'Default2.0', 'default', '2.0');
+
 -- --------------------------------------------------------
 
 --
 -- Tábla szerkezet ehhez a táblához `units`
 --
 
+DROP TABLE IF EXISTS `units`;
 CREATE TABLE `units` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -408,6 +463,7 @@ CREATE TABLE `units` (
 -- Tábla szerkezet ehhez a táblához `used_coupons`
 --
 
+DROP TABLE IF EXISTS `used_coupons`;
 CREATE TABLE `used_coupons` (
   `id` int(11) NOT NULL,
   `coupons_id` int(11) DEFAULT NULL,
@@ -420,6 +476,7 @@ CREATE TABLE `used_coupons` (
 -- Tábla szerkezet ehhez a táblához `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) UNSIGNED NOT NULL,
   `username` varchar(255) DEFAULT NULL,
@@ -469,7 +526,8 @@ ALTER TABLE `bans`
 -- A tábla indexei `categories`
 --
 ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `parentcategory` (`parentcategory`);
 
 --
 -- A tábla indexei `cities`
@@ -548,7 +606,8 @@ ALTER TABLE `postcodes`
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
   ADD KEY `units_id` (`units_id`),
-  ADD KEY `currencies_id` (`currencies_id`);
+  ADD KEY `currencies_id` (`currencies_id`),
+  ADD KEY `categories_id` (`categories_id`);
 
 --
 -- A tábla indexei `product_images`
@@ -619,6 +678,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT a táblához `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT a táblához `permissions`
 --
 ALTER TABLE `permissions`
@@ -631,26 +696,22 @@ ALTER TABLE `rank_permission`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT a táblához `themes`
+--
+ALTER TABLE `themes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT a táblához `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
---
--- Megkötések a kiírt táblákhoz
---
+COMMIT;
 
---
--- Megkötések a táblához `2fa_codes`
---
-ALTER TABLE `2fa_codes`
-  ADD CONSTRAINT `2fa_codes_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `2fa_codes_ibfk_2` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `2fa_codes_ibfk_3` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`);
+ALTER TABLE `categories`
+  ADD CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`parentcategory`) REFERENCES `categories` (`id`);
 
---
--- Megkötések a táblához `addresses`
---
 ALTER TABLE `addresses`
   ADD CONSTRAINT `addresses_ibfk_1` FOREIGN KEY (`house_numbers_id`) REFERENCES `house_numbers` (`id`),
   ADD CONSTRAINT `addresses_ibfk_2` FOREIGN KEY (`streets_id`) REFERENCES `streets` (`id`),
