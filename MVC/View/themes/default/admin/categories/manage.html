@@ -1,0 +1,45 @@
+<div class="managecategory">
+    <h4>Megjelenítés</h4>
+    <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/categories" method="post">
+        <input type="hidden" id="action" name="action" value="managecategory">
+        <div class="form-group row">
+            <label for="password" class="col-2 col-form-label col-form-label">Kategória</label>
+            <div class="col-10">
+                <select class="form-control" name="rank" id="categoryLabel">
+                    <?php echo $this->createUnusedRows($unused); ?>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="password" class="col-2 col-form-label col-form-label">Fő kategória</label>
+            <div class="col-10">
+                <select class="form-control" name="rank" id="categoryLabel">
+                    <?php echo $this->createMainRows($categories); ?>
+                </select>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <input class="btn btn-primary col-4" type="submit" value="Mentés">
+                </div>
+            </div>
+        </div>
+    </form>
+    <br />
+    <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/categories" method="post">
+        <input type="hidden" id="action" name="action" value="newcategory">
+        <div class="form-group row">
+            <label for="password" class="col-1 col-form-label col-form-label">Új</label>
+            <div class="col-5">
+                <input type="text" class="form-control" placeholder="Név" name="name" id="name" value="">
+            </div>
+            <div class="col-4">
+                <input type="text" class="form-control" placeholder="Azonosító" name="name" id="name" value="">
+            </div>
+            <div class="col-2 text-center">
+                <input class="btn btn-primary" type="submit" value="Mentés">
+            </div>
+        </div>
+    </form>
+</div>

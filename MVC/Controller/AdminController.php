@@ -169,6 +169,12 @@
                         }
 
                         break;
+                    case 'categories':
+                        CategoryController::getInstance();
+                        $details['used'] = CategoryController::getCategories(true,false);
+                        $details['unused'] = CategoryController::getCategories(false,false);
+                        $details['main'] = CategoryController::getCategories(true,true);
+                        break;
                     default:
                         break;
                 }

@@ -220,3 +220,18 @@ div.admincontent div.tableholder.onepage {
     height: 100%;
     padding: 15px;
 }
+
+div.categoryholder {
+    height: 30%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin-bottom: 20px;
+}
+
+div.managecategory {
+    height: calc(40% - 40px);
+}
+
+th.subcategory {
+    padding-left: 2.25rem!important;
+}

@@ -72,6 +72,16 @@
                     $shopname = $details['shopname'];
                     include __DIR__ . "/themes/" . $theme . "/admin/settings/settings.html";
                     break;
+                case "categories":
+
+                    $categories = $details['used'];
+                    include __DIR__ . "/themes/" . $theme . "/admin/categories/used.html";
+                    $categories = $details['unused'];
+                    include __DIR__ . "/themes/" . $theme . "/admin/categories/unused.html";
+                    $categories = $details['main'];
+                    $unused = $details['unused'];
+                    include __DIR__ . "/themes/" . $theme . "/admin/categories/manage.html";
+                    break;
                 default:
                    echo "Admin page not set.";
             }
@@ -124,6 +134,51 @@
                 $selected = $t['id']==$details['theme'] ? 'selected' : '';
                 $name = $t['name'];
                 include __DIR__ . "/themes/" . $theme . "/admin/settings/themerow.html";
+            }
+        }
+
+        private function createCategories($type,$categories) {
+            $theme = 'default';
+            if ($type=="unused") {
+                foreach($categories as $category) {
+                    $name = $category['name'];
+                    $id = $category['id'];
+                    include __DIR__ . "/themes/" . $theme . "/admin/categories/unusedrow.html";
+                }
+            } elseif ($type=="used") {
+                foreach($categories as $category) {
+                    $name = $category['name'];
+                    $id = $category['id'];
+                    $subcategory = false;
+                    include __DIR__ . "/themes/" . $theme . "/admin/categories/usedrow.html";
+                    foreach($category["subcategories"] as $subcategory) {
+                        $name = $subcategory['name'];
+                        $id = $subcategory['id'];
+                        $subcategory = true;
+                        include __DIR__ . "/themes/" . $theme . "/admin/categories/usedrow.html";
+                    }
+                }
+            }
+        }
+
+        private function createUnusedRows($categories) {
+            $theme = 'default';
+            foreach($categories as $category) {
+                $name = $category['name'];
+                $id = $category['id'];
+                include __DIR__ . "/themes/" . $theme . "/admin/categories/unusedoption.html";
+            }
+        }
+
+        private function createMainRows($categories) {
+            $theme = 'default';
+            $name = "Nincs";
+            $id = 0;
+            include __DIR__ . "/themes/" . $theme . "/admin/categories/mainoption.html";
+            foreach($categories as $category) {
+                $name = $category['name'];
+                $id = $category['id'];
+                include __DIR__ . "/themes/" . $theme . "/admin/categories/mainoption.html";
             }
         }
     }

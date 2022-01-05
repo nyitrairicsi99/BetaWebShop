@@ -1,0 +1,10 @@
+<tr>
+    <th scope="row" class="<?php echo $subcategory ? 'subcategory' : ''; ?>"><?php echo $name; ?></th>
+    <td>
+        <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/categories" method="post">
+            <input type="hidden" id="action" name="action" value="remove">
+            <input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
+            <input class="btn btn-danger col" type="submit" value="Eltávolít">
+        </form>
+    </td>
+</tr>
