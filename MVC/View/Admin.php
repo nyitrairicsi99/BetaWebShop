@@ -73,7 +73,6 @@
                     include __DIR__ . "/themes/" . $theme . "/admin/settings/settings.html";
                     break;
                 case "categories":
-
                     $categories = $details['used'];
                     include __DIR__ . "/themes/" . $theme . "/admin/categories/used.html";
                     $categories = $details['unused'];
@@ -81,6 +80,17 @@
                     $categories = $details['main'];
                     $unused = $details['unused'];
                     include __DIR__ . "/themes/" . $theme . "/admin/categories/manage.html";
+                    break;
+                case "products":
+                    $id = 1;
+                    include __DIR__ . "/themes/" . $theme . "/admin/products/products.html";
+                    break;
+                case "product":
+                    $id = $details['id'];
+                    include __DIR__ . "/themes/" . $theme . "/admin/product/product.html";
+                    break;
+                case "addproduct":
+                    include __DIR__ . "/themes/" . $theme . "/admin/addproduct/new.html";
                     break;
                 default:
                    echo "Admin page not set.";

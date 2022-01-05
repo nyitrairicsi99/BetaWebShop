@@ -175,6 +175,15 @@
                         $details['unused'] = CategoryController::getCategories(false,false);
                         $details['main'] = CategoryController::getCategories(true,true);
                         break;
+                    case 'products':
+                        $maxpage = 5;
+                        $selectedPage = 1;
+                        break;
+                    case 'addproduct':
+                        break;
+                    case 'product':
+                        $details['id'] = 1;
+                        break;
                     default:
                         break;
                 }

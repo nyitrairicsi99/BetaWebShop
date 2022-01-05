@@ -1,0 +1,20 @@
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th class="col-1">#</th>
+            <th class="col-6">Megnevezés</th>
+            <th class="col-2">Ár</th>
+            <th class="col-2">Készlet</th>
+            <th class="col-1"><a href="<?php echo $GLOBALS['settings']['root_folder']."/admin/addproduct/"; ?>" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Hozzáadás</a></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>Fazsa cipő</td>
+            <td>20.000Ft</td>
+            <td>2db</td>
+            <td><a href="<?php echo $GLOBALS['settings']['root_folder']."/admin/product/".$id; ?>" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Szerkesztés</a></td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,80 @@
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post">
+    <h3>Termék létrehozás</h3>
+    <input type="hidden" id="action" name="action" value="createproduct">
+    <div class="form-group row">
+        <label for="name" class="col-1 col-form-label">Név</label>
+        <div class="col-11">
+            <input type="text" class="form-control form-control" id="name" name="name" placeholder="Név" value="">
+        </div>
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="description">Leírás</label>
+        <textarea class="form-control" id="description" rows="3"></textarea>
+    </div>
+    <br />
+    <div class="form-group row">
+        <label for="price" class="col-1 col-form-label">Ár</label>
+        <div class="col-3">
+            <input type="number" class="form-control form-control" id="name" name="name" placeholder="Ár" value="">
+        </div>
+        <div class="col-3">
+            <select class="form-control">
+                <option>Ft</option>
+                <option>$</option>
+                <option>€</option>
+            </select>
+        </div>
+    </div>
+    <br />
+    <div class="form-group row">
+        <label for="price" class="col-1 col-form-label">Raktáron</label>
+        <div class="col-3">
+            <input type="number" class="form-control form-control" id="name" name="name" placeholder="Darab" value="">
+        </div>
+    </div>
+    <br />
+    <div class="form-group row">
+        <label for="files" class="form-label col-2 col-form-label">Fájlok</label>
+        <input class="form-control col-10" type="file" id="files" multiple />
+    </div>
+    <br />
+    <div class="form-group row">
+        <label for="price" class="col-1 col-form-label">Elérhető</label>
+        <div class="col-1 col-form-label">
+        </div>
+        <div class="col-1 col-form-label">
+            Megjelenés
+        </div>
+        <div class="col-3">
+            <input type="date" class="form-control form-control" id="name" name="name" value="">
+        </div>
+        <div class="col-1 col-form-label">
+        </div>
+        <div class="col-1 col-form-label">
+            Eltűnés
+        </div>
+        <div class="col-3">
+            <input type="date" class="form-control form-control" id="name" name="name" value="">
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox">
+        <label class="form-check-label" for="checkbox">
+            Mindig elérhető
+        </label>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <input class="btn btn-primary col-4" type="submit" value="Létrehozás">
+            </div>
+        </div>
+    </div>
+    <br />
+</form>
