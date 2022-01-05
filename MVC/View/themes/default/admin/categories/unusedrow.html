@@ -2,9 +2,9 @@
     <th scope="row"><?php echo $name; ?></th>
     <td>
         <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/categories" method="post">
-            <input type="hidden" id="action" name="action" value="delete">
+            <input type="hidden" id="action" name="action" value="deletecategory">
             <input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
-            <input class="btn btn-danger col" type="submit" value="Törlés">
+            <input class="btn btn-danger col btn-sm" type="submit" value="Törlés">
         </form>
     </td>
 </tr>

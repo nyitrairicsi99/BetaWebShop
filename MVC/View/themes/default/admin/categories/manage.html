@@ -5,7 +5,7 @@
         <div class="form-group row">
             <label for="password" class="col-2 col-form-label col-form-label">Kategória</label>
             <div class="col-10">
-                <select class="form-control" name="rank" id="categoryLabel">
+                <select class="form-control" name="selectedcategory" id="categoryLabel">
                     <?php echo $this->createUnusedRows($unused); ?>
                 </select>
             </div>
@@ -13,7 +13,7 @@
         <div class="form-group row">
             <label for="password" class="col-2 col-form-label col-form-label">Fő kategória</label>
             <div class="col-10">
-                <select class="form-control" name="rank" id="categoryLabel">
+                <select class="form-control" name="maincategory" id="categoryLabel">
                     <?php echo $this->createMainRows($categories); ?>
                 </select>
             </div>
@@ -35,7 +35,7 @@
                 <input type="text" class="form-control" placeholder="Név" name="name" id="name" value="">
             </div>
             <div class="col-4">
-                <input type="text" class="form-control" placeholder="Azonosító" name="name" id="name" value="">
+                <input type="text" class="form-control" placeholder="Azonosító" name="shortname" id="shortname" value="">
             </div>
             <div class="col-2 text-center">
                 <input class="btn btn-primary" type="submit" value="Mentés">

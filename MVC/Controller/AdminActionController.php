@@ -270,6 +270,77 @@
                                 ]);
                             }
                             break;
+                        case 'removecategory':
+                            $id = $_POST['id'];
+
+                            $sql = '
+                                UPDATE categories SET parentcategory=NULL, display_navbar=0 WHERE id=:id OR parentcategory=:id
+                            ';
+
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':id' => $id
+                            ]);
+                            
+                            redirect("admin/".$page,[
+                                "success" => "Sikeres művelet."
+                            ]);
+
+                            break;
+                        case 'deletecategory':
+                            $id = $_POST['id'];
+
+                            $sql = '
+                                DELETE FROM categories WHERE id=:id
+                            ';
+
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':id' => $id
+                            ]);
+                            
+                            redirect("admin/".$page,[
+                                "success" => "Sikeres művelet."
+                            ]);
+                            break;
+                        case 'managecategory':
+                            $maincategory = $_POST['maincategory'];
+                            $maincategory = $maincategory>0 ? $maincategory : null;
+                            $selectedcategory = $_POST['selectedcategory'];
+
+                            $sql = '
+                                UPDATE categories SET parentcategory=:parent, display_navbar=1 WHERE id=:id
+                            ';
+
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':id' => $selectedcategory,
+                                ':parent' => $maincategory,
+                            ]);
+                            
+                            redirect("admin/".$page,[
+                                "success" => "Sikeres művelet."
+                            ]);
+
+                            break;
+                        case 'newcategory':
+                            $name = $_POST['name'];
+                            $shortname = $_POST['shortname'];
+                            $sql = '
+                                INSERT INTO `categories`(`parentcategory`, `name`, `short`, `display_navbar`) VALUES (NULL,:name,:shortname,0)
+                            ';
+
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':name' => $name,
+                                ':shortname' => $shortname,
+                            ]);
+                            
+                            redirect("admin/".$page,[
+                                "success" => "Sikeres művelet."
+                            ]);
+
+                            break;
                         default:
                             break;
                     }
