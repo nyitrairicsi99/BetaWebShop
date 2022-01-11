@@ -1,5 +1,10 @@
 <?php
     session_start();
+    ini_set('max_file_uploads', '50');
+    ini_set('file_uploads', 'On');
+    ini_set('post_max_size', '100M');
+    ini_set('upload_max_filesize', '100M');
+    /*phpinfo();*/
 
     $loadFolders = array('utility','MVC/*');
     foreach ($loadFolders as $folder) {

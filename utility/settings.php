@@ -6,5 +6,5 @@
     $settings["db_username"] = "root";
     $settings["db_password"] = "";
     $settings["db_prefix"] = "ws_";
-    $settings["root_folder"] = "/betawebshop";
+    $settings["root_folder"] = "/BetaWebShop";
     

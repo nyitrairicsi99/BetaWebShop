@@ -341,6 +341,57 @@
                             ]);
 
                             break;
+                            
+                        case 'createproduct':
+                            $name = $_POST['name'];
+                            $description = $_POST['description'];
+                            $price = $_POST['price'];
+                            $currency_id = $_POST['currency'];
+                            $stock = $_POST['stock'];
+                            $category_id = $_POST['category'];
+                            $availablefrom = $_POST['availablefrom'];
+                            $availableto = $_POST['availableto'];
+                            $alwaysavailable = isset($_POST['alwaysavailable']);
+
+                            $sql = '
+                                INSERT INTO `products`(`name`, `description`, `price`, `currencies_id`, `units_id`, `stock`, `active_from`, `active_to`, `display_notactive`, `categories_id`)
+                                VALUES (:name,:description,:price,:currency_id,NULL,:stock,:availablefrom,:availableto,:alwaysavailable,:category_id)
+                            ';
+
+                            
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':name' => $name,
+                                ':description' => $description,
+                                ':price' => $price,
+                                ':currency_id' => $currency_id,
+                                ':stock' => $stock,
+                                ':availablefrom' => $availablefrom,
+                                ':availableto' => $availableto,
+                                ':alwaysavailable' => $alwaysavailable ? '1' : '0',
+                                ':category_id' => $category_id
+                            ]);
+
+                            $id = $pdo->lastInsertId();
+
+                            $uploadedNames = uploadFiles("files");
+                            foreach ($uploadedNames as $file) {
+                                $sql = '
+                                    INSERT INTO `product_images`(`products_id`, `url`) VALUES (:id,:file)
+                                ';
+
+                                $statement = $pdo->prepare($sql);
+                                $statement->execute([
+                                    ':id' => $id,
+                                    ':file' => $file,
+                                ]);
+                            }
+                            
+                            redirect("admin/".$page,[
+                                "success" => "Sikeres művelet."
+                            ]);
+
+                            break;
                         default:
                             break;
                     }

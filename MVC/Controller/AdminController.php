@@ -180,6 +180,52 @@
                         $selectedPage = 1;
                         break;
                     case 'addproduct':
+                        $details['categories'] = [];
+                        $details['currencies'] = [];
+                        CategoryController::getInstance();
+                        $categories = CategoryController::getCategories(true,false);
+                        for ($i=0; $i < count($categories); $i++) {
+                            for ($j=0; $j < count($categories[$i]["subcategories"]); $j++) {
+                                array_push($details['categories'],[
+                                    "name" => $categories[$i]["subcategories"][$j]["name"],
+                                    "id" => $categories[$i]["subcategories"][$j]["id"],
+                                ]);
+                            }
+                            array_push($details['categories'],[
+                                "name" => $categories[$i]["name"],
+                                "id" => $categories[$i]["id"],
+                            ]);
+                        }
+                        $categories = CategoryController::getCategories(false,false);
+                        for ($i=0; $i < count($categories); $i++) {
+                            for ($j=0; $j < count($categories[$i]["subcategories"]); $j++) {
+                                array_push($details['categories'],[
+                                    "name" => $categories[$i]["subcategories"][$j]["name"],
+                                    "id" => $categories[$i]["subcategories"][$j]["id"],
+                                ]);
+                            }
+                            array_push($details['categories'],[
+                                "name" => $categories[$i]["name"],
+                                "id" => $categories[$i]["id"],
+                            ]);
+                        }
+                        $sql = 'SELECT id,longname FROM currencies';
+
+                        $statement = $pdo->query($sql);
+
+                        $statement->execute();
+
+                        $currencies = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                        if ($currencies) {
+                            foreach ($currencies as $currency) {
+                                array_push($details['currencies'],[
+                                    "name" => $currency["longname"],
+                                    "id" => $currency["id"],
+                                ]);
+                            }
+                        }
+
                         break;
                     case 'product':
                         $details['id'] = 1;

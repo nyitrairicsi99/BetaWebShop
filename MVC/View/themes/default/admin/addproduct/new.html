@@ -1,4 +1,4 @@
-<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post">
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/products" method="post" enctype="multipart/form-data">
     <h3>Termék létrehozás</h3>
     <input type="hidden" id="action" name="action" value="createproduct">
     <div class="form-group row">
@@ -10,19 +10,17 @@
     <br />
     <div class="form-group">
         <label for="description">Leírás</label>
-        <textarea class="form-control" id="description" rows="3"></textarea>
+        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
     </div>
     <br />
     <div class="form-group row">
         <label for="price" class="col-1 col-form-label">Ár</label>
         <div class="col-3">
-            <input type="number" class="form-control form-control" id="name" name="name" placeholder="Ár" value="">
+            <input type="number" class="form-control form-control" id="price" name="price" placeholder="Ár" value="">
         </div>
         <div class="col-3">
-            <select class="form-control">
-                <option>Ft</option>
-                <option>$</option>
-                <option>€</option>
+            <select class="form-control" name="currency">
+                <?php echo $this->createNewItemCurrencies($currencies); ?>
             </select>
         </div>
     </div>
@@ -30,13 +28,22 @@
     <div class="form-group row">
         <label for="price" class="col-1 col-form-label">Raktáron</label>
         <div class="col-3">
-            <input type="number" class="form-control form-control" id="name" name="name" placeholder="Darab" value="">
+            <input type="number" class="form-control form-control" id="stock" name="stock" placeholder="Darab" value="">
+        </div>
+    </div>
+    <br />
+    <div class="form-group row">
+        <label for="price" class="col-1 col-form-label">Kategória</label>
+        <div class="col-3">
+            <select class="form-control" name="category">
+                <?php echo $this->createNewItemCategories($categories); ?>
+            </select>
         </div>
     </div>
     <br />
     <div class="form-group row">
         <label for="files" class="form-label col-2 col-form-label">Fájlok</label>
-        <input class="form-control col-10" type="file" id="files" multiple />
+        <input class="form-control col-10" type="file" id="files" name="files[]" multiple />
     </div>
     <br />
     <div class="form-group row">
@@ -47,7 +54,7 @@
             Megjelenés
         </div>
         <div class="col-3">
-            <input type="date" class="form-control form-control" id="name" name="name" value="">
+            <input type="date" class="form-control form-control autofill-today" id="availablefrom" name="availablefrom" value="">
         </div>
         <div class="col-1 col-form-label">
         </div>
@@ -55,16 +62,16 @@
             Eltűnés
         </div>
         <div class="col-3">
-            <input type="date" class="form-control form-control" id="name" name="name" value="">
+            <input type="date" class="form-control form-control autofill-huge" id="availableto" name="availableto" value="">
         </div>
     </div>
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <input class="form-check-input" type="checkbox" value="" id="checkbox">
-        <label class="form-check-label" for="checkbox">
-            Mindig elérhető
-        </label>
+                <input class="form-check-input" type="checkbox" value="" id="alwaysavailable" checked name="alwaysavailable">
+                <label class="form-check-label" for="checkbox">
+                    Mindig elérhető
+                </label>
             </div>
         </div>
     </div>

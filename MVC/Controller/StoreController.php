@@ -21,7 +21,7 @@
         {
             DatabaseConnection::getInstance();
             $pdo = DatabaseConnection::$connection;
-
+ 
             SettingsController::getInstance();
             $shopname = SettingsController::$shopname;
 

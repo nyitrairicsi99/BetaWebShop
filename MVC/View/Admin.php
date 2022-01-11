@@ -90,6 +90,8 @@
                     include __DIR__ . "/themes/" . $theme . "/admin/product/product.html";
                     break;
                 case "addproduct":
+                    $categories = $details['categories'];
+                    $currencies = $details['currencies'];
                     include __DIR__ . "/themes/" . $theme . "/admin/addproduct/new.html";
                     break;
                 default:
@@ -189,6 +191,24 @@
                 $name = $category['name'];
                 $id = $category['id'];
                 include __DIR__ . "/themes/" . $theme . "/admin/categories/mainoption.html";
+            }
+        }
+
+        private function createNewItemCategories($categories) {
+            $theme = 'default';
+            foreach($categories as $category) {
+                $name = $category['name'];
+                $id = $category['id'];
+                include __DIR__ . "/themes/" . $theme . "/admin/addproduct/categoryrow.html";
+            }
+        }
+
+        private function createNewItemCurrencies($currencies) {
+            $theme = 'default';
+            foreach($currencies as $currency) {
+                $name = $currency['name'];
+                $id = $currency['id'];
+                include __DIR__ . "/themes/" . $theme . "/admin/addproduct/currencyrow.html";
             }
         }
     }
