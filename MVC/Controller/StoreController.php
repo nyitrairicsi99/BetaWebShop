@@ -22,7 +22,6 @@
             DatabaseConnection::getInstance();
             $pdo = DatabaseConnection::$connection;
 
-            
             SettingsController::getInstance();
             $shopname = SettingsController::$shopname;
 
@@ -31,49 +30,22 @@
 
             $navbar->addItem(new NavbarItem("Főoldal","main",true));
             
-            $sql = '
-            SELECT
-                main.id as main_id,
-                sub.id as sub_id,
-                sub.name as name,
-                sub.short as short
-            FROM 
-                categories as main
-            RIGHT JOIN
-                categories as sub 
-            ON
-                main.id=sub.parentcategory
-            WHERE
-                sub.display_navbar=1
-            ORDER BY
-                sub.parentcategory
-            DESC;
-            ';
-
-            $statement = $pdo->prepare($sql);
-            $statement->execute();
-
-            $categories = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-            if ($categories) {
-                $orderedcategories = [];
-                foreach ($categories as $category) {
-                    $main = $category['main_id'];
-                    $sub = $category['sub_id'];
-                    $name = $category['name'];
-                    $short = $category['short'];
-                    if (!in_array($sub,$orderedcategories) && isset($main)) {
-                        if (!isset($orderedcategories[$main])) {
-                            $orderedcategories[$main] = [];
-                        }
-                        array_push($orderedcategories[$main],new NavbarItem($name,$short,false));
-                    } else {
-                        if (isset($orderedcategories[$sub])) {
-                            $navbar->addItem(new NavbarDropdown($name,$orderedcategories[$sub]));
-                        } else {
-                            $navbar->addItem(new NavbarItem($name,$short,false));
-                        }
+            CategoryController::getInstance();
+            $categories = CategoryController::getCategories(true,false);
+            foreach ($categories as $main) {
+                if (count($main["subcategories"])==0) {
+                    $short = $main["short"];
+                    $name = $main["name"];
+                    $navbar->addItem(new NavbarItem($name,$short,false));
+                } else {
+                    $navitems = [];
+                    foreach ($main["subcategories"] as $sub) {
+                        $short = $sub["short"];
+                        $name = $sub["name"];
+                        array_push($navitems,new NavbarItem($name,$short,false));
                     }
+                    $name = $main["name"];
+                    $navbar->addItem(new NavbarDropdown($name,$navitems));
                 }
             }
             $navbar->create();
