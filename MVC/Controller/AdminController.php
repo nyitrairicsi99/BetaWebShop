@@ -3,6 +3,9 @@
 
     use View\Header;
     use View\Admin;
+    use Model\Product;
+    use Model\Gallery;
+    use Model\Currency;
     use Controller\UserController;
     use PDO;
 
@@ -255,7 +258,134 @@
 
                         break;
                     case 'product':
-                        $details['id'] = 1;
+                        $sql = '
+                        SELECT
+                            products.id as id,
+                            products.name as name,
+                            products.description as description,
+                            products.price as price,
+                            products.currencies_id as currencies_id,
+                            products.stock as stock,
+                            products.availablefrom as availablefrom,
+                            products.availableto as availableto,
+                            products.display_notactive as display_notactive,
+                            products.categories_id as categories_id,
+                            products.shortname as shortname,
+                            products.longname as longname,
+                            products.sign as sign,
+                            product_images.url as url,
+                            product_images.id as imgid
+                        FROM
+                            product_images
+                        RIGHT JOIN (
+                            SELECT 
+                                products.id as id,
+                                products.name as name,
+                                products.description as description,
+                                products.price as price,
+                                products.currencies_id as currencies_id,
+                                products.stock as stock,
+                                products.active_from as availablefrom,
+                                products.active_to as availableto,
+                                products.display_notactive as display_notactive,
+                                products.categories_id as categories_id,
+                                currencies.shortname as shortname,
+                                currencies.longname as longname,
+                                currencies.sign as sign
+                            FROM
+                                products,
+                                currencies
+                            WHERE
+                                products.currencies_id=currencies.id AND
+                                products.id=:id
+                            ) as products
+                        ON
+                            product_images.products_id = products.id;
+                        ';
+
+                        $statement = $pdo->prepare($sql);
+                        $statement->bindValue(':id', (int) ($selectedPage), PDO::PARAM_INT);
+
+                        $statement->execute();
+
+                        $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+                        
+                        $gallery = new Gallery();
+                        foreach($rows as $row) {
+                            $gallery->addImage($row['imgid'],$row['url']);
+                        }
+
+                        $details['product'] = new Product(
+                            $rows[0]['name'],
+                            $rows[0]['price'],
+                            new Currency($rows[0]['longname'],$rows[0]['shortname'],$rows[0]['sign']),
+                            $gallery,
+                            "",
+                            $rows[0]['description'],
+                            null,
+                            $rows[0]['stock'],
+                            $rows[0]['availablefrom'],
+                            $rows[0]['availableto'],
+                            $rows[0]['display_notactive']==1
+                        );
+                        $category = $rows[0]['categories_id'];
+
+
+                        $details['id'] = $selectedPage;
+                        $details['category'] = $category;
+                        $details['currency'] = $rows[0]['currencies_id'];
+                        $details['categories'] = [];
+                        $details['currencies'] = [];
+                        CategoryController::getInstance();
+                        $categories = CategoryController::getCategories(true,false);
+                        for ($i=0; $i < count($categories); $i++) {
+                            for ($j=0; $j < count($categories[$i]["subcategories"]); $j++) {
+                                array_push($details['categories'],[
+                                    "name" => $categories[$i]["subcategories"][$j]["name"],
+                                    "id" => $categories[$i]["subcategories"][$j]["id"],
+                                ]);
+                            }
+                            array_push($details['categories'],[
+                                "name" => $categories[$i]["name"],
+                                "id" => $categories[$i]["id"],
+                            ]);
+                            if ($category==$categories[$i]["id"]) {
+                                $details['product']->setCategory($details['categories']);
+                            }
+                        }
+                        $categories = CategoryController::getCategories(false,false);
+                        for ($i=0; $i < count($categories); $i++) {
+                            for ($j=0; $j < count($categories[$i]["subcategories"]); $j++) {
+                                array_push($details['categories'],[
+                                    "name" => $categories[$i]["subcategories"][$j]["name"],
+                                    "id" => $categories[$i]["subcategories"][$j]["id"],
+                                ]);
+                            }
+                            array_push($details['categories'],[
+                                "name" => $categories[$i]["name"],
+                                "id" => $categories[$i]["id"],
+                            ]);
+                            if ($category==$categories[$i]["id"]) {
+                                $details['product']->setCategory($details['categories']);
+                            }
+                        }
+                        $sql = 'SELECT id,longname FROM currencies';
+
+                        $statement = $pdo->query($sql);
+
+                        $statement->execute();
+
+                        $currencies = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                        if ($currencies) {
+                            foreach ($currencies as $currency) {
+                                array_push($details['currencies'],[
+                                    "name" => $currency["longname"],
+                                    "id" => $currency["id"],
+                                ]);
+                            }
+                        }
+
                         break;
                     default:
                         break;

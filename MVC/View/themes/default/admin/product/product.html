@@ -1,1 +1,97 @@
-product
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/products" method="post" enctype="multipart/form-data">
+    <a href="<?php echo $GLOBALS['settings']['root_folder'] ?>/admin/products"><i class="fas fa-chevron-left"></i> Vissza</a>
+    <h3>Termék szerkesztése</h3>
+    <input type="hidden" id="action" name="action" value="createproduct">
+    <div class="form-group row">
+        <label for="name" class="col-1 col-form-label">Név</label>
+        <div class="col-11">
+            <input type="text" class="form-control form-control" id="name" name="name" placeholder="Név" value="<?php echo $name; ?>">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="description">Leírás</label>
+        <textarea class="form-control" id="description" name="description" rows="3"><?php echo $description; ?></textarea>
+    </div>
+    <div class="form-group row">
+        <label for="price" class="col-1 col-form-label">Ár</label>
+        <div class="col-3">
+            <input type="number" class="form-control form-control" id="price" name="price" placeholder="Ár" value="<?php echo $price; ?>">
+        </div>
+        <div class="col-3">
+            <select class="form-control" name="currency">
+                <?php echo $this->createProductCurrencies($currencies,$currency_id); ?>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="price" class="col-1 col-form-label">Raktáron</label>
+        <div class="col-3">
+            <input type="number" class="form-control form-control" id="stock" name="stock" placeholder="Darab" value="<?php echo $stock; ?>">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="price" class="col-1 col-form-label">Kategória</label>
+        <div class="col-3">
+            <select class="form-control" name="category">
+                <?php echo $this->createProductCategories($categories,$category_id); ?>
+            </select>
+        </div>
+    </div>
+
+    <div id="productImages" class="carousel slide carousel-fade" data-ride="carousel">
+        <div class="carousel-inner">
+            <?php echo $this->createProductImages($gallery); ?>
+        </div>
+        <a class="carousel-control-prev" href="#productImages" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#productImages" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <br />
+
+    <div class="form-group row">
+        <label for="files" class="form-label col-3 col-form-label">Új képek hozzáadása</label>
+        <input class="form-control col-8" type="file" id="files" name="files[]" multiple />
+    </div>
+    <div class="form-group row">
+        <label for="price" class="col-1 col-form-label">Elérhető</label>
+        <div class="col-1 col-form-label">
+        </div>
+        <div class="col-1 col-form-label">
+            Megjelenés
+        </div>
+        <div class="col-3">
+            <input type="date" class="form-control form-control" id="availablefrom" name="availablefrom" value="<?php echo $availablefrom; ?>">
+        </div>
+        <div class="col-1 col-form-label">
+        </div>
+        <div class="col-1 col-form-label">
+            Eltűnés
+        </div>
+        <div class="col-3">
+            <input type="date" class="form-control form-control" id="availableto" name="availableto" value="<?php echo $availableto; ?>">
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <input class="form-check-input" type="checkbox" value="" id="alwaysavailable" <?php echo $alwaysavailable ? 'checked' : ''; ?> name="alwaysavailable">
+                <label class="form-check-label" for="checkbox">
+                    Mindig elérhető
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <input class="btn btn-primary col-4" type="submit" value="Létrehozás">
+            </div>
+        </div>
+    </div>
+</form>

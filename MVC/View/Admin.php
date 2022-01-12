@@ -86,7 +86,20 @@
                     include __DIR__ . "/themes/" . $theme . "/admin/products/products.html";
                     break;
                 case "product":
+                    $categories = $details['categories'];
+                    $currencies = $details['currencies'];
+                    $currency_id = $details['currency'];
+                    $category_id = $details['category'];
                     $id = $details['id'];
+
+                    $name = $details['product']->name;
+                    $description = $details['product']->description;
+                    $price = $details['product']->price;
+                    $stock = $details['product']->stock;
+                    $availablefrom = explode(" ",$details['product']->availablefrom)[0];
+                    $availableto = explode(" ",$details['product']->availableto)[0];
+                    $alwaysavailable = $details['product']->alwaysavailable;
+                    $gallery = $details['product']->gallery;
                     include __DIR__ . "/themes/" . $theme . "/admin/product/product.html";
                     break;
                 case "addproduct":
@@ -221,6 +234,35 @@
                 $stock = $product['stock'];
                 $priceStr = $price . $product['sign'];
                 include __DIR__ . "/themes/" . $theme . "/admin/products/row.html";
+            }
+        }
+        
+        private function createProductCategories($categories,$selectedid) {
+            $theme = 'default';
+            foreach($categories as $category) {
+                $name = $category['name'];
+                $id = $category['id'];
+                $selected = $selectedid==$id ? "selected" : "";
+                include __DIR__ . "/themes/" . $theme . "/admin/product/categoryrow.html";
+            }
+        }
+
+        private function createProductCurrencies($currencies,$selectedid) {
+            $theme = 'default';
+            foreach($currencies as $currency) {
+                $name = $currency['name'];
+                $id = $currency['id'];
+                $selected = $selectedid==$id ? "selected" : "";
+                include __DIR__ . "/themes/" . $theme . "/admin/product/currencyrow.html";
+            }
+        }
+
+        private function createProductImages($gallery) {
+            $theme = 'default';
+            $first = true;
+            foreach($gallery->images as $image) {
+                include __DIR__ . "/themes/" . $theme . "/admin/product/sliderelement.html";
+                $first = false;
             }
         }
     }

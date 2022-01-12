@@ -1,6 +1,8 @@
 <?php
     namespace Model;
 
+    use Model\Image;
+
     class Gallery {
 
         public $images = array();
@@ -9,8 +11,8 @@
         public function __construct()
         {}
 
-        public function addImage($url) {
-            array_push($this->images,$url);
+        public function addImage($id,$url) {
+            array_push($this->images,new Image($id,$url));
             $this->first = $this->images[0];
         }
 
