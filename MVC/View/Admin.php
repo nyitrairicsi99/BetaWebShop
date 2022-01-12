@@ -228,11 +228,11 @@
         private function createProductRows($products) {
             $theme = 'default';
             foreach($products as $product) {
-                $name = $product['name'];
-                $id = $product['id'];
-                $price = $product['price'];
-                $stock = $product['stock'];
-                $priceStr = $price . $product['sign'];
+                $name = $product->name;
+                $id = $product->id;
+                $price = $product->price;
+                $stock = $product->stock;
+                $priceStr = $price . $product->currency->sign;
                 include __DIR__ . "/themes/" . $theme . "/admin/products/row.html";
             }
         }

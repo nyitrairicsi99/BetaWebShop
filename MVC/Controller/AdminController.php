@@ -192,13 +192,19 @@
 
                         if ($products) {
                             foreach ($products as $product) {
-                                array_push($details,[
-                                    "id" => $product["id"],
-                                    "name" => $product["name"],
-                                    "price" => $product["price"],
-                                    "stock" => $product["stock"],
-                                    "sign" => $product["sign"],
-                                ]);
+                                array_push($details,
+                                        new Product(
+                                            $product["id"],
+                                            $product["name"],
+                                            $product["price"],
+                                            new Currency(null,null,$product["sign"]),
+                                            null,
+                                            null,
+                                            null,
+                                            null,
+                                            $product["stock"]
+                                        )
+                                    );
                             }
                         }
 
@@ -316,6 +322,7 @@
                         }
 
                         $details['product'] = new Product(
+                            $rows[0]['id'],
                             $rows[0]['name'],
                             $rows[0]['price'],
                             new Currency($rows[0]['longname'],$rows[0]['shortname'],$rows[0]['sign']),

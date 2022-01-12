@@ -3,6 +3,7 @@
 
     class Product {
 
+        public $id;
         public $name;
         public $price;
         public $currency;
@@ -15,8 +16,9 @@
         public $availableto;
         public $alwaysavailable;
 
-        public function __construct($name,$price,$currency,$gallery,$url,$description,$category = null,$stock = 0,$availablefrom = '1950-01-01 00:00:00',$availableto = '2050-01-01 00:00:00',$alwaysavailable = true)
+        public function __construct($id,$name,$price,$currency,$gallery,$url,$description,$category = null,$stock = 0,$availablefrom = '1950-01-01 00:00:00',$availableto = '2050-01-01 00:00:00',$alwaysavailable = true)
         {
+            $this->id = $id;
             $this->name = $name;
             $this->price = $price;
             $this->currency = $currency;
