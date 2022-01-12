@@ -24,7 +24,7 @@
                 $name = $product->name;
                 $price = $product->price;
                 $sign = $product->currency->sign;
-                $picture = $product->gallery->first;
+                $picture = $product->gallery->first->url;
                 $url = $product->url;
                 include __DIR__ . "/themes/" . $this->theme . "/store/item.html";
             }

@@ -1,5 +1,6 @@
 <?php
     namespace View;
+    use Controller\SettingsController;
 
     class ProductDetails
     {
@@ -30,7 +31,8 @@
 
         private function createImages() {
             $active = "active";
-            foreach ($this->product->gallery->images as $url) {
+            foreach ($this->product->gallery->images as $image) {
+                $url = $image->url;
                 include __DIR__ . "/themes/" . $this->theme . "/product/imagerow.html";
                 $active = "";
             }

@@ -36,10 +36,10 @@
             $desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
             $eur = new Currency("Euro","EUR","€");
             $testgallery = new Gallery();
-            $testgallery->addImage("https://shoestore.io/wp-content/uploads/2020/09/149295_03-1024x730-1.jpg");
-            $testgallery->addImage("https://media.kohlsimg.com/is/image/kohls/3478017_Gray?wid=600&hei=600&op_sharpen=1");
+            $testgallery->addImage(1,"https://shoestore.io/wp-content/uploads/2020/09/149295_03-1024x730-1.jpg");
+            $testgallery->addImage(1,"https://media.kohlsimg.com/is/image/kohls/3478017_Gray?wid=600&hei=600&op_sharpen=1");
 
-            new ProductDetails(new Product("Air Jordan XXXVI „Psychic Energy”",150,$eur,$testgallery,"products/1",$desc));
+            new ProductDetails(new Product(1,"Air Jordan XXXVI „Psychic Energy”",150,$eur,$testgallery,"products/1",$desc));
         }
     }
     
