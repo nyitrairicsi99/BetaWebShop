@@ -10,7 +10,7 @@
     {
         public function __construct($page,$selectedPage)
         {
-            $itemsOnPage = 1;
+            $itemsOnPage = 10;
 
             UserController::getInstance();
             DatabaseConnection::getInstance();
@@ -176,8 +176,35 @@
                         $details['main'] = CategoryController::getCategories(true,true);
                         break;
                     case 'products':
-                        $maxpage = 5;
-                        $selectedPage = 1;
+
+                        $sql = 'SELECT products.id as id,products.name as name,products.price as price,products.stock as stock,currencies.sign as sign FROM products,currencies WHERE currencies.id=products.currencies_id LIMIT :l OFFSET :o';
+
+                        $statement = $pdo->prepare($sql);
+                        $statement->bindValue(':o', (int) (($selectedPage - 1) * $itemsOnPage), PDO::PARAM_INT);
+                        $statement->bindValue(':l', (int) $itemsOnPage, PDO::PARAM_INT);
+
+                        $statement->execute();
+
+                        $products = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                        if ($products) {
+                            foreach ($products as $product) {
+                                array_push($details,[
+                                    "id" => $product["id"],
+                                    "name" => $product["name"],
+                                    "price" => $product["price"],
+                                    "stock" => $product["stock"],
+                                    "sign" => $product["sign"],
+                                ]);
+                            }
+                        }
+
+                        $sql = 'SELECT COUNT(products.id) as c FROM products,currencies WHERE currencies.id=products.currencies_id';
+                        $statement = $pdo->query($sql);
+                        $maxpage = $statement->fetch(PDO::FETCH_ASSOC);
+                        $maxpage = ceil($maxpage['c'] / $itemsOnPage);
+
+
                         break;
                     case 'addproduct':
                         $details['categories'] = [];

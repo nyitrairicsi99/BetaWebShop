@@ -211,5 +211,17 @@
                 include __DIR__ . "/themes/" . $theme . "/admin/addproduct/currencyrow.html";
             }
         }
+
+        private function createProductRows($products) {
+            $theme = 'default';
+            foreach($products as $product) {
+                $name = $product['name'];
+                $id = $product['id'];
+                $price = $product['price'];
+                $stock = $product['stock'];
+                $priceStr = $price . $product['sign'];
+                include __DIR__ . "/themes/" . $theme . "/admin/products/row.html";
+            }
+        }
     }
     
