@@ -180,7 +180,7 @@
                         break;
                     case 'products':
 
-                        $sql = 'SELECT products.id as id,products.name as name,products.price as price,products.stock as stock,currencies.sign as sign FROM products,currencies WHERE currencies.id=products.currencies_id LIMIT :l OFFSET :o';
+                        $sql = 'SELECT products.id as id,products.name as name,products.price as price,products.stock as stock,currencies.sign as sign FROM products,currencies WHERE currencies.id=products.currencies_id AND products.deleted=0 LIMIT :l OFFSET :o';
 
                         $statement = $pdo->prepare($sql);
                         $statement->bindValue(':o', (int) (($selectedPage - 1) * $itemsOnPage), PDO::PARAM_INT);
@@ -208,7 +208,7 @@
                             }
                         }
 
-                        $sql = 'SELECT COUNT(products.id) as c FROM products,currencies WHERE currencies.id=products.currencies_id';
+                        $sql = 'SELECT COUNT(products.id) as c FROM products,currencies WHERE currencies.id=products.currencies_id AND products.deleted=0';
                         $statement = $pdo->query($sql);
                         $maxpage = $statement->fetch(PDO::FETCH_ASSOC);
                         $maxpage = ceil($maxpage['c'] / $itemsOnPage);

@@ -1,6 +1,22 @@
+
+<a href="<?php echo $GLOBALS['settings']['root_folder'] ?>/admin/products"><i class="fas fa-chevron-left"></i> Vissza</a>
+
+<div class="container">
+    <div class="row">
+        <div class="col-10">
+            <h3>Termék szerkesztése</h3>
+        </div>
+        <div class="col-2">
+            <form method="post" action="<?php echo $GLOBALS['settings']['root_folder'] ?>/products">
+                <input type="hidden" id="action" name="action" value="deleteproduct">
+                <input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
+                <button type="submit" class="btn btn-danger">Termék törlése</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br />
 <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/product" method="post" enctype="multipart/form-data">
-    <a href="<?php echo $GLOBALS['settings']['root_folder'] ?>/admin/products"><i class="fas fa-chevron-left"></i> Vissza</a>
-    <h3>Termék szerkesztése</h3>
     <input type="hidden" id="action" name="action" value="manageproduct">
     <input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
     <div class="form-group row">
@@ -91,7 +107,7 @@
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <input class="btn btn-primary col-4" type="submit" value="Létrehozás">
+                <input class="btn btn-primary col-4" type="submit" value="Módosítás">
             </div>
         </div>
     </div>

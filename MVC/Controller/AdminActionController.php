@@ -482,6 +482,23 @@
                             ]);
 
                             break;
+                        case 'deleteproduct':
+                            $id = $_POST['id'];
+                            
+                            $sql = '
+                                UPDATE products SET deleted=1 WHERE id=:id
+                            ';
+
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':id' => $id,
+                            ]);
+                            
+                            redirect("admin/".$page,[
+                                "success" => "Sikeres művelet."
+                            ]);
+
+                            break;
                         default:
                             break;
                     }
