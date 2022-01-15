@@ -8,7 +8,7 @@
         public $theme = 'default';
         public $products = [];
 
-        public function __construct($text,$products,$page,$maxpage)
+        public function __construct($category,$products,$page,$maxpage)
         {
             SettingsController::getInstance();
             $this->theme = SettingsController::$theme;
@@ -30,7 +30,7 @@
             }
         }
 
-        private function createPageRows() {
+        private function createPageRows($category) {
             $page = $this->page;
             $maxpage = $this->maxpage;
             for ($i=$page-2;$i<$page+3;$i++){

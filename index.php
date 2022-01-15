@@ -52,27 +52,50 @@
 
     $router = new Router();
 
+    
+    $router->addRoute(new Route("logout",function($routeVarArr){
+        UserController::getInstance();
+        UserController::logout();
+    },"GET"));
+
+    $router->addRoute(new Route("[a-z]",function($routeVarArr){
+        switch ($routeVarArr[0]) {
+            case 'login':
+                UserController::getInstance();
+                UserController::login();
+                break;
+            case 'register':
+                UserController::getInstance();
+                UserController::register();
+                break;
+            default:
+                $action = $_POST['action'];
+                new AdminActionController($routeVarArr[0],0,$action,"POST");
+                break;
+        }
+    },"POST"));
+
     CategoryController::getInstance();
     $categories = CategoryController::getCategories(true,false);
     foreach ($categories as $main) {
         if (count($main["subcategories"])==0) {
             $path = $main["short"];
             $router->addRoute(new Route($path,function($routeVarArr){
-                new StoreController($routeVarArr[0]);
+                new StoreController($routeVarArr[0],1);
             },"GET"));
     
             $router->addRoute(new Route($path."/[0-9]",function($routeVarArr){
-                new StoreController($routeVarArr[0]);
+                new StoreController($routeVarArr[0],$routeVarArr[1]);
             },"GET"));
         } else {
             foreach ($main["subcategories"] as $sub) {
                 $path = $sub["short"];
                 $router->addRoute(new Route($path,function($routeVarArr){
-                    new StoreController($routeVarArr[0]);
+                    new StoreController($routeVarArr[0],1);
                 },"GET"));
         
                 $router->addRoute(new Route($path."/[0-9]",function($routeVarArr){
-                    new StoreController($routeVarArr[0]);
+                    new StoreController($routeVarArr[0],$routeVarArr[1]);
                 },"GET"));
             }
         }
@@ -80,15 +103,15 @@
 
 
     $router->addRoute(new Route("",function($routeVarArr){
-        redirect("main/1",$_GET);
+        new StoreController("main",1);
     },"GET"));
 
     $router->addRoute(new Route("main",function($routeVarArr){
-        redirect("main/1",$_GET);
+        new StoreController("main",1);
     },"GET"));
 
     $router->addRoute(new Route("main/[0-9]",function($routeVarArr){
-        new StoreController($routeVarArr[0]);
+        new StoreController("main",$routeVarArr[1]);
     },"GET"));
 
     
@@ -111,28 +134,6 @@
     $router->addRoute(new Route("[a-z]/[0-9]",function($routeVarArr){
         $action = $_POST['action'];
         new AdminActionController($routeVarArr[0],intval($routeVarArr[1]),$action,"POST");
-    },"POST"));
-
-    $router->addRoute(new Route("logout",function($routeVarArr){
-        UserController::getInstance();
-        UserController::logout();
-    },"GET"));
-
-    $router->addRoute(new Route("[a-z]",function($routeVarArr){
-        switch ($routeVarArr[0]) {
-            case 'login':
-                UserController::getInstance();
-                UserController::login();
-                break;
-            case 'register':
-                UserController::getInstance();
-                UserController::register();
-                break;
-            default:
-                $action = $_POST['action'];
-                new AdminActionController($routeVarArr[0],0,$action,"POST");
-                break;
-        }
     },"POST"));
 
     $router->setPathNotFound(function(){

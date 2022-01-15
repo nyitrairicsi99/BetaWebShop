@@ -17,8 +17,10 @@
     
     class StoreController
     {
-        public function __construct($page)
+        public function __construct($category,$page)
         {
+            $itemsOnPage = 12;
+
             DatabaseConnection::getInstance();
             $pdo = DatabaseConnection::$connection;
  
@@ -50,32 +52,133 @@
             }
             $navbar->create();
 
-            $desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
-            $eur = new Currency("Euro","EUR","€");
-            $huf = new Currency("Forint","HUF","Ft");
-            $testgallery = new Gallery();
-            $testgallery->addImage(1,"https://shoestore.io/wp-content/uploads/2020/09/149295_03-1024x730-1.jpg");
-            $testgallery2 = new Gallery();
-            $testgallery2->addImage(1,"https://media.kohlsimg.com/is/image/kohls/3478017_Gray?wid=600&hei=600&op_sharpen=1");
-            $testgallery3 = new Gallery();
-            $testgallery3->addImage(1,"https://shoestore.io/wp-content/uploads/2020/09/air-jordan-3-retro-bg-gs-powder-blue-dk-pwdr-blue-wht-blck-wlf-gry-011858_1-1024x730-1.jpg");
+            $sql = '
+                SELECT
+                    products.id as id,
+                    products.name as name,
+                    products.price as price,
+                    products.stock as stock,
+                    products.description as description,
+                    products.sign as sign,
+                    products.shortname as shortname,
+                    products.longname as longname,
+                    product_images.id as imgid,
+                    product_images.url as url
+                FROM (
+                    SELECT
+                        products.id as id,
+                        products.name as name,
+                        products.price as price,
+                        products.stock as stock,
+                        products.description as description,
+                        currencies.sign as sign,
+                        currencies.shortname as shortname,
+                        currencies.longname as longname
+                    FROM
+                        products,
+                        currencies,
+                        categories
+                    WHERE
+                        categories.id = products.categories_id AND
+                        currencies.id=products.currencies_id AND
+                        products.deleted=0 AND
+                        (
+                            (
+                                products.active_from<=NOW() AND
+                                products.active_to>=NOW()
+                            ) OR
+                            display_notactive=1
+                        ) AND
+                        (
+                            categories.short = :c OR
+                            "main" = :c
+                        )
+                    ) as products
+                LEFT JOIN
+                    product_images
+                ON 
+                    product_images.products_id = products.id
+                ORDER BY
+                    products.id
+                LIMIT
+                    :l
+                OFFSET
+                    :o
+            ';
 
-            $products = array(
-                new Product(1,"Air Jordan XXXVI „Psychic Energy”",150,$eur,$testgallery,"product/1",$desc),
-                new Product(1,"Adidas Yeezy 350 V2 Cipő „Citrin”",20000,$huf,$testgallery,"product/1",$desc),
-                new Product(1,"Air Jordan XXXVI „Psychic Energy”",200,$eur,$testgallery,"product/1",$desc),
-                new Product(1,"Adidas Yeezy 350 V2 Cipő „Citrin”",10000,$huf,$testgallery2,"product/1",$desc),
-                new Product(1,"Air Jordan XXXVI „Psychic Energy”",300,$eur,$testgallery2,"product/1",$desc),
-                new Product(1,"Adidas Yeezy 350 V2 Cipő „Citrin”",15000,$huf,$testgallery2,"product/1",$desc),
-                new Product(1,"Air Jordan XXXVI „Psychic Energy”",100,$eur,$testgallery,"product/1",$desc),
-                new Product(1,"Adidas Yeezy 350 V2 Cipő „Citrin”",30000,$huf,$testgallery2,"product/1",$desc),
-                new Product(1,"Air Jordan XXXVI „Psychic Energy”",100,$eur,$testgallery,"product/1",$desc),
-                new Product(1,"Adidas Yeezy 350 V2 Cipő „Citrin”",30000,$huf,$testgallery2,"product/1",$desc),
-                new Product(1,"Air Jordan 3 Cipő „Retro Powder Blue”",26990,$huf,$testgallery3,"product/1",$desc),
-            );
+            $statement = $pdo->prepare($sql);
+            $statement->bindValue(':c', ($category));
+            $statement->bindValue(':o', (int) (($page - 1) * $itemsOnPage), PDO::PARAM_INT);
+            $statement->bindValue(':l', (int) $itemsOnPage, PDO::PARAM_INT);
 
+            $statement->execute();
+
+            $res = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $products = [];
+
+            if ($res) {
+                $gallery = new Gallery();
+                $lastid = 0;
+                foreach ($res as $product) {
+                    if ($lastid!=$product["id"]) { //első sor
+                        if ($lastid!=0) { //már van termék a tömbben
+                            if (count($gallery->images)==0) {
+                                $gallery->addImage(0,"none.jpg");
+                            }
+                            $products[count($products)-1]->gallery = $gallery;
+                            $gallery = new Gallery();
+                        }
+                        array_push($products,
+                            new Product(
+                                $product["id"],
+                                $product["name"],
+                                $product["price"],
+                                new Currency($product["longname"],$product["shortname"],$product["sign"]),
+                                null,
+                                "product/".$product["id"],
+                                $product["description"],
+                                null
+                            )
+                        );
+                        $lastid = $product["id"];
+                    }
+                    if ($product["imgid"]>0) {
+                        $gallery->addImage($product["imgid"],$product["url"]);
+                    }
+                }
+                if ($lastid!=0) {
+                    if (count($gallery->images)==0) {
+                        $gallery->addImage(0,"none.jpg");
+                    }
+                    $products[count($products)-1]->gallery = $gallery;
+                }
+            }
+            $sql = '
+                SELECT
+                    COUNT(products.id) as c
+                FROM
+                    products,
+                    currencies,
+                    categories
+                WHERE
+                    categories.id = products.categories_id AND
+                    currencies.id=products.currencies_id AND
+                    products.deleted=0 AND
+                    (
+                        (
+                            products.active_from<=NOW() AND
+                            products.active_to>=NOW()
+                        ) OR
+                        display_notactive=1
+                    )
+            ';
+            $statement = $pdo->query($sql);
+            $maxpage = $statement->fetch(PDO::FETCH_ASSOC);
+            $maxpage = ceil($maxpage['c'] / $itemsOnPage);
+           
             new Search();
-            new Store($page,$products,9,10);
+            new Store($category,$products,$page,$maxpage);
         }
+
     }
     

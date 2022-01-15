@@ -318,7 +318,12 @@
                         
                         $gallery = new Gallery();
                         foreach($rows as $row) {
-                            $gallery->addImage($row['imgid'],$row['url']);
+                            if (isset($row['imgid'])){
+                                $gallery->addImage($row['imgid'],$row['url']);
+                            }
+                        }
+                        if (count($gallery->images)==0) {
+                            $gallery->addImage(0,"none.jpg");
                         }
 
                         $details['product'] = new Product(

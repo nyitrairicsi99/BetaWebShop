@@ -8,7 +8,7 @@
     class UserController {
         private static $instance = null;
         public static $loggedUser = null;
-        public static $islogged = null;
+        public static $islogged = false;
         private function __construct()
         {
             if (isset($_SESSION["loggedUser"])) {
@@ -22,19 +22,20 @@
         }
 
         public static function getInstance() {
-          if (self::$instance == null)
-          {
-            self::$instance = new UserController();
-          }
-      
-          return self::$instance;
+            if (self::$instance == null)
+            {
+                self::$instance = new UserController();
+            }
+
+            return self::$instance;
         }
 
-        public static function logout() {
+        public static function logout($noredirect = false) {
             self::$loggedUser = null;
             self::$islogged = false;
             session_unset();
-            redirect("main");
+            if (!$noredirect)
+                redirect("main");
         }
 
         public static function login() {
@@ -42,8 +43,8 @@
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-            if (self::$loggedUser!=null) {
-                self::logout();
+            if (!(self::$islogged)) {
+                self::logout(true);
             }
 
             DatabaseConnection::getInstance();
@@ -55,6 +56,7 @@
                 ':username' => $username
             ]);
             $users = $statement->fetchAll(PDO::FETCH_ASSOC);
+
             if ($users && sizeof($users)==1) {
                 $user = $users[0];
                 if (hashMatches($password,$user['password'])) {
@@ -87,11 +89,10 @@
 
                     $_SESSION["loggedUser"] = serialize(self::$loggedUser);
 
-                    
                     redirect("main",[
                         "success" => "Sikeres bejelentkezés.",
                     ]);
-                } else {
+                } else {                    
                     redirect("main",[
                         "error" => "Felhasználónév vagy jelszó hibás.",
                     ]);
