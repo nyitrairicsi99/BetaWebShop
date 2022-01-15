@@ -6,4 +6,5 @@
             }
         }
         header('Location: '.$GLOBALS['settings']['root_folder'].'/'.$url);
+        die();
     }

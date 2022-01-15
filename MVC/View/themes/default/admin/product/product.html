@@ -1,7 +1,8 @@
-<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/products" method="post" enctype="multipart/form-data">
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/product" method="post" enctype="multipart/form-data">
     <a href="<?php echo $GLOBALS['settings']['root_folder'] ?>/admin/products"><i class="fas fa-chevron-left"></i> Vissza</a>
     <h3>Termék szerkesztése</h3>
-    <input type="hidden" id="action" name="action" value="createproduct">
+    <input type="hidden" id="action" name="action" value="manageproduct">
+    <input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
     <div class="form-group row">
         <label for="name" class="col-1 col-form-label">Név</label>
         <div class="col-11">
@@ -38,7 +39,7 @@
         </div>
     </div>
 
-    <div id="productImages" class="carousel slide carousel-fade" data-ride="carousel">
+    <div id="productImages" class="carousel slide carousel-fade" data-ride="carousel" data-interval="false">
         <div class="carousel-inner">
             <?php echo $this->createProductImages($gallery); ?>
         </div>

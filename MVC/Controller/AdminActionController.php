@@ -353,6 +353,15 @@
                             $availableto = $_POST['availableto'];
                             $alwaysavailable = isset($_POST['alwaysavailable']);
 
+                            
+                            $uploadedNames = uploadFiles("files");
+                            
+                            if (count($uploadedNames)==0) {
+                                redirect("admin/".$page,[
+                                    "error" => "Kép nélkül nem hozható létre termék."
+                                ]);
+                            }
+
                             $sql = '
                                 INSERT INTO `products`(`name`, `description`, `price`, `currencies_id`, `units_id`, `stock`, `active_from`, `active_to`, `display_notactive`, `categories_id`)
                                 VALUES (:name,:description,:price,:currency_id,NULL,:stock,:availablefrom,:availableto,:alwaysavailable,:category_id)
@@ -374,7 +383,6 @@
 
                             $id = $pdo->lastInsertId();
 
-                            $uploadedNames = uploadFiles("files");
                             foreach ($uploadedNames as $file) {
                                 $sql = '
                                     INSERT INTO `product_images`(`products_id`, `url`) VALUES (:id,:file)
@@ -388,6 +396,88 @@
                             }
                             
                             redirect("admin/".$page,[
+                                "success" => "Sikeres művelet."
+                            ]);
+
+                            break;
+                        case 'manageproduct':
+                            
+                            $sql = 'SELECT id FROM product_images';
+                            $statement = $pdo->query($sql);
+                            $statement->execute();
+                            $imgs = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                            if ($imgs) {
+                                foreach ($imgs as $img) {
+                                    if (isset($_POST['delete_'.$img['id']])) {
+                                        $id = $img['id'];
+                                        $sql = 'DELETE FROM `product_images` WHERE id=:id';
+                                        $statement = $pdo->prepare($sql);
+                                        $statement->execute([
+                                            ':id' => $id
+                                        ]);
+                                        break;
+                                    }
+                                }
+                            }
+                            
+                            $id = $_POST['id'];
+                            $description = $_POST['description'];
+                            $price = $_POST['price'];
+                            $name = $_POST['name'];
+                            $currency = $_POST['currency'];
+                            $stock = $_POST['stock'];
+                            $category = $_POST['category'];
+                            $availablefrom = $_POST['availablefrom'];
+                            $availableto = $_POST['availableto'];
+                            $alwaysavailable = isset($_POST['alwaysavailable']) ? '1' : '0';
+
+                            $sql = '
+                                UPDATE
+                                    products
+                                SET
+                                    name=:name,
+                                    description=:description,
+                                    price=:price,
+                                    currencies_id=:currency,
+                                    stock=:stock,
+                                    active_from=:availablefrom,
+                                    active_to=:availableto,
+                                    display_notactive=:alwaysavailable,
+                                    categories_id=:category
+                                WHERE
+                                    id=:id
+                                ';
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':id' => $id,
+                                ':description' => $description,
+                                ':name' => $name,
+                                ':price' => $price,
+                                ':currency' => $currency,
+                                ':stock' => $stock,
+                                ':category' => $category,
+                                ':availablefrom' => $availablefrom,
+                                ':availableto' => $availableto,
+                                ':alwaysavailable' => $alwaysavailable,
+                            ]);
+
+                            
+                            $uploadedNames = uploadFiles("files");
+                            foreach ($uploadedNames as $file) {
+                                $sql = '
+                                    INSERT INTO `product_images`(`products_id`, `url`) VALUES (:id,:file)
+                                ';
+
+                                $statement = $pdo->prepare($sql);
+                                $statement->execute([
+                                    ':id' => $id,
+                                    ':file' => $file,
+                                ]);
+                            }
+
+                            
+                            redirect("admin/".$page."/".$id,[
                                 "success" => "Sikeres művelet."
                             ]);
 

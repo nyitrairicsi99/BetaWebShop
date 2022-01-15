@@ -20,4 +20,9 @@ window.onload = (event) => {
         const element = dateHuge[i];
         element.value = (new Date()).addHours(24*365.25*12).toDateInputValue();
     }
+
+    let delButtons = document.getElementsByClassName('delbutton');
+    if (delButtons.length==1) {
+        delButtons[0].style.display = 'none';
+    }
 };
