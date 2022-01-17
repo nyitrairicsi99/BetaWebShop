@@ -1,0 +1,83 @@
+<section id="storemain">
+    <div id="products">
+        <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/profile" method="post">
+            <h1>Felhasználói adatok</h1>
+            <br />
+            <div class="form-group row">
+                <label for="userLabel" class="col-2 col-form-label col-form-label">Felhasználónév</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" id="userLabel" name="username" placeholder="<?php echo $username; ?>" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="emailLabel" class="col-2 col-form-label col-form-label">Email</label>
+                <div class="col-10">
+                <input type="email" class="form-control" id="emailLabel" name="email" placeholder="Email" value="<?php echo $email; ?>">
+                </div>
+            </div>
+            <br />
+            <div class="form-group row">
+                <label for="password" class="col-2 col-form-label col-form-label">Jelszó</label>
+                <div class="col-5">
+                    <input type="password" class="form-control" id="password1" name="password1" placeholder="Új Jelszó">
+                </div>
+                <div class="col-5">
+                    <input type="password" class="form-control" id="password2" name="password2" placeholder="Jelszó újra">
+                </div>
+            </div>
+            <h1>Személyes adatok</h1>
+            <label for="firstname">Név</label>
+            <div class="form-row">
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Keresztnév" name="firstname" id="firstname" value="<?php echo $first_name; ?>">
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Vezetéknév" name="lastname" id="lastname" value="<?php echo $last_name; ?>">
+              </div>
+            </div>
+            <br />
+            <div class="form-group row">
+                <label for="phoneLabel" class="col-2 col-form-label col-form-label">Telefonszám</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" id="phoneLabel" name="phone" placeholder="Telefonszám" value="<?php echo $phone; ?>">
+                </div>
+            </div>
+            <label for="postcode">Cím</label>
+            <div class="form-row">
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Irányítószám" name="postcode" id="postcode" value="<?php echo $postcode; ?>">
+                </div>
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Város" name="city" id="city" value="<?php echo $city; ?>">
+                </div>
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Utca" name="street" id="street" value="<?php echo $street; ?>">
+                </div>
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Házszám" name="housenumber" id="housenumber" value="<?php echo $house_number; ?>">
+                </div>
+            </div>
+            <hr />
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        
+                    </div>
+                    <div class="col-4">
+                        <input type="password" class="form-control" id="passwordnow" name="passwordnow" placeholder="Jelenlegi jelszó">
+                    </div>
+                    <div class="col-4">
+                        
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col text-center">
+                        <input class="btn btn-primary col-4" type="submit" value="Mentés">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr />
+    </div>
+</section>

@@ -39,6 +39,7 @@
     use Controller\DatabaseConnection;
     use Controller\CategoryController;
     //normal classes
+    use Controller\ProfileController;
     use Controller\StoreController;
     use Controller\AdminController;
     use Controller\AdminActionController;
@@ -67,6 +68,10 @@
             case 'register':
                 UserController::getInstance();
                 UserController::register();
+                break;
+            case 'profile':
+                $profileController = new ProfileController();
+                $profileController->modify();
                 break;
             default:
                 $action = $_POST['action'];
@@ -108,6 +113,11 @@
 
     $router->addRoute(new Route("main",function($routeVarArr){
         new StoreController("main",1);
+    },"GET"));
+
+    $router->addRoute(new Route("profile",function($routeVarArr){
+        $profileController = new ProfileController();
+        $profileController->show();
     },"GET"));
 
     $router->addRoute(new Route("main/[0-9]",function($routeVarArr){
