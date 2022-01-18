@@ -13,6 +13,7 @@
             $this->theme = SettingsController::$theme;
             $this->product = $product;
 
+            $id = $this->product->id;
             $name = $this->product->name;
             $description = $this->product->description;
             $price = $this->product->price;

@@ -6,6 +6,7 @@
         public $username;
         public $email;
         public $rank;
+        public $basket;
         public function __construct()
         {
         }

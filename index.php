@@ -34,6 +34,7 @@
     }
 
     //singletons
+    use Controller\BasketController;
     use Controller\UserController;
     use Controller\SettingsController;
     use Controller\DatabaseConnection;
@@ -72,6 +73,10 @@
             case 'profile':
                 $profileController = new ProfileController();
                 $profileController->modify();
+                break;
+            case 'basket':
+                BasketController::getInstance();
+                BasketController::addItem();
                 break;
             default:
                 $action = $_POST['action'];

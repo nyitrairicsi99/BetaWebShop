@@ -103,10 +103,10 @@
                 $currency = new Currency($res[0]['longname'],$res[0]['shortname'],$res[0]['sign']);
                 $gallery = new Gallery();
                 foreach($res as $img) {
-                    $id = $img['imgid'];
+                    $imgid = $img['imgid'];
                     $url = $img['url'];
-                    if ($id>0) {
-                        $gallery->addImage($id,$url);
+                    if ($imgid>0) {
+                        $gallery->addImage($imgid,$url);
                     }
                 }
                 if (count($gallery->images)==0) {

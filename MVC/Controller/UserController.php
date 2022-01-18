@@ -33,7 +33,7 @@
         public static function logout($noredirect = false) {
             self::$loggedUser = null;
             self::$islogged = false;
-            session_unset();
+            self::$loggedUser = unserialize($_SESSION["loggedUser"]);
             if (!$noredirect)
                 redirect("main");
         }
@@ -68,7 +68,7 @@
                     self::$loggedUser->id = $user['id'];
                     self::$loggedUser->username = $user['username'];
                     self::$loggedUser->email = $user['email'];
-                    
+
                     //rank
                     $sql = 'SELECT permissions.name as name,ranks.name as rank FROM ranks,rank_permission,permissions WHERE ranks.id=rank_permission.ranks_id AND rank_permission.permissions_id=permissions.id AND ranks.id=:rank';
                     $statement = $pdo->prepare($sql);
