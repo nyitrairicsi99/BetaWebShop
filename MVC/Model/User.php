@@ -6,10 +6,6 @@
         public $username;
         public $email;
         public $rank;
-        public $phone;
-        public $firstname;
-        public $lastname;
-        public $address;
         public function __construct()
         {
         }

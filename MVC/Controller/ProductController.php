@@ -12,34 +12,113 @@
     use View\Navbar;
     use View\ProductDetails;
 
+    use PDO;
+
     class ProductController
     {
 
 
-        public function __construct()
+        public function __construct($id)
         {
-            new Header("Webshop store site");
-            $navbar = new Navbar("Beta Webshop");
+            DatabaseConnection::getInstance();
+            $pdo = DatabaseConnection::$connection;
+ 
+            SettingsController::getInstance();
+            $shopname = SettingsController::$shopname;
+
+            new Header($shopname);
+            $navbar = new Navbar($shopname);
 
             $navbar->addItem(new NavbarItem("Főoldal","main",true));
-            $navbar->addItem(new NavbarDropdown("Menüpontok",array(
-                new NavbarItem("Menüpont #1","menu1",false),
-                new NavbarItem("Menüpont #2","menu2",false),
-                new NavbarItem("Menüpont #3","menu3",false),
-            )));
-            $navbar->addItem(new NavbarDropdown("Menüpontok2",array(
-                new NavbarItem("Menüpont #21","menu21",false),
-                new NavbarItem("Menüpont #22","menu22",false),
-                new NavbarItem("Menüpont #23","menu23",false),
-            )));
+            
+            CategoryController::getInstance();
+            $categories = CategoryController::getCategories(true,false);
+            foreach ($categories as $main) {
+                if (count($main["subcategories"])==0) {
+                    $short = $main["short"];
+                    $name = $main["name"];
+                    $navbar->addItem(new NavbarItem($name,$short,false));
+                } else {
+                    $navitems = [];
+                    foreach ($main["subcategories"] as $sub) {
+                        $short = $sub["short"];
+                        $name = $sub["name"];
+                        array_push($navitems,new NavbarItem($name,$short,false));
+                    }
+                    $name = $main["name"];
+                    $navbar->addItem(new NavbarDropdown($name,$navitems));
+                }
+            }
             $navbar->create();
-            $desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
-            $eur = new Currency("Euro","EUR","€");
-            $testgallery = new Gallery();
-            $testgallery->addImage(1,"https://shoestore.io/wp-content/uploads/2020/09/149295_03-1024x730-1.jpg");
-            $testgallery->addImage(1,"https://media.kohlsimg.com/is/image/kohls/3478017_Gray?wid=600&hei=600&op_sharpen=1");
 
-            new ProductDetails(new Product(1,"Air Jordan XXXVI „Psychic Energy”",150,$eur,$testgallery,"products/1",$desc));
+            $sql = '
+                SELECT
+                    products.id as id,
+                    products.name as name,
+                    products.price as price,
+                    products.stock as stock,
+                    products.description as description,
+                    products.sign as sign,
+                    products.shortname as shortname,
+                    products.longname as longname,
+                    product_images.id as imgid,
+                    product_images.url as url
+                FROM (
+                    SELECT
+                        products.id as id,
+                        products.name as name,
+                        products.price as price,
+                        products.stock as stock,
+                        products.description as description,
+                        currencies.sign as sign,
+                        currencies.shortname as shortname,
+                        currencies.longname as longname
+                    FROM
+                        products,
+                        currencies,
+                        categories
+                    WHERE
+                        categories.id = products.categories_id AND
+                        currencies.id=products.currencies_id AND
+                        products.id = :id
+                    ) as products
+                LEFT JOIN
+                    product_images
+                ON 
+                    product_images.products_id = products.id
+            ';
+
+            $statement = $pdo->prepare($sql);
+            $statement->bindValue(':id', ($id));
+
+            $statement->execute();
+
+            $res = $statement->fetchAll(PDO::FETCH_ASSOC);
+            
+            if ($res) {
+                $name = $res[0]['name'];
+                $desc = $res[0]['description'];
+                $price = $res[0]['price'];
+                $id = $res[0]['id'];
+                $currency = new Currency($res[0]['longname'],$res[0]['shortname'],$res[0]['sign']);
+                $gallery = new Gallery();
+                foreach($res as $img) {
+                    $id = $img['imgid'];
+                    $url = $img['url'];
+                    if ($id>0) {
+                        $gallery->addImage($id,$url);
+                    }
+                }
+                if (count($gallery->images)==0) {
+                    $gallery->addImage(0,"none.jpg");
+                }
+    
+                new ProductDetails(new Product($id,$name,$price,$currency,$gallery,null,$desc));
+            } else {
+                redirect("main",[
+                    "error" => "Nem található termék."
+                ]);
+            }
         }
     }
     

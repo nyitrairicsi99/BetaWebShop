@@ -126,7 +126,7 @@
 
     
     $router->addRoute(new Route("product/[0-9]",function($routeVarArr){
-        new ProductController($routeVarArr[0]);
+        new ProductController($routeVarArr[1]);
     },"GET"));
 
     $router->addRoute(new Route("admin",function($routeVarArr){

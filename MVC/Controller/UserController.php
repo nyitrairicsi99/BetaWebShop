@@ -68,8 +68,7 @@
                     self::$loggedUser->id = $user['id'];
                     self::$loggedUser->username = $user['username'];
                     self::$loggedUser->email = $user['email'];
-                    //person informations
-
+                    
                     //rank
                     $sql = 'SELECT permissions.name as name,ranks.name as rank FROM ranks,rank_permission,permissions WHERE ranks.id=rank_permission.ranks_id AND rank_permission.permissions_id=permissions.id AND ranks.id=:rank';
                     $statement = $pdo->prepare($sql);
