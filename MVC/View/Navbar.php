@@ -38,7 +38,14 @@
                     $link = $element->link;
                     include __DIR__ . "/themes/" . $this->theme . "/navbar/item.html";
                 } else if (get_class($element)=="Model\\NavbarDropdown") {
+                    $hasactive = false;
+                    foreach($element->elements as $subelement) {
+                        if ($subelement->active) {
+                            $hasactive = true;
+                        }
+                    }
                     $title = $element->title;
+                    $hasactive = $hasactive ? 'active' : '';
                     include __DIR__ . "/themes/" . $this->theme . "/navbar/dropdown.html";
                 }
             }
@@ -58,7 +65,7 @@
             foreach($element->elements as $element) {
                 $title = $element->title;
                 $link = $element->link;
-                $active = $element->active;
+                $active = $element->active ? 'active' : '';
                 include __DIR__ . "/themes/" . $this->theme . "/navbar/dropdownrow.html";
             }
         }

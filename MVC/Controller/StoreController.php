@@ -30,7 +30,7 @@
             new Header($shopname);
             $navbar = new Navbar($shopname);
 
-            $navbar->addItem(new NavbarItem("Főoldal","main",true));
+            $navbar->addItem(new NavbarItem("Főoldal","main","main"==$category));
             
             CategoryController::getInstance();
             $categories = CategoryController::getCategories(true,false);
@@ -38,18 +38,19 @@
                 if (count($main["subcategories"])==0) {
                     $short = $main["short"];
                     $name = $main["name"];
-                    $navbar->addItem(new NavbarItem($name,$short,false));
+                    $navbar->addItem(new NavbarItem($name,$short,$short==$category));
                 } else {
                     $navitems = [];
                     foreach ($main["subcategories"] as $sub) {
                         $short = $sub["short"];
                         $name = $sub["name"];
-                        array_push($navitems,new NavbarItem($name,$short,false));
+                        array_push($navitems,new NavbarItem($name,$short,$short==$category));
                     }
                     $name = $main["name"];
                     $navbar->addItem(new NavbarDropdown($name,$navitems));
                 }
             }
+
             $navbar->create();
 
             $sql = '
