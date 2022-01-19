@@ -2,6 +2,7 @@
     namespace View;
     
     use Controller\SettingsController;
+    use Controller\SearchController;
 
     class Store
     {
@@ -15,6 +16,9 @@
             $this->products = $products;
             $this->page = $page;
             $this->maxpage = $maxpage;
+            SearchController::getInstance();
+            $searchStr = SearchController::getSearchValue();
+            $searchStr = $searchStr=="" ? "" : ("&search=".$searchStr);
 
             include __DIR__ . "/themes/" . $this->theme . "/store/store.html";
         }
@@ -31,6 +35,11 @@
         }
 
         private function createPageRows($category) {
+            SearchController::getInstance();
+            $searchStr = SearchController::getSearchValue();
+            $searchStr = $searchStr=="" ? "" : ("&search=".$searchStr);
+
+
             $page = $this->page;
             $maxpage = $this->maxpage;
             for ($i=$page-2;$i<$page+3;$i++){

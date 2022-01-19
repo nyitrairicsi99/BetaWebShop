@@ -5,14 +5,14 @@
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
             <li class="page-item">
-            <a class="page-link" href="./1" aria-label="Previous">
+            <a class="page-link" href="<?php echo $GLOBALS['settings']['root_folder'].'/'.$category.'/1'.$searchStr; ?>" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
                 <span class="sr-only">Previous</span>
             </a>
             </li>
             <?php $this->createPageRows($category); ?>
             <li class="page-item">
-                <a class="page-link" href="./<?php echo  $maxpage; ?>" aria-label="Next">
+                <a class="page-link" href="<?php echo $GLOBALS['settings']['root_folder'].'/'.$category.'/'.$maxpage.$searchStr; ?>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                     <span class="sr-only">Next</span>
                 </a>

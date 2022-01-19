@@ -93,6 +93,10 @@
                         (
                             categories.short = :c OR
                             "main" = :c
+                        ) AND
+                        (
+                            products.name LIKE :search OR
+                            :search = ""
                         )
                     ) as products
                 LEFT JOIN
@@ -107,10 +111,15 @@
                     :o
             ';
 
+            SearchController::getInstance();
+            $search = SearchController::getSearchValue();
+            $search = "%".$search."%";
+
             $statement = $pdo->prepare($sql);
             $statement->bindValue(':c', ($category));
             $statement->bindValue(':o', (int) (($page - 1) * $itemsOnPage), PDO::PARAM_INT);
             $statement->bindValue(':l', (int) $itemsOnPage, PDO::PARAM_INT);
+            $statement->bindValue(':search', $search);
 
             $statement->execute();
 
@@ -177,7 +186,7 @@
             $maxpage = $statement->fetch(PDO::FETCH_ASSOC);
             $maxpage = ceil($maxpage['c'] / $itemsOnPage);
            
-            new Search();
+            new Search($category);
             new Store($category,$products,$page,$maxpage);
         }
 

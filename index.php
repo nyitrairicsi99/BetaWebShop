@@ -34,6 +34,7 @@
     }
 
     //singletons
+    use Controller\SearchController;
     use Controller\BasketController;
     use Controller\UserController;
     use Controller\SettingsController;
@@ -77,6 +78,10 @@
             case 'basket':
                 BasketController::getInstance();
                 BasketController::addItem();
+                break;
+            case 'search':
+                SearchController::getInstance();
+                SearchController::searchProduct();
                 break;
             default:
                 $action = $_POST['action'];
