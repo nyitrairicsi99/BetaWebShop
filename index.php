@@ -130,6 +130,11 @@
         $profileController->show();
     },"GET"));
 
+    $router->addRoute(new Route("basket",function($routeVarArr){
+        BasketController::getInstance();
+        BasketController::createView();
+    },"GET"));
+
     $router->addRoute(new Route("main/[0-9]",function($routeVarArr){
         new StoreController("main",$routeVarArr[1]);
     },"GET"));

@@ -22,6 +22,14 @@
     section#storemain div#products {
         width: 735px;
     }
+
+    section#storemain div#profile {
+        width: 735px;
+    }
+
+    section#storemain div#basket {
+        width: 735px;
+    }
     
     /**/
     section#imagecontainer {

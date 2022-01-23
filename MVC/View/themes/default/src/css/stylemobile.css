@@ -13,6 +13,16 @@
     section#storemain div#products .storeitem div#image .trapezoid {
         display: none;
     }
+
+    section#storemain div#profile {
+        width: 100%;
+        padding-top: 0;
+    }
+
+    section#storemain div#basket {
+        width: 100%;
+        padding-top: 0;
+    }
     
     section#storemain.product {
         height: calc(100% - 100px);
