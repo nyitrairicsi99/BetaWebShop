@@ -2,5 +2,9 @@
   <td><a href="<?php echo $url; ?>"><?php echo $name; ?></a></td>
   <td><?php echo $piece; ?></td>
   <td><?php echo $price; ?></td>
-  <td><a href="<?php echo $GLOBALS['settings']['root_folder']."/basket/".$id; ?>" class="btn btn-danger btn-sm active" role="button" aria-pressed="true">Törlés</a></td>
+  <td>
+    <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/basket/<?php echo $id; ?>" method="post">
+      <button type="submit" class="btn btn-sm btn-danger">Törlés</button>
+    </form>
+  </td>
 </tr>

@@ -131,6 +131,14 @@
             return $sum;
         }
 
+        public static function removeItem($index) {
+            self::$basket->removeItem($index);
+            self::saveBasket();
+            redirect("basket",[
+                "success" => "Sikeres művelet.",
+            ]);
+        }
+
         private static function saveBasket() {
             $_SESSION["basket"] = serialize(self::$basket);
         }

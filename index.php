@@ -135,6 +135,11 @@
         BasketController::createView();
     },"GET"));
 
+    $router->addRoute(new Route("basket/[0-9]",function($routeVarArr){
+        BasketController::getInstance();
+        BasketController::removeItem($routeVarArr[1]);
+    },"POST"));
+
     $router->addRoute(new Route("main/[0-9]",function($routeVarArr){
         new StoreController("main",$routeVarArr[1]);
     },"GET"));
