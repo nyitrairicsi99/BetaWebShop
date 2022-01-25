@@ -150,9 +150,11 @@
                         if ($settings) {
                             $details['shopname'] = $settings['webshop_name'];
                             $details['theme'] = $settings['themes_id'];
+                            $details['language'] = $settings['languages_id'];
                         }
 
                         $details['themes'] = [];
+                        $details['languages'] = [];
 
                         $sql = 'SELECT id,name FROM themes';
 
@@ -167,6 +169,23 @@
                                 array_push($details['themes'],[
                                     "id" => $theme['id'],
                                     "name" => $theme['name'],
+                                ]);
+                            }
+                        }
+
+                        $sql = 'SELECT id,longname FROM languages';
+
+                        $statement = $pdo->query($sql);
+
+                        $statement->execute();
+
+                        $themes = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                        if ($themes) {
+                            foreach ($themes as $theme) {
+                                array_push($details['languages'],[
+                                    "id" => $theme['id'],
+                                    "name" => $theme['longname'],
                                 ]);
                             }
                         }

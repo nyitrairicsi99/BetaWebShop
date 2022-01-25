@@ -247,8 +247,8 @@
                             }
                             break;
                         case 'updatetheme':
-                            $theme = $_POST['theme'];
-                            if (isset($theme)) {
+                            if (isset($_POST['theme'])) {
+                                $theme = $_POST['theme'];
                                 $sql = '
                                     UPDATE
                                         settings
@@ -259,6 +259,30 @@
                                 $statement = $pdo->prepare($sql);
                                 $statement->execute([
                                     ':theme' => $theme
+                                ]);
+                                
+                                redirect("admin/".$page,[
+                                    "success" => "Sikeres művelet."
+                                ]);
+                            } else {
+                                redirect("admin/".$page,[
+                                    "error" => "Hiányzó paraméterek."
+                                ]);
+                            }
+                            break;
+                        case 'updatelanguage':
+                            if (isset($_POST['language'])) {
+                                $language = $_POST['language'];
+                                $sql = '
+                                    UPDATE
+                                        settings
+                                    SET 
+                                        languages_id=:language
+                                ';
+
+                                $statement = $pdo->prepare($sql);
+                                $statement->execute([
+                                    ':language' => $language
                                 ]);
                                 
                                 redirect("admin/".$page,[

@@ -40,3 +40,60 @@
         </div>
     </div>
 </form>
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post">
+    <br />
+    <input type="hidden" id="action" name="action" value="updatelanguage">
+    <div class="form-group row">
+        <label for="languageLabel" class="col-2">Áruház nyelve</label>
+        <div class="col-8">
+            <select class="form-control" name="language" id="languageLabel">
+                <?php $this->createLanguages($details); ?>
+            </select>
+        </div>
+        <div class="col text">
+            <input class="btn btn-primary col" type="submit" value="Mentés">
+        </div>
+    </div>
+</form>
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post">
+    <input type="hidden" id="action" name="action" value="redirectlanguage">
+    <div class="form-group row">
+        <label for="languageLabel" class="col-2">Nyelv szerkesztés</label>
+        <div class="col-8">
+            <select class="form-control" name="language" id="languageLabel">
+                <?php $this->createLanguages($details); ?>
+            </select>
+        </div>
+        <div class="col text">
+            <input class="btn btn-primary col" type="submit" value="Szerkesztés">
+        </div>
+    </div>
+</form>
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post">
+    <input type="hidden" id="action" name="action" value="uploadlanguage">
+    <div class="form-group row">
+        <label for="languageLabel" class="col-2">Nyelv importálás</label>
+        <div class="col-8">
+            <select class="form-control" name="language" id="languageLabel">
+                <?php $this->createLanguages($details); ?>
+            </select>
+        </div>
+        <div class="col text">
+            <input class="btn btn-primary col" type="submit" value="Importálás">
+        </div>
+    </div>
+</form>
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post">
+    <input type="hidden" id="action" name="action" value="downloadlanguage">
+    <div class="form-group row">
+        <label for="languageLabel" class="col-2">Nyelv exportálás</label>
+        <div class="col-8">
+            <select class="form-control" name="language" id="languageLabel">
+                <?php $this->createLanguages($details); ?>
+            </select>
+        </div>
+        <div class="col text">
+            <input class="btn btn-primary col" type="submit" value="Exportálás">
+        </div>
+    </div>
+</form>

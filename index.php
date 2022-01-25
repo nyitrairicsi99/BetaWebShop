@@ -40,6 +40,7 @@
     use Controller\SettingsController;
     use Controller\DatabaseConnection;
     use Controller\CategoryController;
+    use Controller\LanguageController;
     //normal classes
     use Controller\ProfileController;
     use Controller\StoreController;
@@ -54,7 +55,6 @@
     $pdo = DatabaseConnection::$connection;
 
     $router = new Router();
-
     
     $router->addRoute(new Route("logout",function($routeVarArr){
         UserController::getInstance();

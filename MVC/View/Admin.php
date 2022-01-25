@@ -107,6 +107,8 @@
                     $currencies = $details['currencies'];
                     include __DIR__ . "/themes/" . $theme . "/admin/addproduct/new.html";
                     break;
+                case "language":
+                    break;
                 default:
                    echo "Admin page not set.";
             }
@@ -159,6 +161,16 @@
                 $selected = $t['id']==$details['theme'] ? 'selected' : '';
                 $name = $t['name'];
                 include __DIR__ . "/themes/" . $theme . "/admin/settings/themerow.html";
+            }
+        }
+
+        private function createLanguages($details) {
+            $theme = 'default';
+            foreach($details['languages'] as $t) {
+                $id = $t['id'];
+                $selected = $t['id']==$details['language'] ? 'selected' : '';
+                $name = $t['name'];
+                include __DIR__ . "/themes/" . $theme . "/admin/settings/languagerow.html";
             }
         }
 

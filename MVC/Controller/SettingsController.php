@@ -7,6 +7,7 @@
         private static $instance = null;
         public static $theme = "default";
         public static $shopname = "default";
+        public static $language = 1;
 
         private function __construct()
         {
@@ -22,6 +23,7 @@
             if ($settings) {
                 self::$shopname = $settings['webshop_name'];
                 self::$theme = $settings['theme'];
+                self::$language = $settings['languages_id'];
             }
         }
 
