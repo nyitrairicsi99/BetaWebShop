@@ -1,0 +1,11 @@
+<tr>
+    <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/language" method="post">
+        <input type="hidden" id="action" name="action" value="modifyphrase">
+        <input type="hidden" id="action" name="id" value="<?php echo $id;?>">
+        <input type="hidden" id="action" name="page" value="<?php echo $page;?>">
+        <input type="hidden" id="action" name="language" value="<?php echo $language;?>">
+        <th scope="row"><?php echo $phrase;?></th>
+        <td><input type="text" class="form-control form-control-sm" name="translated" id="translated" value="<?php echo $translated;?>"></td>
+        <td><input class="btn btn-sm btn-primary" type="submit" value="Mentés"></td>
+    </form>
+</tr>

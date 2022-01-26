@@ -294,6 +294,39 @@
                                 ]);
                             }
                             break;
+                        case 'downloadlanguage':
+                            LanguageController::getInstance();
+                            SettingsController::getInstance();
+                            LanguageController::setLanguage($_POST['language']);
+                            $language = SettingsController::$language;
+                            $longname = strtolower(LanguageController::$longname);
+                            $json = LanguageController::getString();
+                            header("Content-type: text/plain");
+                            header("Content-Disposition: attachment; filename=".$longname.".json");
+                            print $json;
+                            LanguageController::setLanguage($language);
+                            break;
+                        case 'uploadlanguage':
+                            $data = getFileContent();
+                            LanguageController::getInstance();
+                            if (LanguageController::createLanguage($data)) {
+                                redirect("admin/".$page,[
+                                    "success" => "Sikeres művelet."
+                                ]);
+                            } else {
+                                redirect("admin/".$page,[
+                                    "error" => "Hiba a művelet végrehajtása során."
+                                ]);
+                            }
+                            break;
+                        case 'redirectlanguage':
+                            redirect("admin/languages/".$_POST['language']."/1");
+                            break;
+                        case 'modifyphrase':
+                            //TODO
+                            
+                            redirect("admin/languages/".$_POST['language']."/".$_POST['page']);
+                            break;
                         case 'removecategory':
                             $id = $_POST['id'];
 

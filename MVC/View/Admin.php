@@ -5,7 +5,7 @@
 
     class Admin
     {
-        public function __construct($page,$details = [],$selectedPage = 1,$maxpage = 1)
+        public function __construct($page,$details = [],$selectedPage = 1,$maxpage = 1,$selectedSubPage = null)
         {
             
             if ($selectedPage==0) {
@@ -25,7 +25,7 @@
                 new NavbarItem("Statisztikák","admin/statistics",false,"fas fa-chart-area"),
                 new NavbarItem("Kuponok","admin/coupons",false,"fas fa-sticky-note"),
                 new NavbarItem("Termékek","admin/products",false,"fas fa-bars"),
-                new NavbarItem("Nyelv","admin/language",false,"fas fa-language"),
+                //new NavbarItem("Nyelv","admin/language",false,"fas fa-language"),
                 new NavbarItem("Felhasználók","admin/users",false,"fas fa-users"),
                 new NavbarItem("Rendelések","admin/orders",false,"fas fa-stream"),
                 new NavbarItem("Jogok","admin/permissions",false,"fas fa-users-cog"),
@@ -107,7 +107,8 @@
                     $currencies = $details['currencies'];
                     include __DIR__ . "/themes/" . $theme . "/admin/addproduct/new.html";
                     break;
-                case "language":
+                case "languages":
+                    include __DIR__ . "/themes/" . $theme . "/admin/languages/language.html";
                     break;
                 default:
                    echo "Admin page not set.";
@@ -116,8 +117,13 @@
             echo "</div>";
             if ($maxpage!=1) {
                 $pageTarget = 1;
-                $pageTargetUrlMin = $GLOBALS['settings']['root_folder']."/admin/".$page."/1";
-                $pageTargetUrlMax = $GLOBALS['settings']['root_folder']."/admin/".$page."/".$maxpage;
+                if (!($selectedSubPage==null)) {
+                    $pageTargetUrlMin = $GLOBALS['settings']['root_folder']."/admin/".$page."/".$selectedPage."/1";
+                    $pageTargetUrlMax = $GLOBALS['settings']['root_folder']."/admin/".$page."/".$selectedPage."/".$maxpage;
+                } else {
+                    $pageTargetUrlMin = $GLOBALS['settings']['root_folder']."/admin/".$page."/1";
+                    $pageTargetUrlMax = $GLOBALS['settings']['root_folder']."/admin/".$page."/".$maxpage;
+                }
                 include __DIR__ . "/themes/" . $theme . "/admin/pagination/pagination.html";
             }
             echo "</div></div>";
@@ -143,16 +149,28 @@
             }
         }
 
-        private function createRows($selectedPage,$maxpage,$page) {
+        private function createRows($selectedPage,$maxpage,$page,$selectedSubPage = null) {
             $theme = 'default';
-            for ($i=$selectedPage-2;$i<$selectedPage+3;$i++){
-                $pageTarget = $i;
-                $pageTargetUrl = $GLOBALS['settings']['root_folder']."/admin/".$page."/".$pageTarget;
-                if ($pageTarget>0 && $pageTarget<=$maxpage) {
-                    $active = $selectedPage==$i ? "active" : "";
-                    include __DIR__ . "/themes/" . $theme . "/admin/pagination/row.html";
+            if (!($selectedSubPage==null)) {
+                for ($i=$selectedSubPage-2;$i<$selectedSubPage+3;$i++){
+                    $pageTarget = $i;
+                    $pageTargetUrl = $GLOBALS['settings']['root_folder']."/admin/".$page."/".$selectedPage."/".$pageTarget;
+                    if ($pageTarget>0 && $pageTarget<=$maxpage) {
+                        $active = $selectedSubPage==$i ? "active" : "";
+                        include __DIR__ . "/themes/" . $theme . "/admin/pagination/row.html";
+                    }
+                }
+            } else {
+                for ($i=$selectedPage-2;$i<$selectedPage+3;$i++){
+                    $pageTarget = $i;
+                    $pageTargetUrl = $GLOBALS['settings']['root_folder']."/admin/".$page."/".$pageTarget;
+                    if ($pageTarget>0 && $pageTarget<=$maxpage) {
+                        $active = $selectedPage==$i ? "active" : "";
+                        include __DIR__ . "/themes/" . $theme . "/admin/pagination/row.html";
+                    }
                 }
             }
+            
         }
 
         private function createThemes($details) {
@@ -275,6 +293,17 @@
             foreach($gallery->images as $image) {
                 include __DIR__ . "/themes/" . $theme . "/admin/product/sliderelement.html";
                 $first = false;
+            }
+        }
+
+        private function createPhrases($phrases,$page) {
+            $theme = 'default';
+            foreach($phrases as $phrase) {
+                $id = $phrase['id'];
+                $translated = $phrase['translated'];
+                $language = $phrase['languages_id'];
+                $phrase = $phrase['phrase'];
+                include __DIR__ . "/themes/" . $theme . "/admin/languages/phraserow.html";
             }
         }
     }

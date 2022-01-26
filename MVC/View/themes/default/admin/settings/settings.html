@@ -69,14 +69,12 @@
         </div>
     </div>
 </form>
-<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post">
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post" enctype="multipart/form-data">
     <input type="hidden" id="action" name="action" value="uploadlanguage">
     <div class="form-group row">
         <label for="languageLabel" class="col-2">Nyelv importálás</label>
         <div class="col-8">
-            <select class="form-control" name="language" id="languageLabel">
-                <?php $this->createLanguages($details); ?>
-            </select>
+            <input class="form-control" type="file" id="file" name="file" />
         </div>
         <div class="col text">
             <input class="btn btn-primary col" type="submit" value="Importálás">

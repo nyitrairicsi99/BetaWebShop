@@ -11,7 +11,7 @@
 
     class AdminController
     {
-        public function __construct($page,$selectedPage)
+        public function __construct($page,$selectedPage,$selectedSubPage = null)
         {
             $itemsOnPage = 10;
 
@@ -418,12 +418,44 @@
                         }
 
                         break;
+                    case 'languages':
+                        if ($selectedSubPage==null) {
+                            redirect("admin");
+                        } else {
+                            $sql = 'SELECT id,phrase,translated,languages_id FROM phrases WHERE languages_id=:id LIMIT :l OFFSET :o';
+
+                            $statement = $pdo->prepare($sql);
+                            $statement->bindValue(':o', (int) (($selectedSubPage - 1) * $itemsOnPage), PDO::PARAM_INT);
+                            $statement->bindValue(':l', (int) $itemsOnPage, PDO::PARAM_INT);
+                            $statement->bindValue(':id', (int) $selectedPage, PDO::PARAM_INT);
+
+                            $statement->execute();
+
+                            $phrases = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                            if ($phrases) {
+                                foreach ($phrases as $phrase) {
+                                    array_push($details,[
+                                        "id" => $phrase["id"],
+                                        "languages_id" => $phrase["languages_id"],
+                                        "phrase" => $phrase["phrase"],
+                                        "translated" => $phrase["translated"],
+                                    ]);
+                                }
+                            }
+
+                            $sql = 'SELECT COUNT(id) as c FROM phrases';
+                            $statement = $pdo->query($sql);
+                            $maxpage = $statement->fetch(PDO::FETCH_ASSOC);
+                            $maxpage = ceil($maxpage['c'] / $itemsOnPage);
+                        }
+                        break;
                     default:
                         break;
                 }
                 
 
-                new Admin($page,$details,$selectedPage,$maxpage);
+                new Admin($page,$details,$selectedPage,$maxpage,$selectedSubPage);
             } else {
                 redirect("main");
             }

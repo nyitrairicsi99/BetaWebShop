@@ -7,8 +7,8 @@
     class LanguageController {
       private static $instance = null;
       private static $phrases = [];
-      private static $longname;
-      private static $shortname;
+      public static $longname;
+      public static $shortname;
 
       private function __construct()
       {
@@ -72,25 +72,36 @@
           if (isset($details['longname']) && isset($details['longname']) && isset($details['longname'])) {
             $longname = $details['longname'];
             $shortname = $details['shortname'];
-            $phrases = $details['phrases'];
-            $sql = "INSERT INTO `languages`(`shortname`, `longname`) VALUES (:shortname,:longname)";
+
+            $sql = "SELECT id FROM languages WHERE shortname=:shortname OR longname=:longname";
             $statement = $pdo->prepare($sql);
             $statement->execute([
-              "shortname" => $shortname,
-              "longname" => $longname,
+              ':shortname' => $shortname,
+              ':longname' => $longname,
             ]);
-            $id = $pdo->lastInsertId();
-            foreach ($phrases as $phrase=>$translated) {
-              $sql = "INSERT INTO `phrases`(`languages_id`, `phrase`, `translated`) VALUES (:language,:phrase,:translated)";
+            if (!($statement->fetch(PDO::FETCH_ASSOC))) {
+              $phrases = $details['phrases'];
+              $sql = "INSERT INTO `languages`(`shortname`, `longname`) VALUES (:shortname,:longname)";
               $statement = $pdo->prepare($sql);
               $statement->execute([
-                "language" => $id,
-                "phrase" => $phrase,
-                "translated" => $translated,
+                "shortname" => $shortname,
+                "longname" => $longname,
               ]);
+              $id = $pdo->lastInsertId();
+              foreach ($phrases as $phrase=>$translated) {
+                $sql = "INSERT INTO `phrases`(`languages_id`, `phrase`, `translated`) VALUES (:language,:phrase,:translated)";
+                $statement = $pdo->prepare($sql);
+                $statement->execute([
+                  "language" => $id,
+                  "phrase" => $phrase,
+                  "translated" => $translated,
+                ]);
+              }
+              return true;
             }
           }
         }
+        return false;
       }
 
     }

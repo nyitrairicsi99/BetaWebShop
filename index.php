@@ -161,6 +161,10 @@
         new AdminController($routeVarArr[1],intval($routeVarArr[2]));
     },"GET"));
 
+    $router->addRoute(new Route("admin/[a-z]/[0-9]/[0-9]",function($routeVarArr){
+        new AdminController($routeVarArr[1],intval($routeVarArr[2]),intval($routeVarArr[3]));
+    },"GET"));
+
     $router->addRoute(new Route("[a-z]/[0-9]",function($routeVarArr){
         $action = $_POST['action'];
         new AdminActionController($routeVarArr[0],intval($routeVarArr[1]),$action,"POST");

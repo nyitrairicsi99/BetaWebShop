@@ -33,5 +33,9 @@
 
         return $uploadedFiles;
     }
+
+    function getFileContent() {
+        return file_get_contents($_FILES['file']['tmp_name']); 
+    }
     
 
