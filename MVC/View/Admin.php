@@ -108,6 +108,10 @@
                     include __DIR__ . "/themes/" . $theme . "/admin/addproduct/new.html";
                     break;
                 case "languages":
+                    $language = 0;
+                    if (count($details)>0) {
+                        $language = $details[0]['languages_id'];
+                    }
                     include __DIR__ . "/themes/" . $theme . "/admin/languages/language.html";
                     break;
                 default:

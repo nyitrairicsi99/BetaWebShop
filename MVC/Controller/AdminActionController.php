@@ -323,9 +323,34 @@
                             redirect("admin/languages/".$_POST['language']."/1");
                             break;
                         case 'modifyphrase':
-                            //TODO
-                            
+                            $id = $_POST['id'];
+                            $translated = $_POST['translated'];
+
+                            $sql = '
+                                UPDATE phrases SET translated=:translated WHERE id=:id
+                            ';
+
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':id' => $id,
+                                ':translated' => $translated,
+                            ]);
+
                             redirect("admin/languages/".$_POST['language']."/".$_POST['page']);
+                            break;
+                        case 'deletelanguage':
+                            $language = $_POST['language'];
+                            $sql = '
+                                DELETE FROM languages WHERE id=:id
+                            ';
+
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':id' => $language,
+                            ]);
+                            redirect("admin",[
+                                "success" => "Sikeres művelet."
+                            ]);
                             break;
                         case 'removecategory':
                             $id = $_POST['id'];
