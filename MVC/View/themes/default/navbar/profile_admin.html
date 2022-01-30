@@ -1,15 +1,15 @@
 <ul class="navbar-nav ml-auto">
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Profil műveletek
+            <?php echo echotranslated('profile_operations'); ?>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="<?php echo $GLOBALS['settings']['root_folder'] ?>/admin">Admin</a>
+            <a class="dropdown-item" href="<?php echo $GLOBALS['settings']['root_folder'] ?>/admin"><?php echo echotranslated('admin'); ?></a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="<?php echo $GLOBALS['settings']['root_folder'] ?>/basket">Kosár<?php echo $countText ?></a>
-            <a class="dropdown-item" href="<?php echo $GLOBALS['settings']['root_folder'] ?>/orders">Rendelések</a>
-            <a class="dropdown-item" href="<?php echo $GLOBALS['settings']['root_folder'] ?>/profile">Profil</a>
-            <a class="dropdown-item" href="<?php echo $GLOBALS['settings']['root_folder'] ?>/logout">Kilépés</a>
+            <a class="dropdown-item" href="<?php echo $GLOBALS['settings']['root_folder'] ?>/basket"><?php echo echotranslated('basket'); ?><?php echo $countText ?></a>
+            <a class="dropdown-item" href="<?php echo $GLOBALS['settings']['root_folder'] ?>/orders"><?php echo echotranslated('orders'); ?></a>
+            <a class="dropdown-item" href="<?php echo $GLOBALS['settings']['root_folder'] ?>/profile"><?php echo echotranslated('profile'); ?></a>
+            <a class="dropdown-item" href="<?php echo $GLOBALS['settings']['root_folder'] ?>/logout"><?php echo echotranslated('logout'); ?></a>
         </div>
     </li>
 </ul>
