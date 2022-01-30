@@ -1,42 +1,42 @@
 <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/user/<?php echo $id ?>" method="post">
     <input type="hidden" id="action" name="action" value="updatepersonal">
-    <h1>Személyes adatok</h1>
-    <label for="firstname">Név</label>
+    <h1><?php echo echotranslated('personal_informations'); ?></h1>
+    <label for="firstname"><?php echo echotranslated('name'); ?></label>
     <div class="form-row">
       <div class="col">
-        <input type="text" class="form-control" placeholder="Keresztnév" name="firstname" id="firstname" value="<?php echo $first_name; ?>">
+        <input type="text" class="form-control" placeholder="<?php echo echotranslated('first_name'); ?>" name="firstname" id="firstname" value="<?php echo $first_name; ?>">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Vezetéknév" name="lastname" id="lastname" value="<?php echo $last_name; ?>">
+        <input type="text" class="form-control" placeholder="<?php echo echotranslated('last_name'); ?>" name="lastname" id="lastname" value="<?php echo $last_name; ?>">
       </div>
     </div>
     <br />
     <div class="form-group row">
-        <label for="phoneLabel" class="col-2 col-form-label col-form-label">Telefonszám</label>
+        <label for="phoneLabel" class="col-2 col-form-label col-form-label"><?php echo echotranslated('phone_number'); ?></label>
         <div class="col-10">
-        <input type="text" class="form-control form-control" id="phoneLabel" name="phone" placeholder="Telefonszám" value="<?php echo $phone; ?>">
+        <input type="text" class="form-control form-control" id="phoneLabel" name="phone" placeholder="<?php echo echotranslated('phone_number'); ?>" value="<?php echo $phone; ?>">
         </div>
     </div>
-    <label for="postcode">Cím</label>
+    <label for="postcode"><?php echo echotranslated('address'); ?></label>
     <div class="form-row">
         <div class="col">
-          <input type="text" class="form-control" placeholder="Irányítószám" name="postcode" id="postcode" value="<?php echo $postcode; ?>">
+          <input type="text" class="form-control" placeholder="<?php echo echotranslated('postcode'); ?>" name="postcode" id="postcode" value="<?php echo $postcode; ?>">
         </div>
         <div class="col">
-          <input type="text" class="form-control" placeholder="Város" name="city" id="city" value="<?php echo $city; ?>">
+          <input type="text" class="form-control" placeholder="<?php echo echotranslated('city'); ?>" name="city" id="city" value="<?php echo $city; ?>">
         </div>
         <div class="col">
-          <input type="text" class="form-control" placeholder="Utca" name="street" id="street" value="<?php echo $street; ?>">
+          <input type="text" class="form-control" placeholder="<?php echo echotranslated('street'); ?>" name="street" id="street" value="<?php echo $street; ?>">
         </div>
         <div class="col">
-          <input type="text" class="form-control" placeholder="Házszám" name="housenumber" id="housenumber" value="<?php echo $house_number; ?>">
+          <input type="text" class="form-control" placeholder="<?php echo echotranslated('house_number'); ?>" name="housenumber" id="housenumber" value="<?php echo $house_number; ?>">
         </div>
     </div>
     <br />
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <input class="btn btn-primary col-4" type="submit" value="Mentés">
+                <input class="btn btn-primary col-4" type="submit" value="<?php echo echotranslated('save'); ?>">
             </div>
         </div>
     </div>

@@ -1,60 +1,60 @@
 <section id="storemain">
     <div id="profile">
         <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/profile" method="post">
-            <h1>Felhasználói adatok</h1>
+            <h1><?php echo echotranslated('user_details'); ?></h1>
             <br />
             <div class="form-group row">
-                <label for="userLabel" class="col-2 col-form-label col-form-label">Felhasználónév</label>
+                <label for="userLabel" class="col-2 col-form-label col-form-label"><?php echo echotranslated('username'); ?></label>
                 <div class="col-10">
                     <input type="text" class="form-control" id="userLabel" name="username" placeholder="<?php echo $username; ?>" readonly>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="emailLabel" class="col-2 col-form-label col-form-label">Email</label>
+                <label for="emailLabel" class="col-2 col-form-label col-form-label"><?php echo echotranslated('email'); ?></label>
                 <div class="col-10">
-                <input type="email" class="form-control" id="emailLabel" name="email" placeholder="Email" value="<?php echo $email; ?>">
+                <input type="email" class="form-control" id="emailLabel" name="email" placeholder="<?php echo echotranslated('email'); ?>" value="<?php echo $email; ?>">
                 </div>
             </div>
             <br />
             <div class="form-group row">
-                <label for="password" class="col-2 col-form-label col-form-label">Jelszó</label>
+                <label for="password" class="col-2 col-form-label col-form-label"><?php echo echotranslated('password'); ?></label>
                 <div class="col-5">
-                    <input type="password" class="form-control" id="password1" name="password1" placeholder="Új Jelszó">
+                    <input type="password" class="form-control" id="password1" name="password1" placeholder="<?php echo echotranslated('new_password'); ?>">
                 </div>
                 <div class="col-5">
-                    <input type="password" class="form-control" id="password2" name="password2" placeholder="Jelszó újra">
+                    <input type="password" class="form-control" id="password2" name="password2" placeholder="<?php echo echotranslated('password_again'); ?>">
                 </div>
             </div>
-            <h1>Személyes adatok</h1>
-            <label for="firstname">Név</label>
+            <h1><?php echo echotranslated('personal_informations'); ?></h1>
+            <label for="firstname"><?php echo echotranslated('name'); ?></label>
             <div class="form-row">
               <div class="col">
-                <input type="text" class="form-control" placeholder="Keresztnév" name="firstname" id="firstname" value="<?php echo $first_name; ?>">
+                <input type="text" class="form-control" placeholder="<?php echo echotranslated('first_name'); ?>" name="firstname" id="firstname" value="<?php echo $first_name; ?>">
               </div>
               <div class="col">
-                <input type="text" class="form-control" placeholder="Vezetéknév" name="lastname" id="lastname" value="<?php echo $last_name; ?>">
+                <input type="text" class="form-control" placeholder="<?php echo echotranslated('last_name'); ?>" name="lastname" id="lastname" value="<?php echo $last_name; ?>">
               </div>
             </div>
             <br />
             <div class="form-group row">
-                <label for="phoneLabel" class="col-2 col-form-label col-form-label">Telefonszám</label>
+                <label for="phoneLabel" class="col-2 col-form-label col-form-label"><?php echo echotranslated('phone_number'); ?></label>
                 <div class="col-10">
-                    <input type="text" class="form-control" id="phoneLabel" name="phone" placeholder="Telefonszám" value="<?php echo $phone; ?>">
+                    <input type="text" class="form-control" id="phoneLabel" name="phone" placeholder="<?php echo echotranslated('phone_number'); ?>" value="<?php echo $phone; ?>">
                 </div>
             </div>
-            <label for="postcode">Cím</label>
+            <label for="postcode"><?php echo echotranslated('address'); ?></label>
             <div class="form-row">
                 <div class="col">
-                  <input type="text" class="form-control" placeholder="Irányítószám" name="postcode" id="postcode" value="<?php echo $postcode; ?>">
+                  <input type="text" class="form-control" placeholder="<?php echo echotranslated('postcode'); ?>" name="postcode" id="postcode" value="<?php echo $postcode; ?>">
                 </div>
                 <div class="col">
-                  <input type="text" class="form-control" placeholder="Város" name="city" id="city" value="<?php echo $city; ?>">
+                  <input type="text" class="form-control" placeholder="<?php echo echotranslated('city'); ?>" name="city" id="city" value="<?php echo $city; ?>">
                 </div>
                 <div class="col">
-                  <input type="text" class="form-control" placeholder="Utca" name="street" id="street" value="<?php echo $street; ?>">
+                  <input type="text" class="form-control" placeholder="<?php echo echotranslated('street'); ?>" name="street" id="street" value="<?php echo $street; ?>">
                 </div>
                 <div class="col">
-                  <input type="text" class="form-control" placeholder="Házszám" name="housenumber" id="housenumber" value="<?php echo $house_number; ?>">
+                  <input type="text" class="form-control" placeholder="<?php echo echotranslated('housenumber'); ?>" name="housenumber" id="housenumber" value="<?php echo $house_number; ?>">
                 </div>
             </div>
             <hr />
@@ -64,7 +64,7 @@
                         
                     </div>
                     <div class="col-4">
-                        <input type="password" class="form-control" id="passwordnow" name="passwordnow" placeholder="Jelenlegi jelszó">
+                        <input type="password" class="form-control" id="passwordnow" name="passwordnow" placeholder="<?php echo echotranslated('password_now'); ?>">
                     </div>
                     <div class="col-4">
                         
@@ -73,7 +73,7 @@
                 <br />
                 <div class="row">
                     <div class="col text-center">
-                        <input class="btn btn-primary col-4" type="submit" value="Mentés">
+                        <input class="btn btn-primary col-4" type="submit" value="<?php echo echotranslated('save'); ?>">
                     </div>
                 </div>
             </div>

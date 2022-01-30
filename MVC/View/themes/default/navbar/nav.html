@@ -2,7 +2,7 @@
 <div class="modal-dialog" role="document">
     <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title" id="loginModalLabel">Bejelentkezés</h5>
+        <h5 class="modal-title" id="loginModalLabel"><?php echo echotranslated('login'); ?></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
@@ -10,18 +10,18 @@
     <div class="modal-body">
             <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/login" method="post">
                 <div class="form-group">
-                    <label for="username">Felhasználónév</label>
-                    <input type="text" class="form-control" id="username" placeholder="Felhasználónév" name="username">
+                    <label for="username"><?php echo echotranslated('username'); ?></label>
+                    <input type="text" class="form-control" id="username" placeholder="<?php echo echotranslated('username'); ?>" name="username">
                 </div>
                 <div class="form-group">
-                    <label for="password">Jelszó</label>
-                    <input type="password" class="form-control" id="password" placeholder="Jelszó" name="password">
+                    <label for="password">password</label>
+                    <input type="password" class="form-control" id="password" placeholder="<?php echo echotranslated('password'); ?>" name="password">
                 </div>
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberme">
-                    <label class="form-check-label" for="rememberMe">Bejelentkezve maradok</label>
+                    <label class="form-check-label" for="rememberMe"><?php echo echotranslated('rememberme'); ?></label>
                 </div>
-                <button type="submit" class="btn btn-primary">Bejelentkezés</button>
+                <button type="submit" class="btn btn-primary"><?php echo echotranslated('login'); ?></button>
             </form>
     </div>
     </div>
@@ -33,7 +33,7 @@
 <div class="modal-dialog" role="document">
     <div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title" id="regModalLabel">Regisztráció</h5>
+        <h5 class="modal-title" id="regModalLabel"><?php echo echotranslated('register'); ?></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
@@ -41,22 +41,22 @@
     <div class="modal-body">
             <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/register" method="post">
                 <div class="form-group">
-                    <label for="email">Felhasználónév</label>
-                    <input type="email" class="form-control" id="email" placeholder="E-mail cím" name="email">
+                    <label for="email"><?php echo echotranslated('email'); ?></label>
+                    <input type="email" class="form-control" id="email" placeholder="<?php echo echotranslated('email'); ?>" name="email">
                 </div>
                 <div class="form-group">
-                    <label for="username">Felhasználónév</label>
-                    <input type="text" class="form-control" id="username" placeholder="Felhasználónév" name="username">
+                    <label for="username"><?php echo echotranslated('username'); ?></label>
+                    <input type="text" class="form-control" id="username" placeholder="<?php echo echotranslated('username'); ?>" name="username">
                 </div>
                 <div class="form-group">
-                    <label for="password">Jelszó</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                    <label for="password"><?php echo echotranslated('password'); ?></label>
+                    <input type="password" class="form-control" id="password" placeholder="<?php echo echotranslated('password'); ?>" name="password">
                 </div>
                 <div class="form-group">
-                    <label for="password2">Jelszó újra</label>
-                    <input type="password" class="form-control" id="password2" placeholder="Password" name="password2">
+                    <label for="password2"><?php echo echotranslated('password_again'); ?></label>
+                    <input type="password" class="form-control" id="password2" placeholder="<?php echo echotranslated('password'); ?>" name="password2">
                 </div>
-                <button type="submit" class="btn btn-primary">Regisztráció</button>
+                <button type="submit" class="btn btn-primary"><?php echo echotranslated('register'); ?></button>
             </form>
     </div>
     </div>

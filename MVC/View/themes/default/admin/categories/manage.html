@@ -1,17 +1,17 @@
 <div class="managecategory">
-    <h4>Megjelenítés</h4>
+    <h4><?php echo echotranslated('show'); ?></h4>
     <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/categories" method="post">
         <input type="hidden" id="action" name="action" value="newcategory">
         <div class="form-group row">
-            <label for="name" class="col-1 col-form-label col-form-label">Új</label>
+            <label for="name" class="col-1 col-form-label col-form-label"><?php echo echotranslated('new'); ?></label>
             <div class="col-5">
-                <input type="text" class="form-control" placeholder="Név" name="name" id="name" value="">
+                <input type="text" class="form-control" placeholder="<?php echo echotranslated('name'); ?>" name="name" id="name" value="">
             </div>
             <div class="col-4">
-                <input type="text" class="form-control" placeholder="Azonosító" name="shortname" id="shortname" value="">
+                <input type="text" class="form-control" placeholder="<?php echo echotranslated('id'); ?>" name="shortname" id="shortname" value="">
             </div>
             <div class="col-2 text-center">
-                <input class="btn btn-primary" type="submit" value="Mentés">
+                <input class="btn btn-primary" type="submit" value="<?php echo echotranslated('save'); ?>">
             </div>
         </div>
     </form>
@@ -20,7 +20,7 @@
     <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/categories" method="post">
         <input type="hidden" id="action" name="action" value="managecategory">
         <div class="form-group row">
-            <label for="categoryLabel" class="col-2 col-form-label col-form-label">Kategória</label>
+            <label for="categoryLabel" class="col-2 col-form-label col-form-label"><?php echo echotranslated('category'); ?></label>
             <div class="col-10">
                 <select class="form-control" name="selectedcategory" id="categoryLabel">
                     <?php echo $this->createUnusedRows($unused); ?>
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="categoryLabel" class="col-2 col-form-label col-form-label">Fő kategória</label>
+            <label for="categoryLabel" class="col-2 col-form-label col-form-label"><?php echo echotranslated('main_category'); ?></label>
             <div class="col-10">
                 <select class="form-control" name="maincategory" id="categoryLabel">
                     <?php echo $this->createMainRows($categories); ?>
@@ -38,7 +38,7 @@
         <div class="container">
             <div class="row">
                 <div class="col text-center">
-                    <input class="btn btn-primary col-4" type="submit" value="Mentés">
+                    <input class="btn btn-primary col-4" type="submit" value="<?php echo echotranslated('save'); ?>">
                 </div>
             </div>
         </div>

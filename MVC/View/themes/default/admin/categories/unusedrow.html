@@ -4,7 +4,7 @@
         <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/categories" method="post">
             <input type="hidden" id="action" name="action" value="deletecategory">
             <input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
-            <input class="btn btn-danger col btn-sm" type="submit" value="Törlés">
+            <input class="btn btn-danger col btn-sm" type="submit" value="<?php echo echotranslated('delete'); ?>">
         </form>
     </td>
 </tr>

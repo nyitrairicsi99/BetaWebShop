@@ -1,15 +1,15 @@
 <section id="storemain">
     <div id="basket">
-        <h1>Kosár</h1>
+        <h1><?php echo echotranslated('basket'); ?></h1>
         <br />
         <div id="baskettable">
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th class="col-8">Megnevezés</th>
-                        <th class="col-1">Darab</th>
-                        <th class="col-1">Ár</th>
-                        <th class="col-2">Szerkesztés</th>
+                        <th class="col-8"><?php echo echotranslated('name'); ?></th>
+                        <th class="col-1"><?php echo echotranslated('piece'); ?></th>
+                        <th class="col-1"><?php echo echotranslated('price'); ?></th>
+                        <th class="col-2"><?php echo echotranslated('edit'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,7 +20,7 @@
         <br />
         <div class="container">
             <div class="col-md-12 text-center">
-                <a class="btn btn-primary" href="<?php echo $GLOBALS['settings']['root_folder']."/orderdetails"; ?>" role="button">Tovább a szállítási adatokhoz</a>
+                <a class="btn btn-primary" href="<?php echo $GLOBALS['settings']['root_folder']."/orderdetails"; ?>" role="button"><?php echo echotranslated('redirect_to_shipping'); ?></a>
             </div>
         </div>
         <br />

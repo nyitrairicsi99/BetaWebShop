@@ -1,16 +1,16 @@
 
-<a href="<?php echo $GLOBALS['settings']['root_folder'] ?>/admin/products"><i class="fas fa-chevron-left"></i> Vissza</a>
+<a href="<?php echo $GLOBALS['settings']['root_folder'] ?>/admin/products"><i class="fas fa-chevron-left"></i> <?php echo echotranslated('back'); ?></a>
 
 <div class="container">
     <div class="row">
         <div class="col-10">
-            <h3>Termék szerkesztése</h3>
+            <h3><?php echo echotranslated('edit_product'); ?></h3>
         </div>
         <div class="col-2">
             <form method="post" action="<?php echo $GLOBALS['settings']['root_folder'] ?>/products">
                 <input type="hidden" id="action" name="action" value="deleteproduct">
                 <input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
-                <button type="submit" class="btn btn-danger">Termék törlése</button>
+                <button type="submit" class="btn btn-danger"><?php echo echotranslated('delete_product'); ?></button>
             </form>
         </div>
     </div>
@@ -20,19 +20,19 @@
     <input type="hidden" id="action" name="action" value="manageproduct">
     <input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
     <div class="form-group row">
-        <label for="name" class="col-1 col-form-label">Név</label>
+        <label for="name" class="col-1 col-form-label"><?php echo echotranslated('name'); ?></label>
         <div class="col-11">
-            <input type="text" class="form-control form-control" id="name" name="name" placeholder="Név" value="<?php echo $name; ?>">
+            <input type="text" class="form-control form-control" id="name" name="name" placeholder="<?php echo echotranslated('name'); ?>" value="<?php echo $name; ?>">
         </div>
     </div>
     <div class="form-group">
-        <label for="description">Leírás</label>
+        <label for="description"><?php echo echotranslated('description'); ?></label>
         <textarea class="form-control" id="description" name="description" rows="3"><?php echo $description; ?></textarea>
     </div>
     <div class="form-group row">
-        <label for="price" class="col-1 col-form-label">Ár</label>
+        <label for="price" class="col-1 col-form-label"><?php echo echotranslated('price'); ?></label>
         <div class="col-3">
-            <input type="number" class="form-control form-control" id="price" name="price" placeholder="Ár" value="<?php echo $price; ?>">
+            <input type="number" class="form-control form-control" id="price" name="price" placeholder="<?php echo echotranslated('price'); ?>" value="<?php echo $price; ?>">
         </div>
         <div class="col-3">
             <select class="form-control" name="currency">
@@ -41,13 +41,13 @@
         </div>
     </div>
     <div class="form-group row">
-        <label for="price" class="col-1 col-form-label">Raktáron</label>
+        <label for="price" class="col-1 col-form-label"><?php echo echotranslated('Stock'); ?></label>
         <div class="col-3">
-            <input type="number" class="form-control form-control" id="stock" name="stock" placeholder="Darab" value="<?php echo $stock; ?>">
+            <input type="number" class="form-control form-control" id="stock" name="stock" placeholder="<?php echo echotranslated('piece'); ?>" value="<?php echo $stock; ?>">
         </div>
     </div>
     <div class="form-group row">
-        <label for="price" class="col-1 col-form-label">Kategória</label>
+        <label for="price" class="col-1 col-form-label"><?php echo echotranslated('category'); ?></label>
         <div class="col-3">
             <select class="form-control" name="category">
                 <?php echo $this->createProductCategories($categories,$category_id); ?>
@@ -72,15 +72,15 @@
     <br />
 
     <div class="form-group row">
-        <label for="files" class="form-label col-3 col-form-label">Új képek hozzáadása</label>
+        <label for="files" class="form-label col-3 col-form-label"><?php echo echotranslated('add_new_images'); ?></label>
         <input class="form-control col-8" type="file" id="files" name="files[]" multiple />
     </div>
     <div class="form-group row">
-        <label for="price" class="col-1 col-form-label">Elérhető</label>
+        <label for="price" class="col-1 col-form-label"><?php echo echotranslated('available'); ?></label>
         <div class="col-1 col-form-label">
         </div>
         <div class="col-1 col-form-label">
-            Megjelenés
+            <?php echo echotranslated('appear'); ?>
         </div>
         <div class="col-3">
             <input type="date" class="form-control form-control" id="availablefrom" name="availablefrom" value="<?php echo $availablefrom; ?>">
@@ -88,7 +88,7 @@
         <div class="col-1 col-form-label">
         </div>
         <div class="col-1 col-form-label">
-            Eltűnés
+            <?php echo echotranslated('disappear'); ?>
         </div>
         <div class="col-3">
             <input type="date" class="form-control form-control" id="availableto" name="availableto" value="<?php echo $availableto; ?>">
@@ -99,7 +99,7 @@
             <div class="col text-center">
                 <input class="form-check-input" type="checkbox" value="" id="alwaysavailable" <?php echo $alwaysavailable ? 'checked' : ''; ?> name="alwaysavailable">
                 <label class="form-check-label" for="checkbox">
-                    Mindig elérhető
+                    <?php echo echotranslated('always_available'); ?>
                 </label>
             </div>
         </div>
@@ -107,7 +107,7 @@
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <input class="btn btn-primary col-4" type="submit" value="Módosítás">
+                <input class="btn btn-primary col-4" type="submit" value="<?php echo echotranslated('modify'); ?>">
             </div>
         </div>
     </div>

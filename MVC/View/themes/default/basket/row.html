@@ -4,7 +4,7 @@
   <td><?php echo $price; ?></td>
   <td>
     <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/basket/<?php echo $id; ?>" method="post">
-      <button type="submit" class="btn btn-sm btn-danger">Törlés</button>
+      <button type="submit" class="btn btn-sm btn-danger"><?php echo echotranslated('delete'); ?></button>
     </form>
   </td>
 </tr>

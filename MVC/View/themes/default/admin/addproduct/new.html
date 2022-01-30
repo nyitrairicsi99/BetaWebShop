@@ -1,22 +1,22 @@
 <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/products" method="post" enctype="multipart/form-data">
-    <h3>Termék létrehozás</h3>
+    <h3><?php echo echotranslated('create_product'); ?></h3>
     <input type="hidden" id="action" name="action" value="createproduct">
     <div class="form-group row">
-        <label for="name" class="col-1 col-form-label">Név</label>
+        <label for="name" class="col-1 col-form-label"><?php echo echotranslated('name'); ?></label>
         <div class="col-11">
-            <input type="text" class="form-control form-control" id="name" name="name" placeholder="Név" value="">
+            <input type="text" class="form-control form-control" id="name" name="name" placeholder="<?php echo echotranslated('name'); ?>" value="">
         </div>
     </div>
     <br />
     <div class="form-group">
-        <label for="description">Leírás</label>
+        <label for="description"><?php echo echotranslated('description'); ?></label>
         <textarea class="form-control" id="description" name="description" rows="3"></textarea>
     </div>
     <br />
     <div class="form-group row">
-        <label for="price" class="col-1 col-form-label">Ár</label>
+        <label for="price" class="col-1 col-form-label"><?php echo echotranslated('price'); ?></label>
         <div class="col-3">
-            <input type="number" class="form-control form-control" id="price" name="price" placeholder="Ár" value="">
+            <input type="number" class="form-control form-control" id="price" name="price" placeholder="<?php echo echotranslated('price'); ?>" value="">
         </div>
         <div class="col-3">
             <select class="form-control" name="currency">
@@ -26,14 +26,14 @@
     </div>
     <br />
     <div class="form-group row">
-        <label for="price" class="col-1 col-form-label">Raktáron</label>
+        <label for="price" class="col-1 col-form-label"><?php echo echotranslated('stock'); ?></label>
         <div class="col-3">
-            <input type="number" class="form-control form-control" id="stock" name="stock" placeholder="Darab" value="">
+            <input type="number" class="form-control form-control" id="stock" name="stock" placeholder="<?php echo echotranslated('piece'); ?>" value="">
         </div>
     </div>
     <br />
     <div class="form-group row">
-        <label for="price" class="col-1 col-form-label">Kategória</label>
+        <label for="price" class="col-1 col-form-label"><?php echo echotranslated('category'); ?></label>
         <div class="col-3">
             <select class="form-control" name="category">
                 <?php echo $this->createNewItemCategories($categories); ?>
@@ -42,16 +42,16 @@
     </div>
     <br />
     <div class="form-group row">
-        <label for="files" class="form-label col-2 col-form-label">Fájlok</label>
+        <label for="files" class="form-label col-2 col-form-label"><?php echo echotranslated('images'); ?></label>
         <input class="form-control col-10" type="file" id="files" name="files[]" multiple />
     </div>
     <br />
     <div class="form-group row">
-        <label for="price" class="col-1 col-form-label">Elérhető</label>
+        <label for="price" class="col-1 col-form-label"><?php echo echotranslated('available'); ?></label>
         <div class="col-1 col-form-label">
         </div>
         <div class="col-1 col-form-label">
-            Megjelenés
+            <?php echo echotranslated('appear'); ?>
         </div>
         <div class="col-3">
             <input type="date" class="form-control form-control autofill-today" id="availablefrom" name="availablefrom" value="">
@@ -59,7 +59,7 @@
         <div class="col-1 col-form-label">
         </div>
         <div class="col-1 col-form-label">
-            Eltűnés
+            <?php echo echotranslated('disappear'); ?>
         </div>
         <div class="col-3">
             <input type="date" class="form-control form-control autofill-huge" id="availableto" name="availableto" value="">
@@ -70,7 +70,7 @@
             <div class="col text-center">
                 <input class="form-check-input" type="checkbox" value="" id="alwaysavailable" checked name="alwaysavailable">
                 <label class="form-check-label" for="checkbox">
-                    Mindig elérhető
+                    <?php echo echotranslated('always_available'); ?>
                 </label>
             </div>
         </div>
@@ -79,7 +79,7 @@
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <input class="btn btn-primary col-4" type="submit" value="Létrehozás">
+                <input class="btn btn-primary col-4" type="submit" value="<?php echo echotranslated('create'); ?>">
             </div>
         </div>
     </div>

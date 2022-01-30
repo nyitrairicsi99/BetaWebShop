@@ -1,7 +1,7 @@
 <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/search" method="post">
     <section id="searchbar">
             <input type="hidden" id="category" name="category" value="<?php echo $category; ?>">
-            <input type="text" id="search" name="search" placeholder="Keresés" value = "<?php echo $value; ?>">
+            <input type="text" id="search" name="search" placeholder="<?php echo echotranslated('search'); ?>" value = "<?php echo $value; ?>">
             <button type="submit" class="btn btn-default">
                 <i class="fas fa-search"></i>
             </button>

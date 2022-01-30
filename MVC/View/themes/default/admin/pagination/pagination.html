@@ -3,14 +3,14 @@
         <li class="page-item">
         <a class="page-link" href="<?php echo  $pageTargetUrlMin; ?>" aria-label="First">
             <span aria-hidden="true">&laquo;</span>
-            <span class="sr-only">Első</span>
+            <span class="sr-only"><?php echo echotranslated('first'); ?></span>
         </a>
         </li>
         <?php $this->createRows($selectedPage,$maxpage,$page,$selectedSubPage)?>
         <li class="page-item">
             <a class="page-link" href="<?php echo  $pageTargetUrlMax; ?>" aria-label="Last">
                 <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Utolsó</span>
+                <span class="sr-only"><?php echo echotranslated('last'); ?></span>
             </a>
         </li>
     </ul>

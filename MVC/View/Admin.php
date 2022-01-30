@@ -22,17 +22,16 @@
             include __DIR__ . "/themes/" . $theme . "/admin/sidenav/before.html";
 
             $navbar = array(
-                new NavbarItem("Statisztikák","admin/statistics",false,"fas fa-chart-area"),
-                new NavbarItem("Kuponok","admin/coupons",false,"fas fa-sticky-note"),
-                new NavbarItem("Termékek","admin/products",false,"fas fa-bars"),
-                //new NavbarItem("Nyelv","admin/language",false,"fas fa-language"),
-                new NavbarItem("Felhasználók","admin/users",false,"fas fa-users"),
-                new NavbarItem("Rendelések","admin/orders",false,"fas fa-stream"),
-                new NavbarItem("Jogok","admin/permissions",false,"fas fa-users-cog"),
-                new NavbarItem("Tiltások","admin/bans",false,"fas fa-ban"),
-                new NavbarItem("Beállítások","admin/settings",false,"fas fa-cog"),
-                new NavbarItem("Bővítmények","admin/addons",false,"fas fa-puzzle-piece"),
-                new NavbarItem("Vissza a bolthoz","main",false,"fas fa-shopping-cart"),
+                new NavbarItem(translate('statistics'),"admin/statistics",false,"fas fa-chart-area"),
+                new NavbarItem(translate('coupons'),"admin/coupons",false,"fas fa-sticky-note"),
+                new NavbarItem(translate('products'),"admin/products",false,"fas fa-bars"),
+                new NavbarItem(translate('users'),"admin/users",false,"fas fa-users"),
+                new NavbarItem(translate('orders'),"admin/orders",false,"fas fa-stream"),
+                new NavbarItem(translate('permissions'),"admin/permissions",false,"fas fa-users-cog"),
+                new NavbarItem(translate('bans'),"admin/bans",false,"fas fa-ban"),
+                new NavbarItem(translate('settings'),"admin/settings",false,"fas fa-cog"),
+                new NavbarItem(translate('addons'),"admin/addons",false,"fas fa-puzzle-piece"),
+                new NavbarItem(translate('back_to_shop'),"main",false,"fas fa-shopping-cart"),
             );
             
             foreach($navbar as $item) {

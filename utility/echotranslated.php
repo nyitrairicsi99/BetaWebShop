@@ -5,3 +5,8 @@
         LanguageController::getInstance();
         echo LanguageController::translate($phrase);
     }
+
+    function translate($phrase){
+        LanguageController::getInstance();
+        return LanguageController::translate($phrase);
+    }

@@ -1,39 +1,39 @@
-<h1>Webáruház adatok</h1>
+<h1><?php echo echotranslated('webshop_details'); ?></h1>
 <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post">
     <br />
     <input type="hidden" id="action" name="action" value="updatetheme">
     <div class="form-group row">
-        <label for="themeLabel" class="col-2">Téma</label>
+        <label for="themeLabel" class="col-2"><?php echo echotranslated('theme'); ?></label>
         <div class="col-8">
             <select class="form-control" name="theme" id="themeLabel">
                 <?php $this->createThemes($details); ?>
             </select>
         </div>
         <div class="col text">
-            <input class="btn btn-primary col" type="submit" value="Mentés">
+            <input class="btn btn-primary col" type="submit" value="<?php echo echotranslated('save'); ?>">
         </div>
     </div>
 </form>
 <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post">
     <input type="hidden" id="action" name="action" value="updatename">
     <div class="form-group row">
-        <label for="name" class="col-2">Név</label>
+        <label for="name" class="col-2"><?php echo echotranslated('name'); ?></label>
         <div class="col-8">
-            <input type="text" class="form-control form-control" id="name" name="name" placeholder="Név" value="<?php echo $shopname; ?>">
+            <input type="text" class="form-control form-control" id="name" name="name" placeholder="<?php echo echotranslated('name'); ?>" value="<?php echo $shopname; ?>">
         </div>
         <div class="col text">
-            <input class="btn btn-primary col" type="submit" value="Mentés">
+            <input class="btn btn-primary col" type="submit" value="<?php echo echotranslated('save'); ?>">
         </div>
     </div>
 </form>
 <form method="get">
     <div class="form-group row">
-        <label for="categoryLabel" class="col-3 col-form-label col-form-label">Kategóriák szerkesztése</label>
+        <label for="categoryLabel" class="col-3 col-form-label col-form-label"><?php echo echotranslated('edit_categories'); ?></label>
         <div class="col-9">
             <div class="container">
                 <div class="row">
                     <div class="col text-left">
-                        <a href="<?php echo $GLOBALS['settings']['root_folder'] ?>/admin/categories" class="link-primary"><label for="categoryLabel" class="col-2 col-form-label col-form-label">Szerkesztés</label></a>
+                        <a href="<?php echo $GLOBALS['settings']['root_folder'] ?>/admin/categories" class="link-primary"><label for="categoryLabel" class="col-2 col-form-label col-form-label"><?php echo echotranslated('edit'); ?></label></a>
                     </div>
                 </div>
             </div>
@@ -44,54 +44,54 @@
     <br />
     <input type="hidden" id="action" name="action" value="updatelanguage">
     <div class="form-group row">
-        <label for="languageLabel" class="col-2">Áruház nyelve</label>
+        <label for="languageLabel" class="col-2"><?php echo echotranslated('webshop_language'); ?></label>
         <div class="col-8">
             <select class="form-control" name="language" id="languageLabel">
                 <?php $this->createLanguages($details); ?>
             </select>
         </div>
         <div class="col text">
-            <input class="btn btn-primary col" type="submit" value="Mentés">
+            <input class="btn btn-primary col" type="submit" value="<?php echo echotranslated('save'); ?>">
         </div>
     </div>
 </form>
 <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post">
     <input type="hidden" id="action" name="action" value="redirectlanguage">
     <div class="form-group row">
-        <label for="languageLabel" class="col-2">Nyelv szerkesztés</label>
+        <label for="languageLabel" class="col-2"><?php echo echotranslated('edit_language'); ?></label>
         <div class="col-8">
             <select class="form-control" name="language" id="languageLabel">
                 <?php $this->createLanguages($details); ?>
             </select>
         </div>
         <div class="col text">
-            <input class="btn btn-primary col" type="submit" value="Szerkesztés">
+            <input class="btn btn-primary col" type="submit" value="<?php echo echotranslated('modify'); ?>">
         </div>
     </div>
 </form>
 <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post" enctype="multipart/form-data">
     <input type="hidden" id="action" name="action" value="uploadlanguage">
     <div class="form-group row">
-        <label for="languageLabel" class="col-2">Nyelv importálás</label>
+        <label for="languageLabel" class="col-2"><?php echo echotranslated('import_language'); ?></label>
         <div class="col-8">
             <input class="form-control" type="file" id="file" name="file" />
         </div>
         <div class="col text">
-            <input class="btn btn-primary col" type="submit" value="Importálás">
+            <input class="btn btn-primary col" type="submit" value="<?php echo echotranslated('import'); ?>">
         </div>
     </div>
 </form>
 <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post">
     <input type="hidden" id="action" name="action" value="downloadlanguage">
     <div class="form-group row">
-        <label for="languageLabel" class="col-2">Nyelv exportálás</label>
+        <label for="languageLabel" class="col-2"><?php echo echotranslated('export_language'); ?></label>
         <div class="col-8">
             <select class="form-control" name="language" id="languageLabel">
                 <?php $this->createLanguages($details); ?>
             </select>
         </div>
         <div class="col text">
-            <input class="btn btn-primary col" type="submit" value="Exportálás">
+            <input class="btn btn-primary col" type="submit" value="<?php echo echotranslated('export'); ?>">
         </div>
     </div>
 </form>
