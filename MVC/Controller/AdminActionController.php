@@ -581,6 +581,23 @@
                             ]);
 
                             break;
+                            
+                        case 'deletecoupon':
+                            $id = $_POST['id'];
+
+                            $sql = '
+                                DELETE FROM coupons WHERE id=:id
+                            ';
+                            
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':id' => $id,
+                            ]);
+
+                            redirect("admin/".$page,[
+                                "success" => "Sikeres művelet."
+                            ]);
+                            break;
                         default:
                             break;
                     }
