@@ -450,6 +450,56 @@
                             $maxpage = ceil($maxpage['c'] / $itemsOnPage);
                         }
                         break;
+                    case 'coupons':
+                        $sql = '
+                        SELECT
+                            coupons.id as id,
+                            COUNT(used_coupons.id) as uses,
+                            coupons.code as code,
+                            coupons.start_time as start_time,
+                            coupons.end_time as end_time,
+                            coupons.singleuse as single_use,
+                            coupons.discount as discount
+                        FROM
+                            used_coupons
+                        RIGHT JOIN
+                            coupons
+                        ON
+                            used_coupons.coupons_id = coupons.id
+                        GROUP BY
+                            coupons.code
+                        LIMIT
+                            :l
+                        OFFSET
+                            :o
+                        ';
+                        $statement = $pdo->prepare($sql);
+                        $statement->bindValue(':o', (int) (($selectedPage - 1) * $itemsOnPage), PDO::PARAM_INT);
+                        $statement->bindValue(':l', (int) $itemsOnPage, PDO::PARAM_INT);
+
+                        $statement->execute();
+                        $coupons = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                        if ($coupons) {
+                            foreach ($coupons as $coupon) {
+                                array_push($details,[
+                                    "id" => $coupon["id"],
+                                    "used" => $coupon["uses"],
+                                    "code" => $coupon["code"],
+                                    "start_time" => $coupon["start_time"],
+                                    "end_time" => $coupon["end_time"],
+                                    "singleuse" => $coupon["single_use"],
+                                    "discount" => $coupon["discount"],
+                                ]);
+                            }
+                        }
+                        
+                        $sql = 'SELECT COUNT(id) as c FROM coupons';
+                        $statement = $pdo->query($sql);
+                        $maxpage = $statement->fetch(PDO::FETCH_ASSOC);
+                        $maxpage = ceil($maxpage['c'] / $itemsOnPage);
+
+                        break;
                     default:
                         break;
                 }

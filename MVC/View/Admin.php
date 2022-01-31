@@ -23,7 +23,7 @@
 
             $navbar = array(
                 new NavbarItem(translate('statistics'),"admin/statistics",false,"fas fa-chart-area"),
-                new NavbarItem(translate('coupons'),"admin/coupons",false,"fas fa-sticky-note"),
+                new NavbarItem(translate('coupons'),"admin/coupons",false,"fas fa-tags"),
                 new NavbarItem(translate('products'),"admin/products",false,"fas fa-bars"),
                 new NavbarItem(translate('users'),"admin/users",false,"fas fa-users"),
                 new NavbarItem(translate('orders'),"admin/orders",false,"fas fa-stream"),
@@ -112,6 +112,9 @@
                         $language = $details[0]['languages_id'];
                     }
                     include __DIR__ . "/themes/" . $theme . "/admin/languages/language.html";
+                    break;
+                case "coupons":
+                    include __DIR__ . "/themes/" . $theme . "/admin/coupons/coupons.html";
                     break;
                 default:
                    echo "Admin page not set.";
@@ -307,6 +310,25 @@
                 $language = $phrase['languages_id'];
                 $phrase = $phrase['phrase'];
                 include __DIR__ . "/themes/" . $theme . "/admin/languages/phraserow.html";
+            }
+        }
+
+        private function createCoupons($coupons) {
+            $theme = 'default';
+            foreach($coupons as $coupon) {
+                $id = $coupon['id'];
+                $availablefrom = $coupon['start_time'];
+                $availableto = $coupon['end_time'];
+                $used = $coupon['used'];
+                $code = $coupon['code'];
+                $singleuse = $coupon['singleuse'];
+                if ($singleuse==1) {
+                    $singleuse = '<i class="fas fa-check-square"></i>';
+                } else {
+                    $singleuse = '<i class="far fa-square"></i>';
+                }
+                $discount = $coupon['discount'];
+                include __DIR__ . "/themes/" . $theme . "/admin/coupons/row.html";
             }
         }
     }

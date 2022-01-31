@@ -3,14 +3,14 @@
         <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/language" method="post">
             <input type="hidden" id="action" name="action" value="deletelanguage">
             <input type="hidden" id="language" name="language" value="<?php echo $language; ?>">
-        <tr>
-            <th class="col-3"><?php echo echotranslated('phrase'); ?></th>
-            <th class="col-7"><?php echo echotranslated('translated'); ?></th>
-            <th class="col-2">
-                <input class="btn btn-sm btn-danger" type="submit" value="<?php echo echotranslated('delete_language'); ?>">
-            </th>
-        </tr>
-    </form>
+            <tr>
+                <th class="col-3"><?php echo echotranslated('phrase'); ?></th>
+                <th class="col-7"><?php echo echotranslated('translated'); ?></th>
+                <th class="col-2">
+                    <input class="btn btn-sm btn-danger" type="submit" value="<?php echo echotranslated('delete_language'); ?>">
+                </th>
+            </tr>
+        </form>
     </thead>
     <tbody>
         <?php $this->createPhrases($details,$selectedSubPage) ?>

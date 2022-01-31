@@ -1,0 +1,14 @@
+<tr>
+    <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/coupons" method="post">
+        <input type="hidden" id="action" name="action" value="deletecoupon">
+        <input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
+        <th scope="row"><?php echo $id; ?></th>
+        <td><?php echo $code; ?></td>
+        <td><?php echo $availablefrom; ?></td>
+        <td><?php echo $availableto; ?></td>
+        <td><?php echo $discount; ?>%</td>
+        <td><?php echo $singleuse; ?></td>
+        <td><?php echo $used; ?></td>
+        <td><input class="btn btn-sm btn-danger" type="submit" value="<?php echo echotranslated('delete'); ?>"></td>
+    </form>
+</tr>
