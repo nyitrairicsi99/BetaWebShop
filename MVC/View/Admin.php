@@ -116,6 +116,9 @@
                 case "coupons":
                     include __DIR__ . "/themes/" . $theme . "/admin/coupons/coupons.html";
                     break;
+                case "createcoupon":
+                    include __DIR__ . "/themes/" . $theme . "/admin/createcoupon/create.html";
+                    break;
                 default:
                    echo "Admin page not set.";
             }

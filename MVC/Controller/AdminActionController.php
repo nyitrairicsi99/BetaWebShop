@@ -598,6 +598,30 @@
                                 "success" => "Sikeres művelet."
                             ]);
                             break;
+                        case 'createcoupon':
+                            $singleuse = isset($_POST['singleuse']) ? 1 : 0;
+                            $code = $_POST['code'];
+                            $discount = $_POST['discount'];
+                            $availablefrom = $_POST['availablefrom'];
+                            $availableto = $_POST['availableto'];
+
+                            $sql = '
+                                INSERT INTO `coupons`(`code`, `start_time`, `end_time`, `discount`, `singleuse`) VALUES (:code,:availablefrom,:availableto,:discount,:singleuse)
+                            ';
+                            
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':code' => $code,
+                                ':availablefrom' => $availablefrom,
+                                ':availableto' => $availableto,
+                                ':discount' => $discount,
+                                ':singleuse' => $singleuse,
+                            ]);
+
+                            redirect("admin/".$page,[
+                                "success" => "Sikeres művelet."
+                            ]);
+                            break;
                         default:
                             break;
                     }

@@ -1,0 +1,63 @@
+
+<a href="<?php echo $GLOBALS['settings']['root_folder'] ?>/admin/coupons"><i class="fas fa-chevron-left"></i> <?php echo echotranslated('back'); ?></a>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h3><?php echo echotranslated('new_coupon'); ?></h3>
+        </div>
+    </div>
+</div>
+<br />
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/coupons" method="post">
+    <input type="hidden" id="action" name="action" value="createcoupon">
+    <div class="form-group row">
+        <label for="code" class="col-1 col-form-label"><?php echo echotranslated('code'); ?></label>
+        <div class="col-11">
+            <input type="text" class="form-control form-control" id="code" name="code" placeholder="<?php echo echotranslated('code'); ?>" value="">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="discount" class="col-1 col-form-label"><?php echo echotranslated('discount'); ?></label>
+        <div class="col-11">
+            <input type="number" class="form-control form-control" id="discount" name="discount" placeholder="<?php echo echotranslated('discount'); ?>" value="">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="price" class="col-1 col-form-label"><?php echo echotranslated('available'); ?></label>
+        <div class="col-1 col-form-label">
+        </div>
+        <div class="col-2 col-form-label">
+            <?php echo echotranslated('available_from'); ?>
+        </div>
+        <div class="col-2">
+            <input type="date" class="form-control form-control autofill-today" id="availablefrom" name="availablefrom" value="<?php echo $availablefrom; ?>">
+        </div>
+        <div class="col-1 col-form-label">
+        </div>
+        <div class="col-2 col-form-label">
+            <?php echo echotranslated('available_to'); ?>
+        </div>
+        <div class="col-2">
+            <input type="date" class="form-control form-control autofill-huge" id="availableto" name="availableto" value="<?php echo $availableto; ?>">
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <input class="form-check-input" type="checkbox" value="" id="singleuse" checked name="singleuse">
+                <label class="form-check-label" for="checkbox">
+                    <?php echo echotranslated('single_use'); ?>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <input class="btn btn-primary col-4" type="submit" value="<?php echo echotranslated('modify'); ?>">
+            </div>
+        </div>
+    </div>
+</form>
