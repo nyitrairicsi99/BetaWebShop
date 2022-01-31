@@ -34,6 +34,7 @@
             self::$loggedUser = null;
             self::$islogged = false;
             self::$loggedUser = unserialize($_SESSION["loggedUser"]);
+            unset($_SESSION["loggedUser"]);
             if (!$noredirect)
                 redirect("main");
         }
