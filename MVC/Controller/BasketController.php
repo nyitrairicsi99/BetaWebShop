@@ -139,6 +139,11 @@
             ]);
         }
 
+        public static function clearItems() {
+            self::$basket = new Basket();
+            self::saveBasket();
+        }
+
         private static function saveBasket() {
             $_SESSION["basket"] = serialize(self::$basket);
         }

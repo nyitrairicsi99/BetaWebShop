@@ -9,9 +9,9 @@
         public function __construct($page,$id,$action,$method)
         {
             UserController::getInstance();
-            DatabaseConnection::getInstance();
 
             if (UserController::$loggedUser->rank->hasPermission('admin_access')) {
+                DatabaseConnection::getInstance();
                 $pdo = DatabaseConnection::$connection;
                 if ($method=="POST") {
                     switch ($action) {
@@ -621,6 +621,24 @@
                             redirect("admin/".$page,[
                                 "success" => "Sikeres művelet."
                             ]);
+                            break;
+                        case 'modifyorderstate':
+                            $id = $_POST['id'];
+                            $orderstate = $_POST['orderstate'];
+
+                            $sql = '
+                                UPDATE orders SET state_id = :state WHERE id = :id
+                            ';
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':state' => $orderstate,
+                                ':id' => $id,
+                            ]);
+                            redirect("admin/".$page,[
+                                "success" => "Sikeres művelet."
+                            ]);
+
+
                             break;
                         default:
                             break;

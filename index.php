@@ -41,6 +41,7 @@
     use Controller\DatabaseConnection;
     use Controller\CategoryController;
     use Controller\LanguageController;
+    use Controller\OrderController;
     //normal classes
     use Controller\ProfileController;
     use Controller\StoreController;
@@ -82,6 +83,10 @@
             case 'search':
                 SearchController::getInstance();
                 SearchController::searchProduct();
+                break;
+            case 'order':
+                OrderController::getInstance();
+                OrderController::makeOrder();
                 break;
             default:
                 $action = $_POST['action'];
@@ -139,6 +144,11 @@
         BasketController::getInstance();
         BasketController::removeItem($routeVarArr[1]);
     },"POST"));
+    
+    $router->addRoute(new Route("orderdetails",function($routeVarArr){
+        OrderController::getInstance();
+        OrderController::createView();
+    },"GET"));
 
     $router->addRoute(new Route("main/[0-9]",function($routeVarArr){
         new StoreController("main",$routeVarArr[1]);

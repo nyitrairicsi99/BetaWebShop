@@ -52,6 +52,9 @@
                 case "users":
                     include __DIR__ . "/themes/" . $theme . "/admin/users/users.html";
                     break;
+                case "orders":
+                    include __DIR__ . "/themes/" . $theme . "/admin/orders/orders.html";
+                    break;
                 case "user":
                     $id = $details['id'];
                     $username = $details['username'];
@@ -155,6 +158,28 @@
                 $selected = $rank['id']==$details['rank'] ? 'selected' : '';
                 $name = $rank['name'];
                 include __DIR__ . "/themes/" . $theme . "/admin/user/rankrow.html";
+            }
+        }
+        
+        private function createOrders($details) {
+            $theme = "default";
+            foreach ($details['orders'] as $row) {
+                $id = $row['id'];
+                $date = $row['date'];
+                $email = $row['email'];
+                $price = $row['price'];
+                $state = $row['state'];
+                include __DIR__ . "/themes/" . $theme . "/admin/orders/row.html";
+            }
+        }
+
+        private function createStates($details,$state) {
+            $theme = "default";
+            foreach ($details['states'] as $row) {
+                $id = $row['id'];
+                $name = $row['name'];
+                $selected = $state == $row['id'] ? "selected" : "";
+                include __DIR__ . "/themes/" . $theme . "/admin/orders/staterow.html";
             }
         }
 

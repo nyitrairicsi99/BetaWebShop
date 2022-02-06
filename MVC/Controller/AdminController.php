@@ -141,6 +141,99 @@
                             redirect("admin/users");
                         }
                         break;
+                        
+                    case 'orders':
+                        $sql = '
+                            SELECT  
+                                orders.id as id,
+                                orders.order_time as date,
+                                users.email as email,
+                                SUM(products.price * product_order.piece) as price,
+                                pay_types.type as type,
+                                orders.state_id as state
+                            FROM
+                                orders,
+                                order_states,
+                                users,
+                                pay_types,
+                                product_order,
+                                products
+                            WHERE
+                                orders.state_id=order_states.id AND
+                                users.id = orders.users_id AND
+                                orders.pay_types_id=pay_types.id AND
+                                product_order.orders_id=orders.id AND
+                                products.id = product_order.products_id
+                            GROUP BY
+                                orders.id
+                            LIMIT
+                                :l
+                            OFFSET
+                                :o';
+
+                        $statement = $pdo->prepare($sql);
+                        $statement->bindValue(':o', (int) (($selectedPage - 1) * $itemsOnPage), PDO::PARAM_INT);
+                        $statement->bindValue(':l', (int) $itemsOnPage, PDO::PARAM_INT);
+
+                        $statement->execute();
+
+                        $orders = $statement->fetchAll(PDO::FETCH_ASSOC);
+                        $details['orders'] = [];
+                        if ($orders) {
+                            foreach ($orders as $order) {
+                                array_push($details['orders'],[
+                                    "id" => $order["id"],
+                                    "date" => $order["date"],
+                                    "email" => $order["email"],
+                                    "price" => $order["price"],
+                                    "type" => $order["type"],
+                                    "state" => $order["state"],
+                                ]);
+                            }
+                        }
+
+                        $sql = '
+                        SELECT
+                            COUNT(c) as c
+                        FROM
+                            (SELECT  
+                                1 as c
+                            FROM
+                                orders,
+                                order_states,
+                                users,
+                                pay_types,
+                                product_order,
+                                products
+                            WHERE
+                                orders.state_id=order_states.id AND
+                                users.id = orders.users_id AND
+                                orders.pay_types_id=pay_types.id AND
+                                product_order.orders_id=orders.id AND
+                                products.id = product_order.products_id
+                            GROUP BY
+                                orders.id) as orders
+                        ';
+                        $statement = $pdo->query($sql);
+                        $maxpage = $statement->fetch(PDO::FETCH_ASSOC);
+                        $maxpage = ceil($maxpage['c'] / $itemsOnPage);
+
+
+
+                        $sql = 'SELECT * FROM order_states';
+                        $statement = $pdo->prepare($sql);
+
+                        $statement->execute();
+
+                        $states = $statement->fetchAll(PDO::FETCH_ASSOC);
+                        $details['states'] = [];
+                        foreach($states as $state) {
+                            array_push($details['states'],[
+                                "id" => $state["id"],
+                                "name" => $state["name"],
+                            ]);
+                        }
+                        break;
                     case 'settings':
                         $sql = "SELECT `themes_id`, `languages_id`, `license_hash`, `webshop_name`, `root_directory` FROM `settings`";
                         $statement = $pdo->prepare($sql);
