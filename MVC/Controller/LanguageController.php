@@ -11,18 +11,16 @@
       public static $shortname;
 
       private function __construct()
-      {
-        SettingsController::getInstance();
-        $language = SettingsController::$language;
-
-        self::setLanguage($language);
-      }
+      {}
 
       public static function getInstance() {
         if (self::$instance == null)
         {
           self::$instance = new LanguageController();
         }
+        SettingsController::getInstance();
+        $language = SettingsController::$language;
+        self::setLanguage($language);
       
         return self::$instance;
       }
@@ -32,6 +30,16 @@
           DatabaseConnection::getInstance();
           $pdo = DatabaseConnection::$connection;
           
+          $sql = 'SELECT phrase FROM phrases GROUP BY phrase';
+          $statement = $pdo->prepare($sql);
+          $statement->execute();
+          $phrases = $statement->fetchAll(PDO::FETCH_ASSOC);
+          if ($phrases) {
+            foreach($phrases as $phrase) {
+              self::$phrases[$phrase['phrase']] = "";
+            }
+          }
+
           $sql = "SELECT phrases.`id` as id, phrases.`phrase` as phrase, phrases.`translated` as translated, languages.`longname` as longname, languages.`shortname` as shortname FROM `phrases`,`languages` WHERE phrases.languages_id=languages.id AND phrases.languages_id=:language";
           $statement = $pdo->prepare($sql);
           $statement->execute([
@@ -52,7 +60,11 @@
       }
 
       public static function translate($phrase) {
-        return array_key_exists($phrase,self::$phrases) ? self::$phrases[$phrase] : ('(*' . $phrase . '*)');
+        if (!array_key_exists($phrase,self::$phrases)) {
+          return '(*' . $phrase . '*)';
+        } else {
+          return (self::$phrases[$phrase]!="") ? self::$phrases[$phrase] : ('(*' . $phrase . '*)');
+        }
       }
 
       public static function getString() {

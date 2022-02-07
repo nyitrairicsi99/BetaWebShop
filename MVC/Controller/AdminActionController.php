@@ -325,18 +325,33 @@
                         case 'modifyphrase':
                             $id = $_POST['id'];
                             $translated = $_POST['translated'];
+                            $language = $_POST['language'];
+                            $phrase = $_POST['phrase'];
 
-                            $sql = '
-                                UPDATE phrases SET translated=:translated WHERE id=:id
-                            ';
+                            if ($id>0) {
+                                $sql = '
+                                    UPDATE phrases SET translated=:translated WHERE id=:id
+                                ';
+    
+                                $statement = $pdo->prepare($sql);
+                                $statement->execute([
+                                    ':id' => $id,
+                                    ':translated' => $translated,
+                                ]);
+                            } else {    
+                                $sql = '
+                                    INSERT INTO `phrases`(`languages_id`, `phrase`, `translated`) VALUES (:language,:phrase,:translated)
+                                ';
+    
+                                $statement = $pdo->prepare($sql);
+                                $statement->execute([
+                                    ':language' => $language,
+                                    ':phrase' => $phrase,
+                                    ':translated' => $translated,
+                                ]);
+                            }
 
-                            $statement = $pdo->prepare($sql);
-                            $statement->execute([
-                                ':id' => $id,
-                                ':translated' => $translated,
-                            ]);
-
-                            redirect("admin/languages/".$_POST['language']."/".$_POST['page']);
+                            redirect("admin/languages/".$language."/".$_POST['page']);
                             break;
                         case 'deletelanguage':
                             $language = $_POST['language'];
