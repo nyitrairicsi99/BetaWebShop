@@ -56,11 +56,6 @@
     $pdo = DatabaseConnection::$connection;
 
     $router = new Router();
-    
-    $router->addRoute(new Route("logout",function($routeVarArr){
-        UserController::getInstance();
-        UserController::logout();
-    },"GET"));
 
     $router->addRoute(new Route("[a-z]",function($routeVarArr){
         switch ($routeVarArr[0]) {
@@ -95,6 +90,28 @@
         }
     },"POST"));
 
+    $router->addRoute(new Route("[a-z]/[0-9]",function($routeVarArr){
+        $action = $_POST['action'];
+        new AdminActionController($routeVarArr[0],intval($routeVarArr[1]),$action,"POST");
+    },"POST"));
+
+    
+    $router->addRoute(new Route("admin",function($routeVarArr){
+        new AdminController('statistics',1);
+    },"GET"));
+
+    $router->addRoute(new Route("admin/[a-z]",function($routeVarArr){
+        new AdminController($routeVarArr[1],1);
+    },"GET"));
+
+    $router->addRoute(new Route("admin/[a-z]/[0-9]",function($routeVarArr){
+        new AdminController($routeVarArr[1],intval($routeVarArr[2]));
+    },"GET"));
+
+    $router->addRoute(new Route("admin/[a-z]/[0-9]/[0-9]",function($routeVarArr){
+        new AdminController($routeVarArr[1],intval($routeVarArr[2]),intval($routeVarArr[3]));
+    },"GET"));
+
     CategoryController::getInstance();
     $categories = CategoryController::getCategories(true,false);
     foreach ($categories as $main) {
@@ -121,13 +138,31 @@
         }
     }
 
-
     $router->addRoute(new Route("",function($routeVarArr){
         new StoreController("main",1);
     },"GET"));
 
     $router->addRoute(new Route("main",function($routeVarArr){
         new StoreController("main",1);
+    },"GET"));
+
+    $router->addRoute(new Route("basket/[0-9]",function($routeVarArr){
+        BasketController::getInstance();
+        BasketController::removeItem($routeVarArr[1]);
+    },"POST"));
+    
+
+    $router->addRoute(new Route("main/[0-9]",function($routeVarArr){
+        new StoreController("main",$routeVarArr[1]);
+    },"GET"));
+    
+    $router->addRoute(new Route("product/[0-9]",function($routeVarArr){
+        new ProductController($routeVarArr[1]);
+    },"GET"));
+
+    $router->addRoute(new Route("orderdetails",function($routeVarArr){
+        OrderController::getInstance();
+        OrderController::createView();
     },"GET"));
 
     $router->addRoute(new Route("profile",function($routeVarArr){
@@ -139,46 +174,12 @@
         BasketController::getInstance();
         BasketController::createView();
     },"GET"));
-
-    $router->addRoute(new Route("basket/[0-9]",function($routeVarArr){
-        BasketController::getInstance();
-        BasketController::removeItem($routeVarArr[1]);
-    },"POST"));
     
-    $router->addRoute(new Route("orderdetails",function($routeVarArr){
-        OrderController::getInstance();
-        OrderController::createView();
+    $router->addRoute(new Route("logout",function($routeVarArr){
+        UserController::getInstance();
+        UserController::logout();
     },"GET"));
 
-    $router->addRoute(new Route("main/[0-9]",function($routeVarArr){
-        new StoreController("main",$routeVarArr[1]);
-    },"GET"));
-
-    
-    $router->addRoute(new Route("product/[0-9]",function($routeVarArr){
-        new ProductController($routeVarArr[1]);
-    },"GET"));
-
-    $router->addRoute(new Route("admin",function($routeVarArr){
-        new AdminController('statistics',1);
-    },"GET"));
-
-    $router->addRoute(new Route("admin/[a-z]",function($routeVarArr){
-        new AdminController($routeVarArr[1],1);
-    },"GET"));
-
-    $router->addRoute(new Route("admin/[a-z]/[0-9]",function($routeVarArr){
-        new AdminController($routeVarArr[1],intval($routeVarArr[2]));
-    },"GET"));
-
-    $router->addRoute(new Route("admin/[a-z]/[0-9]/[0-9]",function($routeVarArr){
-        new AdminController($routeVarArr[1],intval($routeVarArr[2]),intval($routeVarArr[3]));
-    },"GET"));
-
-    $router->addRoute(new Route("[a-z]/[0-9]",function($routeVarArr){
-        $action = $_POST['action'];
-        new AdminActionController($routeVarArr[0],intval($routeVarArr[1]),$action,"POST");
-    },"POST"));
 
     $router->setPathNotFound(function(){
         echo "no path";
