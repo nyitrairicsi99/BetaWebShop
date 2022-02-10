@@ -150,20 +150,23 @@
                                 users.email as email,
                                 SUM(products.price * product_order.piece) as price,
                                 pay_types.type as type,
-                                orders.state_id as state
+                                orders.state_id as state,
+                                currencies.sign as sign
                             FROM
                                 orders,
                                 order_states,
                                 users,
                                 pay_types,
                                 product_order,
-                                products
+                                products,
+                                currencies
                             WHERE
                                 orders.state_id=order_states.id AND
                                 users.id = orders.users_id AND
                                 orders.pay_types_id=pay_types.id AND
                                 product_order.orders_id=orders.id AND
-                                products.id = product_order.products_id
+                                products.id = product_order.products_id AND
+                                products.currencies_id = currencies.id
                             GROUP BY
                                 orders.id
                             LIMIT
@@ -188,6 +191,7 @@
                                     "price" => $order["price"],
                                     "type" => $order["type"],
                                     "state" => $order["state"],
+                                    "sign" => $order["sign"],
                                 ]);
                             }
                         }

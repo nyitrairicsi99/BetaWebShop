@@ -2,6 +2,7 @@
     namespace Controller;
 
     use PDO;
+    use View\OrderList;
     use View\Order;
     use View\Header;
     use View\Navbar;
@@ -178,6 +179,81 @@
             //TODO: KUPON BESZÚRÁSA
 
 
+        }
+
+        public static function createListView() {
+            $details = [];
+            UserController::getInstance();
+
+            DatabaseConnection::getInstance();
+            $pdo = DatabaseConnection::$connection;
+
+            $sql = '
+                SELECT  
+                    orders.id as id,
+                    orders.order_time as date,
+                    SUM(products.price * product_order.piece) as price,
+                    currencies.sign as sign
+                FROM
+                    orders,
+                    users,
+                    product_order,
+                    products,
+                    currencies
+                WHERE
+                    users.id = orders.users_id AND
+                    product_order.orders_id=orders.id AND
+                    products.id = product_order.products_id AND
+                    products.currencies_id = currencies.id AND
+                    users.id = :id
+                GROUP BY
+                    orders.id
+            ';
+            $statement = $pdo->prepare($sql);
+            $statement->execute([
+                ':id' => UserController::$loggedUser->id
+            ]);
+
+            $orders = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach($orders as $order) {
+                array_push($details,[
+                    "id" => $order['id'],
+                    "date" => $order['date'],
+                    "price" => $order['price'],
+                    "sign" => $order['sign'],
+                ]);
+            }
+
+            SettingsController::getInstance();
+            $shopname = SettingsController::$shopname;
+
+            new Header($shopname);
+            $navbar = new Navbar($shopname);
+
+            $navbar->addItem(new NavbarItem("Főoldal","main",false));
+            
+            CategoryController::getInstance();
+            $categories = CategoryController::getCategories(true,false);
+            foreach ($categories as $main) {
+                if (count($main["subcategories"])==0) {
+                    $short = $main["short"];
+                    $name = $main["name"];
+                    $navbar->addItem(new NavbarItem($name,$short,false));
+                } else {
+                    $navitems = [];
+                    foreach ($main["subcategories"] as $sub) {
+                        $short = $sub["short"];
+                        $name = $sub["name"];
+                        array_push($navitems,new NavbarItem($name,$short,false));
+                    }
+                    $name = $main["name"];
+                    $navbar->addItem(new NavbarDropdown($name,$navitems));
+                }
+            }
+
+            $navbar->create();
+            new OrderList($details);
         }
 
         public static function createView() {

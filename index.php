@@ -159,6 +159,15 @@
     $router->addRoute(new Route("product/[0-9]",function($routeVarArr){
         new ProductController($routeVarArr[1]);
     },"GET"));
+    
+    $router->addRoute(new Route("orders",function($routeVarArr){
+        OrderController::getInstance();
+        OrderController::createListView();
+    },"GET"));
+
+    $router->addRoute(new Route("orders/[0-9]",function($routeVarArr){
+        //new ProductController($routeVarArr[1]);
+    },"GET"));
 
     $router->addRoute(new Route("orderdetails",function($routeVarArr){
         OrderController::getInstance();

@@ -1,0 +1,17 @@
+<section id="storemain">
+  <div id="profile">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+            <th class="col-1">#</th>
+            <th class="col-6"><?php echo echotranslated('date'); ?></th>
+            <th class="col-5"><?php echo echotranslated('price'); ?></th>
+            <th class="col-5"><?php echo echotranslated('details'); ?></th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php $this->createOrders($details) ?>
+      </tbody>
+    </table>
+  </div>
+</section>

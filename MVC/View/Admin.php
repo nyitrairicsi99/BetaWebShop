@@ -169,6 +169,7 @@
                 $email = $row['email'];
                 $price = $row['price'];
                 $state = $row['state'];
+                $sign = $row['sign'];
                 include __DIR__ . "/themes/" . $theme . "/admin/orders/row.html";
             }
         }
