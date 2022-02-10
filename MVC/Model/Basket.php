@@ -21,6 +21,8 @@
         public function getItem($index) {
             if ($index<count($this->items) && $index>=0) {
                 return $this->items[$index];
+            } else {
+                return null;
             }
         }
 

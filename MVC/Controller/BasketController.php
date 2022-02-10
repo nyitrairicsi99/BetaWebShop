@@ -110,13 +110,30 @@
                 }
     
                 $product = new Product($id,$name,$price,$currency,$gallery,"product/".$id,$desc);
+
+                $firstItem = self::$basket->getItem(0);
+
+                if ($firstItem!=null) {
+                    $firstItem = $firstItem->product;
+                    if ($firstItem->currency->shortName!=$currency->shortName) {
+                        redirect("product/".$id,[
+                            "error" => "Csak azonos valutájú tárgyak rakhatók egy kosárba.",
+                        ]);
+                    }
+                }
+
+                self::$basket->addItem(new BasketItem($id,$piece,$product));
+                self::saveBasket();
+
+                redirect("product/".$id,[
+                    "success" => "Sikeres művelet.",
+                ]);
+            } else {
+                redirect("product/".$id,[
+                    "error" => "Hiba a kosárba rakás során.",
+                ]);
             }
 
-            self::$basket->addItem(new BasketItem($id,$piece,$product));
-            self::saveBasket();
-            redirect("product/".$id,[
-                "success" => "Sikeres művelet.",
-            ]);
         }
 
         public static function getItems() {
