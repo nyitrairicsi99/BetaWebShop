@@ -1,0 +1,14 @@
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" id="warningModal" aria-labelledby="warningModal" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="alert alert-warning">
+            <?php echo $message; ?>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#warningModal').modal();
+    setTimeout(() => {
+        $('#warningModal').modal('hide');
+    }, 2000);
+</script>
