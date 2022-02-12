@@ -57,6 +57,11 @@
 
     $router = new Router();
 
+    $router->addRoute(new Route("basket/[0-9]",function($routeVarArr){
+        BasketController::getInstance();
+        BasketController::removeItem($routeVarArr[1]);
+    },"POST"));
+
     $router->addRoute(new Route("[a-z]",function($routeVarArr){
         switch ($routeVarArr[0]) {
             case 'login':
@@ -146,12 +151,6 @@
         new StoreController("main",1);
     },"GET"));
 
-    $router->addRoute(new Route("basket/[0-9]",function($routeVarArr){
-        BasketController::getInstance();
-        BasketController::removeItem($routeVarArr[1]);
-    },"POST"));
-    
-
     $router->addRoute(new Route("main/[0-9]",function($routeVarArr){
         new StoreController("main",$routeVarArr[1]);
     },"GET"));
@@ -166,7 +165,8 @@
     },"GET"));
 
     $router->addRoute(new Route("orders/[0-9]",function($routeVarArr){
-        //new ProductController($routeVarArr[1]);
+        OrderController::getInstance();
+        OrderController::createOrderView($routeVarArr[1]);
     },"GET"));
 
     $router->addRoute(new Route("orderdetails",function($routeVarArr){

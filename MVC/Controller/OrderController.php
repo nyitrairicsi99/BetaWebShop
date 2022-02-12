@@ -4,6 +4,7 @@
     use PDO;
     use View\OrderList;
     use View\Order;
+    use View\OrderDetails;
     use View\Header;
     use View\Navbar;
     use Model\NavbarItem;
@@ -254,6 +255,109 @@
 
             $navbar->create();
             new OrderList($details);
+        }
+
+        public static function createOrderView($id) {
+            $details = [];
+
+            UserController::getInstance();
+
+            DatabaseConnection::getInstance();
+            $pdo = DatabaseConnection::$connection;
+
+            $sql = '
+            SELECT
+                postcodes.postcode as postcode,
+                cities.name as city,
+                streets.street as street,
+                house_numbers.number as house_number,
+                orders.order_time as order_time,
+                pay_types.type as pay_type,
+                product_order.piece as piece,
+                products.price as price,
+                currencies.sign as sign,
+                products.name as name,
+                order_states.name as order_state
+            FROM
+                `postcodes`,
+                `cities`,
+                `streets`,
+                `house_numbers`,
+                `addresses`,
+                `orders`,
+                `product_order`,
+                `products`,
+                `pay_types`,
+                `order_states`,
+                `currencies`
+            WHERE
+                postcodes.id = cities.postcodes_id AND
+                cities.id = addresses.cities_id AND
+                streets.id = addresses.streets_id AND
+                house_numbers.id = addresses.house_numbers_id AND
+                orders.addresses_id = addresses.id AND
+                product_order.orders_id = orders.id AND
+                product_order.products_id = products.id AND 
+                orders.pay_types_id = pay_types.id AND
+                orders.state_id = order_states.id AND
+                products.currencies_id = currencies.id AND
+                orders.id = :id;
+            ';
+            
+            $statement = $pdo->prepare($sql);
+            $statement->execute([
+                ':id' => $id
+            ]);
+
+            $orders = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach($orders as $order) {
+                array_push($details,[
+                    "postcode" => $order['postcode'],
+                    "city" => $order['city'],
+                    "street" => $order['street'],
+                    "house_number" => $order['house_number'],
+                    "order_time" => $order['order_time'],
+                    "pay_type" => $order['pay_type'],
+                    "order_state" => $order['order_state'],
+                    "piece" => $order['piece'],
+                    "price" => $order['price'],
+                    "sign" => $order['sign'],
+                    "name" => $order['name'],
+                ]);
+            }
+
+
+            
+            SettingsController::getInstance();
+            $shopname = SettingsController::$shopname;
+
+            new Header($shopname);
+            $navbar = new Navbar($shopname);
+
+            $navbar->addItem(new NavbarItem("Főoldal","main",false));
+            
+            CategoryController::getInstance();
+            $categories = CategoryController::getCategories(true,false);
+            foreach ($categories as $main) {
+                if (count($main["subcategories"])==0) {
+                    $short = $main["short"];
+                    $name = $main["name"];
+                    $navbar->addItem(new NavbarItem($name,$short,false));
+                } else {
+                    $navitems = [];
+                    foreach ($main["subcategories"] as $sub) {
+                        $short = $sub["short"];
+                        $name = $sub["name"];
+                        array_push($navitems,new NavbarItem($name,$short,false));
+                    }
+                    $name = $main["name"];
+                    $navbar->addItem(new NavbarDropdown($name,$navitems));
+                }
+            }
+
+            $navbar->create();
+            new OrderDetails($details);
         }
 
         public static function createView() {
