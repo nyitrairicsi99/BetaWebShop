@@ -38,6 +38,7 @@
                             $username = $_POST['username'];
                             $email = $_POST['email'];
                             $rank = $_POST['rank'];
+                            $banned = isset($_POST['banned']);
                             if ($username && $email && $rank) {
                                 $sql = '
                                     UPDATE
@@ -45,7 +46,8 @@
                                     SET 
                                         ranks_id=(SELECT id FROM ranks WHERE name=:rank),
                                         username=:username,
-                                        email=:email
+                                        email=:email,
+                                        banned=:banned
                                     WHERE
                                         id=:id
                                 ';
@@ -56,6 +58,7 @@
                                     ':username'=> $username,
                                     ':email'=> $email,
                                     ':rank'=> $rank,
+                                    ':banned'=> $banned ? 1 : 0,
                                 ]);
 
                                 redirect("admin/".$page."/".$id,[

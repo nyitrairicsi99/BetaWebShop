@@ -28,7 +28,6 @@
                 new NavbarItem(translate('users'),"admin/users",false,"fas fa-users"),
                 new NavbarItem(translate('orders'),"admin/orders",false,"fas fa-stream"),
                 new NavbarItem(translate('permissions'),"admin/permissions",false,"fas fa-users-cog"),
-                new NavbarItem(translate('bans'),"admin/bans",false,"fas fa-ban"),
                 new NavbarItem(translate('settings'),"admin/settings",false,"fas fa-cog"),
                 new NavbarItem(translate('addons'),"admin/addons",false,"fas fa-puzzle-piece"),
                 new NavbarItem(translate('back_to_shop'),"main",false,"fas fa-shopping-cart"),
@@ -66,6 +65,7 @@
                     $phone = $details['phone'];
                     $first_name = $details['first_name'];
                     $last_name = $details['last_name'];
+                    $banned = $details['banned'];
                     
                     include __DIR__ . "/themes/" . $theme . "/admin/user/user.html";
                     include __DIR__ . "/themes/" . $theme . "/admin/user/personal.html";

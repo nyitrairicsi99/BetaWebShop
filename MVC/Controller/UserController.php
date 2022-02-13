@@ -33,7 +33,6 @@
         public static function logout($noredirect = false) {
             self::$loggedUser = null;
             self::$islogged = false;
-            self::$loggedUser = unserialize($_SESSION["loggedUser"]);
             unset($_SESSION["loggedUser"]);
             if (!$noredirect)
                 redirect("main");
@@ -51,7 +50,7 @@
             DatabaseConnection::getInstance();
             $pdo = DatabaseConnection::$connection;
 
-            $sql = 'SELECT `id`, `username`, `password`, `email`, `people_id`, `ranks_id` FROM `users` WHERE `username`=:username OR `email`=:username';
+            $sql = 'SELECT `id`, `username`, `password`, `email`, `people_id`, `ranks_id`, `banned` FROM `users` WHERE `username`=:username OR `email`=:username';
             $statement = $pdo->prepare($sql);
             $statement->execute([
                 ':username' => $username
@@ -69,6 +68,11 @@
                     self::$loggedUser->id = $user['id'];
                     self::$loggedUser->username = $user['username'];
                     self::$loggedUser->email = $user['email'];
+                    self::$loggedUser->banned = $user['banned']==1;
+                    if (self::$loggedUser->banned) {
+                        http_response_code(403);
+                        die();
+                    }
 
                     //rank
                     $sql = 'SELECT permissions.name as name,ranks.name as rank FROM ranks,rank_permission,permissions WHERE ranks.id=rank_permission.ranks_id AND rank_permission.permissions_id=permissions.id AND ranks.id=:rank';
