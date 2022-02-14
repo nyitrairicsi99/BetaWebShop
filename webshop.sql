@@ -80,31 +80,6 @@ INSERT INTO `addresses` VALUES (1,1,1,1),(2,4,2,2),(3,5,2,2),(4,6,3,3),(5,7,2,2)
 UNLOCK TABLES;
 
 --
--- Table structure for table `bans`
---
-
-DROP TABLE IF EXISTS `bans`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `bans` (
-  `id` int(11) NOT NULL,
-  `users_id` int(11) DEFAULT NULL,
-  `ip` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `users_id` (`users_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `bans`
---
-
-LOCK TABLES `bans` WRITE;
-/*!40000 ALTER TABLE `bans` DISABLE KEYS */;
-/*!40000 ALTER TABLE `bans` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `categories`
 --
 
@@ -408,7 +383,7 @@ CREATE TABLE `permissions` (
   `name` varchar(32) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -417,7 +392,7 @@ CREATE TABLE `permissions` (
 
 LOCK TABLES `permissions` WRITE;
 /*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
-INSERT INTO `permissions` VALUES (1,'admin_access','Enable to access the admin page.');
+INSERT INTO `permissions` VALUES (1,'admin_access','Enable to access the admin page.'),(2,'view_users','view_users'),(3,'manage_users','manage_users');
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -435,7 +410,7 @@ CREATE TABLE `phrases` (
   `translated` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `languages_id` (`languages_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=255 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -444,7 +419,7 @@ CREATE TABLE `phrases` (
 
 LOCK TABLES `phrases` WRITE;
 /*!40000 ALTER TABLE `phrases` DISABLE KEYS */;
-INSERT INTO `phrases` VALUES (1,1,'search','Keresés'),(2,2,'search','Search'),(4,4,'search','Traži'),(5,5,'search','Keresés'),(6,6,'search','Keresés'),(7,5,'webshop','Webáruház'),(38,1,'statistics','Statisztikák'),(39,2,'statistics','Statistics'),(40,5,'user_details','Felhasználói adatok'),(41,5,'username','Felhasználónév'),(42,5,'email','E-mail'),(43,5,'password','Jelszó'),(44,5,'new_password','Új jelszó'),(45,5,'password_again','Jelszó újra'),(46,5,'password_now','Jelenlegi jelszó'),(47,5,'personal_informations','Személyes adatok'),(48,5,'name','Név'),(49,5,'first_name','Keresztnév'),(50,5,'last_name','Vezetéknév'),(51,5,'phone_number','Telefonszám'),(52,5,'address','Cím'),(53,5,'postcode','Irányítószám'),(54,5,'city','Város'),(55,5,'street','Utca'),(56,5,'housenumber','Házszám'),(57,5,'save','Mentés'),(58,5,'piece','Darab'),(59,5,'basket_add','Kosárhoz ad'),(60,5,'login','Bejelenetkezés'),(61,5,'rememberme','Jegyezz meg'),(62,5,'register','Regisztráció'),(63,5,'basket','Kosár'),(64,5,'price','Ár'),(65,5,'edit','Szerkesztés'),(66,5,'redirect_to_shipping','Tovább a szállításhoz'),(67,5,'delete','Törlés'),(68,5,'id','Azonosító'),(69,5,'rank','Rang'),(70,5,'modify','Módosítás'),(71,5,'admin','Admin'),(72,5,'theme','Téma'),(73,5,'edit_categories','Kategóriák szerkesztése'),(74,5,'webshop_language','Webáruház nyelve'),(75,5,'edit_language','Nyelv szerkesztés'),(76,5,'import_language','Nyelv importálása'),(77,5,'import','Importálás'),(78,5,'export_language','Nyelv exportálás'),(79,5,'export','Exportálás'),(80,5,'stock','Raktár'),(81,5,'add','Hozzáadás'),(82,5,'back','Vissza'),(83,5,'edit_product','Termék szerkesztése'),(84,5,'delete_product','Termék törlése'),(85,5,'description','Leírás'),(86,5,'add_new_images','Új képek hozzáadása'),(87,5,'available','Elérhető'),(88,5,'appear','Megjelenés'),(89,5,'disappear','Eltűnés'),(90,5,'webshop_details','Webáruház adatok'),(91,5,'theme','Téma'),(92,5,'edit_categories','Kategóriák szerkesztése'),(93,5,'webshop_language','Webáruház nyelve'),(94,5,'edit_language','Nyelv szerkesztés'),(95,5,'import_language','Nyelv importálása'),(96,5,'import','Importálás'),(97,5,'export_language','Nyelv exportálás'),(98,5,'export','Exportálás'),(99,5,'stock','Raktár'),(100,5,'add','Hozzáadás'),(101,5,'back','Vissza'),(102,5,'edit_product','Termék szerkesztése'),(103,5,'delete_product','Termék törlése'),(104,5,'description','Leírás'),(105,5,'add_new_images','Új képek hozzáadása'),(106,5,'available','Elérhető'),(107,5,'appear','Megjelenés'),(108,5,'disappear','Eltűnés'),(109,5,'always_available','Mindig elérhető'),(110,5,'first','Első'),(111,5,'last','Utolsó'),(112,5,'phrase','Kifejezés'),(113,5,'translated','Fordított'),(114,5,'delete_language','Nyelv törlése'),(115,5,'show','Megjelenítés'),(116,5,'new','Új'),(117,5,'category','Kategória'),(118,5,'main_category','Fő kategória'),(119,5,'unused_categories','Nem használt kategóriák'),(120,5,'used_categories','Használt kategóriák'),(121,5,'remove','Eltávolítás'),(122,5,'create_product','Termék létrehozása'),(123,5,'images','Képek'),(124,5,'create','Létrehozás'),(125,5,'statistics','Statisztikák'),(126,5,'coupons','Kuponok'),(127,5,'products','Termékek'),(128,5,'users','Felhasználók'),(129,5,'orders','Rendelések'),(130,5,'permissions','Jogok'),(131,5,'bans','Tiltások'),(132,5,'settings','Beállítások'),(133,5,'addons','Bővítmények'),(134,5,'back_to_shop','Vissza az áruházhoz'),(135,5,'profile','Profil'),(136,5,'logout','Kilépés'),(137,5,'profile_operations','Profil műveletek'),(138,5,'code','Kód'),(139,5,'available_from','-tól elérhető'),(140,5,'available_to','-ig elérhető'),(141,5,'uses','Felhasználások'),(142,5,'discount','Kedvezmény'),(143,5,'single_use','Egyszer használható'),(144,5,'new_coupon','Új kupon'),(145,5,'coupon','Kuponkód'),(146,5,'order','Rendelés'),(147,5,'cash_on_delivery','Utánvét'),(148,5,'paypal','Paypal'),(149,5,'ordered','Megrendelve'),(150,5,'date','Dátum'),(151,5,'done','Kész');
+INSERT INTO `phrases` VALUES (1,1,'search','Keresés'),(2,2,'search','Search'),(4,4,'search','Traži'),(5,5,'search','Keresés'),(6,6,'search','Keresés'),(7,5,'webshop','Webáruház'),(38,1,'statistics','Statisztikák'),(39,2,'statistics','Statistics'),(40,5,'user_details','Felhasználói adatok'),(41,5,'username','Felhasználónév'),(42,5,'email','E-mail'),(43,5,'password','Jelszó'),(44,5,'new_password','Új jelszó'),(45,5,'password_again','Jelszó újra'),(46,5,'password_now','Jelenlegi jelszó'),(47,5,'personal_informations','Személyes adatok'),(48,5,'name','Név'),(49,5,'first_name','Keresztnév'),(50,5,'last_name','Vezetéknév'),(51,5,'phone_number','Telefonszám'),(52,5,'address','Cím'),(53,5,'postcode','Irányítószám'),(54,5,'city','Város'),(55,5,'street','Utca'),(56,5,'housenumber','Házszám'),(57,5,'save','Mentés'),(58,5,'piece','Darab'),(59,5,'basket_add','Kosárhoz ad'),(60,5,'login','Bejelenetkezés'),(61,5,'rememberme','Jegyezz meg'),(62,5,'register','Regisztráció'),(63,5,'basket','Kosár'),(64,5,'price','Ár'),(65,5,'edit','Szerkesztés'),(66,5,'redirect_to_shipping','Tovább a szállításhoz'),(67,5,'delete','Törlés'),(68,5,'id','Azonosító'),(69,5,'rank','Rang'),(70,5,'modify','Módosítás'),(71,5,'admin','Admin'),(72,5,'theme','Téma'),(73,5,'edit_categories','Kategóriák szerkesztése'),(74,5,'webshop_language','Webáruház nyelve'),(75,5,'edit_language','Nyelv szerkesztés'),(76,5,'import_language','Nyelv importálása'),(77,5,'import','Importálás'),(78,5,'export_language','Nyelv exportálás'),(79,5,'export','Exportálás'),(80,5,'stock','Raktár'),(81,5,'add','Hozzáadás'),(82,5,'back','Vissza'),(83,5,'edit_product','Termék szerkesztése'),(84,5,'delete_product','Termék törlése'),(85,5,'description','Leírás'),(86,5,'add_new_images','Új képek hozzáadása'),(87,5,'available','Elérhető'),(88,5,'appear','Megjelenés'),(89,5,'disappear','Eltűnés'),(90,5,'webshop_details','Webáruház adatok'),(91,5,'theme','Téma'),(92,5,'edit_categories','Kategóriák szerkesztése'),(93,5,'webshop_language','Webáruház nyelve'),(94,5,'edit_language','Nyelv szerkesztés'),(95,5,'import_language','Nyelv importálása'),(96,5,'import','Importálás'),(97,5,'export_language','Nyelv exportálás'),(98,5,'export','Exportálás'),(99,5,'stock','Raktár'),(100,5,'add','Hozzáadás'),(101,5,'back','Vissza'),(102,5,'edit_product','Termék szerkesztése'),(103,5,'delete_product','Termék törlése'),(104,5,'description','Leírás'),(105,5,'add_new_images','Új képek hozzáadása'),(106,5,'available','Elérhető'),(107,5,'appear','Megjelenés'),(108,5,'disappear','Eltűnés'),(109,5,'always_available','Mindig elérhető'),(110,5,'first','Első'),(111,5,'last','Utolsó'),(112,5,'phrase','Kifejezés'),(113,5,'translated','Fordított'),(114,5,'delete_language','Nyelv törlése'),(115,5,'show','Megjelenítés'),(116,5,'new','Új'),(117,5,'category','Kategória'),(118,5,'main_category','Fő kategória'),(119,5,'unused_categories','Nem használt kategóriák'),(120,5,'used_categories','Használt kategóriák'),(121,5,'remove','Eltávolítás'),(122,5,'create_product','Termék létrehozása'),(123,5,'images','Képek'),(124,5,'create','Létrehozás'),(125,5,'statistics','Statisztikák'),(126,5,'coupons','Kuponok'),(127,5,'products','Termékek'),(128,5,'users','Felhasználók'),(129,5,'orders','Rendelések'),(130,5,'permissions','Jogok'),(131,5,'bans','Tiltások'),(132,5,'settings','Beállítások'),(133,5,'addons','Bővítmények'),(134,5,'back_to_shop','Vissza az áruházhoz'),(135,5,'profile','Profil'),(136,5,'logout','Kilépés'),(137,5,'profile_operations','Profil műveletek'),(138,5,'code','Kód'),(139,5,'available_from','-tól elérhető'),(140,5,'available_to','-ig elérhető'),(141,5,'uses','Felhasználások'),(142,5,'discount','Kedvezmény'),(143,5,'single_use','Egyszer használható'),(144,5,'new_coupon','Új kupon'),(145,5,'coupon','Kuponkód'),(146,5,'order','Rendelés'),(147,5,'cash_on_delivery','Utánvét'),(148,5,'paypal','Paypal'),(149,5,'ordered','Megrendelve'),(150,5,'date','Dátum'),(151,5,'done','Kész'),(152,2,'add','Add'),(153,2,'addons','Addons'),(154,2,'address','Address'),(155,2,'add_new_images','Add new images'),(156,2,'admin','Admin'),(157,2,'always_available','Always available'),(158,2,'appear','Appear'),(159,2,'available','Available'),(160,2,'available_from','Available from'),(161,2,'available_to','Available to'),(162,2,'back','Back'),(163,2,'back_to_shop','Back to shop'),(164,2,'bans','Bans'),(165,2,'basket','Basket'),(166,2,'basket_add','Add to basket'),(167,2,'cash_on_delivery','Cash on delivery'),(168,2,'category','Category'),(169,2,'city','City'),(170,2,'code','Code'),(171,2,'coupon','Coupon'),(172,2,'coupons','Coupons'),(173,2,'create','Create'),(174,2,'create_product','Create product'),(175,2,'date','Date'),(176,2,'delete','Delete'),(177,2,'delete_language','Delete language'),(178,2,'delete_product','Delete product'),(179,2,'description','Description'),(180,2,'disappear','Disappear'),(181,2,'discount','Discount'),(182,2,'done','Done'),(183,2,'edit','Edit'),(184,2,'edit_categories','Edit categories'),(185,2,'edit_language','Edit language'),(186,2,'edit_product','Edit product'),(187,2,'email','Email'),(188,2,'export','Export'),(189,2,'export_language','Export language'),(190,2,'first','First'),(191,2,'first_name','First name'),(192,2,'housenumber','House number'),(193,2,'id','Id'),(194,2,'images','Images'),(195,2,'import','Import'),(196,2,'import_language','Import language'),(197,2,'last','Last'),(198,2,'last_name','Last name'),(199,2,'login','Login'),(200,2,'logout','Logout'),(201,2,'main_category','Main category'),(202,2,'modify','Modify'),(203,2,'name','Name'),(204,2,'new','New'),(205,2,'new_coupon','New coupon'),(206,2,'new_password','New password'),(207,2,'order','Order'),(208,2,'ordered','Ordered'),(209,2,'orders','Orders'),(210,2,'password','Password'),(211,2,'password_again','Password again'),(212,2,'password_now','Password now'),(213,2,'paypal','PayPal'),(214,2,'permissions','Permissions'),(215,2,'personal_informations','Personal informations'),(216,2,'phone_number','Phone number'),(217,2,'phrase','Phrase'),(218,2,'piece','Quantity'),(219,2,'postcode','Postcode'),(220,2,'price','Price'),(221,2,'products','Products'),(222,2,'profile','Profile'),(223,2,'profile_operations','Profile operations'),(224,2,'rank','Rank'),(225,2,'redirect_to_shipping','Redirect to shipping'),(226,2,'register','Register'),(227,2,'rememberme','Remember me'),(228,2,'remove','Remove'),(229,2,'save','Save'),(230,2,'settings','Settings'),(231,2,'show','Show'),(232,2,'single_use','Single use'),(233,2,'stock','Stock'),(235,2,'street','Street'),(236,2,'theme','Theme'),(237,2,'translated','Translated'),(238,2,'unused_categories','Unused categories'),(239,2,'used_categories','Used categories'),(240,2,'username','Username'),(241,2,'users','Users'),(242,2,'user_details','User details'),(243,2,'uses','Uses'),(244,2,'webshop','Webshop'),(245,2,'webshop_details','Webshop details'),(246,2,'webshop_language','Webshop language'),(247,5,'details','Adatok'),(248,2,'details','Details'),(249,5,'order_state','Megrendelés állapota'),(250,5,'pay_type','Fizetés típusa'),(251,2,'pay_type','Pay type'),(252,2,'order_state','Order state'),(253,5,'edit_permission','Jogok szerkesztése'),(254,2,'edit_permission','Edit permission');
 /*!40000 ALTER TABLE `phrases` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -580,7 +555,7 @@ CREATE TABLE `rank_permission` (
   PRIMARY KEY (`id`),
   KEY `permissions_id` (`permissions_id`),
   KEY `ranks_id` (`ranks_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -589,7 +564,7 @@ CREATE TABLE `rank_permission` (
 
 LOCK TABLES `rank_permission` WRITE;
 /*!40000 ALTER TABLE `rank_permission` DISABLE KEYS */;
-INSERT INTO `rank_permission` VALUES (1,2,1);
+INSERT INTO `rank_permission` VALUES (1,2,1),(2,2,2),(3,2,3);
 /*!40000 ALTER TABLE `rank_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -601,10 +576,10 @@ DROP TABLE IF EXISTS `ranks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ranks` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -613,7 +588,7 @@ CREATE TABLE `ranks` (
 
 LOCK TABLES `ranks` WRITE;
 /*!40000 ALTER TABLE `ranks` DISABLE KEYS */;
-INSERT INTO `ranks` VALUES (1,'user'),(2,'admin');
+INSERT INTO `ranks` VALUES (1,'user'),(2,'admin'),(5,'moderator');
 /*!40000 ALTER TABLE `ranks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -639,7 +614,7 @@ CREATE TABLE `settings` (
 
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` VALUES (1,5,NULL,'Szakdolgozat webshop',NULL);
+INSERT INTO `settings` VALUES (1,2,NULL,'Szakdolgozat webshop',NULL);
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -758,6 +733,7 @@ CREATE TABLE `users` (
   `email` varchar(255) DEFAULT NULL,
   `people_id` int(11) DEFAULT NULL,
   `ranks_id` int(11) DEFAULT NULL,
+  `banned` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `people_id` (`people_id`),
   KEY `ranks_id` (`ranks_id`)
@@ -770,7 +746,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (15,'William','$2y$10$7828jPg2RgqPfP0.4r7D0OLF3FQ0ANHiy26lk9wVZcJ//PwAseMZe','nyitrairicsi99@gmail.com',1,1),(16,'admin','$2y$10$KZ/Z.VOStTVGIBt6o3DKhOr0wLVaTWkFB8m6ntJbJLcd0kFSK2hdm','admin@webshop.hu1',2,2),(17,'user1234','$2y$10$m0r5URVj.osEQ4cEenjLcOn68S/Sg1Yxtw.QrUseGODuxLcB152Wi','valami@valami.hu',3,2);
+INSERT INTO `users` VALUES (15,'William','$2y$10$7828jPg2RgqPfP0.4r7D0OLF3FQ0ANHiy26lk9wVZcJ//PwAseMZe','admin@webshop.hu',1,2,0),(16,'admin','$2y$10$KZ/Z.VOStTVGIBt6o3DKhOr0wLVaTWkFB8m6ntJbJLcd0kFSK2hdm','admin@webshop.hu1',2,2,0),(17,'user1234','$2y$10$m0r5URVj.osEQ4cEenjLcOn68S/Sg1Yxtw.QrUseGODuxLcB152Wi','valami@valami.hu',3,2,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -783,4 +759,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-07  0:38:16
+-- Dump completed on 2022-02-14 23:28:38
