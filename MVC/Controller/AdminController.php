@@ -601,6 +601,58 @@
                         $maxpage = ceil($maxpage['c'] / $itemsOnPage);
 
                         break;
+                    case 'permissions':
+                        $sql = '
+                            SELECT id,name FROM ranks
+                        ';
+                        $statement = $pdo->prepare($sql);
+                        $statement->execute();
+                        $ranks = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                        if ($ranks) {
+                            foreach ($ranks as $rank) {
+                                array_push($details,[
+                                    "id" => $rank["id"],
+                                    "name" => $rank["name"],
+                                ]);
+                            }
+                        }
+                        break;
+                    case 'permission':
+                        $details['permissions'] = [];
+                        $sql = '
+                            SELECT permissions.name as name,permissions.id as id,ranks.permissions_id as permissions_id, permissions.description as description
+                            FROM (SELECT rank_permission.permissions_id as permissions_id,ranks.name FROM ranks,rank_permission WHERE ranks.id = rank_permission.ranks_id AND ranks.id = :id) as ranks
+                            RIGHT JOIN (SELECT id,name,description FROM `permissions`) as permissions
+                            ON permissions.id = ranks.permissions_id;
+                        ';
+                        $statement = $pdo->prepare($sql);
+                        $statement->bindValue(':id', (int) $selectedPage, PDO::PARAM_INT);
+                        $statement->execute();
+                        $permissions = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                        if ($permissions) {
+                            foreach ($permissions as $permission) {
+                                array_push($details['permissions'],[
+                                    "id" => $permission["id"],
+                                    "name" => $permission["name"],
+                                    "description" => $permission["description"],
+                                    "granted" => $permission["permissions_id"]!=null ? 1 : 0,
+                                ]);
+                            }
+                        }
+
+                        $sql = '
+                            SELECT id,name FROM `ranks` WHERE id=:id;
+                        ';
+                        $statement = $pdo->prepare($sql);
+                        $statement->bindValue(':id', (int) $selectedPage, PDO::PARAM_INT);
+                        $statement->execute();
+                        $rank = $statement->fetch(PDO::FETCH_ASSOC);
+                        $details['rank'] = $rank['name'];
+                        $details['id'] = $rank['id'];
+
+                        break;
                     default:
                         break;
                 }

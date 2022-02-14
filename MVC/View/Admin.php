@@ -122,6 +122,14 @@
                 case "createcoupon":
                     include __DIR__ . "/themes/" . $theme . "/admin/createcoupon/create.html";
                     break;
+                case "permissions":
+                    include __DIR__ . "/themes/" . $theme . "/admin/permissions/permissions.html";
+                    break;
+                case "permission":
+                    $id = $details['id'];
+                    $rank = $details['rank'];
+                    include __DIR__ . "/themes/" . $theme . "/admin/permission/permission.html";
+                    break;
                 default:
                    echo "Admin page not set.";
             }
@@ -358,6 +366,25 @@
                 }
                 $discount = $coupon['discount'];
                 include __DIR__ . "/themes/" . $theme . "/admin/coupons/row.html";
+            }
+        }
+
+        private function createPermissionRow($details) {
+            $theme = 'default';
+            foreach($details as $rank) {
+                $id = $rank['id'];
+                $name = $rank['name'];
+                include __DIR__ . "/themes/" . $theme . "/admin/permissions/row.html";
+            }
+        }
+
+        private function createPermissions($details) {
+            $theme = 'default';
+            foreach($details['permissions'] as $permission) {
+                $id = $permission['id'];
+                $name = $permission['name'];
+                $checked = $permission['granted']==1 ? "checked" : "";
+                include __DIR__ . "/themes/" . $theme . "/admin/permission/row.html";
             }
         }
     }

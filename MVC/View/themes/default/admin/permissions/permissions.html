@@ -1,0 +1,28 @@
+<h1><?php echo echotranslated('permissions'); ?></h1>
+<hr />
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/permissions" method="post">
+    <div class="form-group row">
+        <input type="hidden" id="action" name="action" value="createrank">
+        <label for="rank" class="col-2 col-form-label col-form-label"><?php echo echotranslated('rank'); ?></label>
+        <div class="col-7">
+            <input type="rank" class="form-control form-control" id="rank" name="rank" placeholder="<?php echo echotranslated('rank'); ?>">
+        </div>
+        <div class="col-2">
+            <input class="btn btn-primary" type="submit" value="<?php echo echotranslated('create'); ?>">
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th class="col-1">#</th>
+            <th class="col-9"><?php echo echotranslated('name'); ?></th>
+            <th class="col-1"><?php echo echotranslated('edit'); ?></th>
+            <th class="col-1"><?php echo echotranslated('delete'); ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php $this->createPermissionRow($details) ?>
+    </tbody>
+</table>

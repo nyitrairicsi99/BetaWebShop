@@ -658,6 +658,75 @@
 
 
                             break;
+                        case 'createrank':
+                            $name = $_POST['rank'];
+
+                            $sql = '
+                                INSERT INTO ranks(name) VALUES (:name)
+                            ';
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':name' => $name,
+                            ]);
+
+                            redirect("admin/".$page,[
+                                "success" => "Sikeres művelet."
+                            ]);
+                            break;
+                        case 'deleterank':
+                            $id = $_POST['id'];
+
+                            $sql = '
+                                DELETE FROM ranks WHERE id=:id
+                            ';
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':id' => $id,
+                            ]);
+
+                            $sql = '
+                                UPDATE users SET ranks_id=1 WHERE ranks_id=:id
+                            ';
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':id' => $id,
+                            ]);
+
+                            redirect("admin/".$page,[
+                                "success" => "Sikeres művelet."
+                            ]);
+                            break;
+                        case 'editrank':
+                            $rankid = $_POST['id'];
+
+                            
+                            $sql = 'DELETE FROM rank_permission WHERE ranks_id=:id';
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':id' => $rankid,
+                            ]);
+
+
+                            $sql = 'SELECT id FROM permissions';
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute();
+                            $permissions = $statement->fetchAll(PDO::FETCH_ASSOC);
+                            foreach ($permissions as $permission) {
+                                $id = $permission['id'];
+                                if (isset($_POST["perm_".$id])) {
+                                    $sql = 'INSERT INTO `rank_permission`(`ranks_id`, `permissions_id`) VALUES (:rank,:permission)';
+                                    $statement = $pdo->prepare($sql);
+                                    $statement->execute([
+                                        ':rank' => $rankid,
+                                        ':permission' => $id,
+                                    ]);
+                                }
+                            }
+                            
+                            redirect("admin/".$page."/".$rankid,[
+                                "success" => "Sikeres művelet."
+                            ]);
+                            break;
                         default:
                             break;
                     }
