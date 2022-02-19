@@ -42,6 +42,7 @@
     use Controller\CategoryController;
     use Controller\LanguageController;
     use Controller\OrderController;
+    use Controller\AddonController;
     //normal classes
     use Controller\ProfileController;
     use Controller\StoreController;
@@ -200,5 +201,8 @@
     });
 
     $router->resolveRoute();
+
+    AddonController::getInstance();
+    AddonController::runAddons();
 
 ?>
