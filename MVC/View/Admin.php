@@ -2,12 +2,14 @@
     namespace View;
 
     use Model\NavbarItem;
+    use Controller\UserController;
 
     class Admin
     {
         public function __construct($page,$details = [],$selectedPage = 1,$maxpage = 1,$selectedSubPage = null)
         {
-            
+            UserController::getInstance();
+
             if ($selectedPage==0) {
                 $maxpage = 1;
                 $selectedPage = 1;
@@ -21,27 +23,31 @@
 
             include __DIR__ . "/themes/" . $theme . "/admin/sidenav/before.html";
 
-            $navbar = array(
-                new NavbarItem(translate('statistics'),"admin/statistics",false,"fas fa-chart-area"),
-                new NavbarItem(translate('coupons'),"admin/coupons",false,"fas fa-tags"),
-                new NavbarItem(translate('products'),"admin/products",false,"fas fa-bars"),
-                new NavbarItem(translate('users'),"admin/users",false,"fas fa-users"),
-                new NavbarItem(translate('orders'),"admin/orders",false,"fas fa-stream"),
-                new NavbarItem(translate('permissions'),"admin/permissions",false,"fas fa-users-cog"),
-                new NavbarItem(translate('settings'),"admin/settings",false,"fas fa-cog"),
-                new NavbarItem(translate('addons'),"admin/addons",false,"fas fa-puzzle-piece"),
-                new NavbarItem(translate('back_to_shop'),"main",false,"fas fa-shopping-cart"),
-            );
+            $navbar = [
+                ['view_statistics',new NavbarItem(translate('statistics'),"admin/statistics",false,"fas fa-chart-area")],
+                ['view_coupons',new NavbarItem(translate('coupons'),"admin/coupons",false,"fas fa-tags")],
+                ['view_products',new NavbarItem(translate('products'),"admin/products",false,"fas fa-bars")],
+                ['view_users',new NavbarItem(translate('users'),"admin/users",false,"fas fa-users")],
+                ['view_orders',new NavbarItem(translate('orders'),"admin/orders",false,"fas fa-stream")],
+                ['view_permissions',new NavbarItem(translate('permissions'),"admin/permissions",false,"fas fa-users-cog")],
+                ['manage_settings',new NavbarItem(translate('settings'),"admin/settings",false,"fas fa-cog")],
+                ['view_statistics',new NavbarItem(translate('addons'),"admin/addons",false,"fas fa-puzzle-piece")],
+                ['admin_access',new NavbarItem(translate('back_to_shop'),"main",false,"fas fa-shopping-cart")],
+            ];
             
-            foreach($navbar as $item) {
-                $url = $item->link;
-                $name = $item->title;
-                $icon = $item->icon;
-                $active = "";
-                if ($GLOBALS['settings']['root_folder']."/admin/".$page==$url || $GLOBALS['settings']['root_folder']."/admin/".$page."s"==$url) {
-                    $active = "active";
+            foreach($navbar as $row) {
+                $perm = $row[0];
+                if (UserController::$loggedUser->rank->hasPermission($perm)) {
+                    $item = $row[1];
+                    $url = $item->link;
+                    $name = $item->title;
+                    $icon = $item->icon;
+                    $active = "";
+                    if ($GLOBALS['settings']['root_folder']."/admin/".$page==$url || $GLOBALS['settings']['root_folder']."/admin/".$page."s"==$url) {
+                        $active = "active";
+                    }
+                    include __DIR__ . "/themes/" . $theme . "/admin/sidenav/row.html";
                 }
-                include __DIR__ . "/themes/" . $theme . "/admin/sidenav/row.html";
             }
             include __DIR__ . "/themes/" . $theme . "/admin/sidenav/after.html";
             $onepage = $maxpage==1 ? 'onepage' : '';
@@ -148,6 +154,11 @@
             }
             echo "</div></div>";
             //echo "<div class='adminpage'>".$page."</div>";
+        }
+
+        private function hasPermission($perm) {
+            UserController::getInstance();
+            return UserController::$loggedUser->rank->hasPermission($perm);
         }
 
         private function createUsers($details) {

@@ -5,7 +5,9 @@
             <th class="col-6"><?php echo echotranslated('name'); ?></th>
             <th class="col-2"><?php echo echotranslated('price'); ?></th>
             <th class="col-2"><?php echo echotranslated('stock'); ?></th>
+            <?php if($this->hasPermission('create_product')): ?>
             <th class="col-1"><a href="<?php echo $GLOBALS['settings']['root_folder']."/admin/addproduct/"; ?>" class="btn btn-primary btn-sm active" role="button" aria-pressed="true"><?php echo echotranslated('add'); ?></a></th>
+            <?php endif; ?>
         </tr>
     </thead>
     <tbody>

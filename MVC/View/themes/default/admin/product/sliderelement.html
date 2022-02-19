@@ -1,6 +1,8 @@
 <div class="carousel-item <?php echo $first ? 'active' : '';?>">
     <img class="d-block w-100" src="<?php echo $image->url;?>">
     <div class="carousel-caption d-none d-md-block">
+        <?php if($this->hasPermission('manage_products')): ?>
         <input type="submit" class="btn btn-danger delbutton" value="<?php echo echotranslated('delete'); ?>" name="delete_<?php echo $image->id;?>">
+        <?php endif; ?>
     </div>
 </div>

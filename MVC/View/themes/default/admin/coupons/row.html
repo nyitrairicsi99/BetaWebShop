@@ -9,6 +9,8 @@
         <td><?php echo $discount; ?>%</td>
         <td><?php echo $singleuse; ?></td>
         <td><?php echo $used; ?></td>
+        <?php if($this->hasPermission('manage_coupons')): ?>
         <td><input class="btn btn-sm btn-danger" type="submit" value="<?php echo echotranslated('delete'); ?>"></td>
+        <?php endif; ?>
     </form>
 </tr>

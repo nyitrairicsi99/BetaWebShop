@@ -2,5 +2,7 @@
   <th scope="row"><?php echo $id; ?></th>
   <td><?php echo $username; ?></td>
   <td><?php echo $email; ?></td>
+  <?php if($this->hasPermission('manage_users')): ?>
   <td><a href="<?php echo $GLOBALS['settings']['root_folder']."/admin/user/".$id; ?>" class="btn btn-primary btn-sm active" role="button" aria-pressed="true"><?php echo echotranslated('edit'); ?></a></td>
+  <?php endif; ?>
 </tr>

@@ -1,6 +1,7 @@
 <tr>
     <th scope="row"><?php echo $id; ?></th>
     <td><?php echo $name; ?></td>
+    <?php if($this->hasPermission('manage_permissions')): ?>
     <td><a href="<?php echo $GLOBALS['settings']['root_folder']."/admin/permission/".$id; ?>" class="btn btn-primary btn-sm col" role="button" aria-pressed="true"><?php echo echotranslated('modify'); ?></a></td>
     <td>
         <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/permissions" method="post">
@@ -9,4 +10,5 @@
             <input class="btn btn-danger btn-sm col" type="submit" value="<?php echo echotranslated('delete'); ?>">
         </form>
     </td>
+    <?php endif; ?>
 </tr>

@@ -179,6 +179,8 @@
             //TODO: KUPON ÉRVÉNYESÍTÉS
             //TODO: KUPON BESZÚRÁSA
 
+            //TODO: NÉV, TELEFONSZÁM MENTÉS
+
 
         }
 

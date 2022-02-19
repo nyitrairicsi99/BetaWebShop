@@ -1,5 +1,6 @@
 <h1><?php echo echotranslated('permissions'); ?></h1>
 <hr />
+<?php if($this->hasPermission('manage_permissions')): ?>
 <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/permissions" method="post">
     <div class="form-group row">
         <input type="hidden" id="action" name="action" value="createrank">
@@ -12,14 +13,17 @@
         </div>
     </div>
 </form>
+<?php endif; ?>
 
 <table class="table table-striped table-hover">
     <thead>
         <tr>
             <th class="col-1">#</th>
             <th class="col-9"><?php echo echotranslated('name'); ?></th>
+            <?php if($this->hasPermission('manage_permissions')): ?>
             <th class="col-1"><?php echo echotranslated('edit'); ?></th>
             <th class="col-1"><?php echo echotranslated('delete'); ?></th>
+            <?php endif; ?>
         </tr>
     </thead>
     <tbody>

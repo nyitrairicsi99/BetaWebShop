@@ -11,6 +11,22 @@
 
     class AdminController
     {
+        private $neededPermissions = [
+            'users' => ['view_users','manage_users'],
+            'user' => ['manage_users'],
+            'orders' => ['view_orders','manage_orders'],
+            'settings' => ['manage_settings'],
+            'categories' => ['manage_settings'],
+            'products' => ['view_products'],
+            'addproduct' => ['create_product'],
+            'product' => ['view_products'],
+            'languages' => ['manage_settings'],
+            'coupons' => ['view_coupons'],
+            'permissions' => ['view_permissions'],
+            'permission' => ['view_permissions'],
+            'statistics' => ['view_statistics']
+        ];
+
         public function __construct($page,$selectedPage,$selectedSubPage = null)
         {
             $itemsOnPage = 10;
@@ -19,6 +35,18 @@
             DatabaseConnection::getInstance();
 
             if (UserController::$loggedUser->rank->hasPermission('admin_access')) {
+                
+                $foundPermission = false;
+                foreach ($this->neededPermissions[$page] as $perm) {
+                    if (UserController::$loggedUser->rank->hasPermission($perm)) {
+                        $foundPermission = true;
+                    }
+                }
+                
+                if (!$foundPermission) {
+                    redirect("admin");
+                }
+
                 $pdo = DatabaseConnection::$connection;
                 new Header("Admin site");
 
@@ -621,9 +649,9 @@
                     case 'permission':
                         $details['permissions'] = [];
                         $sql = '
-                            SELECT permissions.name as name,permissions.id as id,ranks.permissions_id as permissions_id, permissions.description as description
+                            SELECT permissions.name as name,permissions.id as id,ranks.permissions_id as permissions_id
                             FROM (SELECT rank_permission.permissions_id as permissions_id,ranks.name FROM ranks,rank_permission WHERE ranks.id = rank_permission.ranks_id AND ranks.id = :id) as ranks
-                            RIGHT JOIN (SELECT id,name,description FROM `permissions`) as permissions
+                            RIGHT JOIN (SELECT id,name FROM `permissions`) as permissions
                             ON permissions.id = ranks.permissions_id;
                         ';
                         $statement = $pdo->prepare($sql);
@@ -636,7 +664,6 @@
                                 array_push($details['permissions'],[
                                     "id" => $permission["id"],
                                     "name" => $permission["name"],
-                                    "description" => $permission["description"],
                                     "granted" => $permission["permissions_id"]!=null ? 1 : 0,
                                 ]);
                             }

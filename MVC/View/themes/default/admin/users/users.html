@@ -4,7 +4,9 @@
             <th scope="col-12">#</th>
             <th scope="col"><?php echo echotranslated('username'); ?></th>
             <th scope="col"><?php echo echotranslated('email'); ?></th>
+            <?php if($this->hasPermission('manage_users')): ?>
             <th scope="col-12"><?php echo echotranslated('edit'); ?></th>
+            <?php endif; ?>
         </tr>
     </thead>
     <tbody>

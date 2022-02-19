@@ -10,7 +10,9 @@
             <form method="post" action="<?php echo $GLOBALS['settings']['root_folder'] ?>/products">
                 <input type="hidden" id="action" name="action" value="deleteproduct">
                 <input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
+                <?php if($this->hasPermission('delete_product')): ?>
                 <button type="submit" class="btn btn-danger"><?php echo echotranslated('delete_product'); ?></button>
+                <?php endif; ?>
             </form>
         </div>
     </div>
@@ -104,6 +106,7 @@
             </div>
         </div>
     </div>
+    <?php if($this->hasPermission('manage_products')): ?>
     <div class="container">
         <div class="row">
             <div class="col text-center">
@@ -111,4 +114,5 @@
             </div>
         </div>
     </div>
+    <?php endif; ?>
 </form>

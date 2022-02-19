@@ -6,11 +6,52 @@
 
     class AdminActionController
     {
+        private $neededPermissions = [
+            'password' => ['manage_users'],
+            'updateuser' => ['manage_users'],
+            'updatepersonal' => ['manage_users'],
+            'updatename' => ['manage_settings'],
+            'updatetheme' => ['manage_settings'],
+            'updatelanguage' => ['manage_settings'],
+            'downloadlanguage' => ['manage_settings'],
+            'uploadlanguage' => ['manage_settings'],
+            'redirectlanguage' => ['manage_settings'],
+            'modifyphrase' => ['manage_settings'],
+            'deletelanguage' => ['manage_settings'],
+            'removecategory' => ['manage_settings'],
+            'deletecategory' => ['manage_settings'],
+            'managecategory' => ['manage_settings'],
+            'newcategory' => ['manage_settings'],
+            'createproduct' => ['create_product'],
+            'manageproduct' => ['manage_products'],
+            'deleteproduct' => ['delete_product'],
+            'deletecoupon' => ['manage_coupons'],
+            'createcoupon' => ['manage_coupons'],
+            'modifyorderstate' => ['manage_orders'],
+            'createrank' => ['manage_permissions'],
+            'deleterank' => ['manage_permissions'],
+            'editrank' => ['manage_permissions'],
+        ];
+
         public function __construct($page,$id,$action,$method)
         {
             UserController::getInstance();
 
             if (UserController::$loggedUser->rank->hasPermission('admin_access')) {
+                
+                $foundPermission = false;
+                foreach ($this->neededPermissions[$action] as $perm) {
+                    if (UserController::$loggedUser->rank->hasPermission($perm)) {
+                        $foundPermission = true;
+                    }
+                }
+                
+                if (!$foundPermission) {
+                    redirect("admin",[
+                        "error"=>"Nincs jogod ehhez a művelethez."
+                    ]);
+                }
+
                 DatabaseConnection::getInstance();
                 $pdo = DatabaseConnection::$connection;
                 if ($method=="POST") {
@@ -39,6 +80,21 @@
                             $email = $_POST['email'];
                             $rank = $_POST['rank'];
                             $banned = isset($_POST['banned']);
+
+                            $modifyRank = false;
+                            $sql = 'SELECT ranks_id as rank FROM users WHERE id=:id';
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':id' => $id
+                            ]);
+                            $rank = $statement->fetch(PDO::FETCH_ASSOC);
+                            $modifyRank = $rank['rank']!=$rank;
+                            if (($modifyRank && !UserController::$loggedUser->rank->hasPermission('manage_permissions'))) {
+                                redirect("admin",[
+                                    "error"=>"Nincs jogod ehhez a művelethez."
+                                ]);
+                            }
+
                             if ($username && $email && $rank) {
                                 $sql = '
                                     UPDATE
