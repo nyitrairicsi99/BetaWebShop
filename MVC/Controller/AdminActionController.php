@@ -31,6 +31,8 @@
             'createrank' => ['manage_permissions'],
             'deleterank' => ['manage_permissions'],
             'editrank' => ['manage_permissions'],
+            'switchaddon' => ['manage_addons'],
+            'checkforaddons' => ['manage_addons']
         ];
 
         public function __construct($page,$id,$action,$method)
@@ -782,6 +784,47 @@
                             redirect("admin/".$page."/".$rankid,[
                                 "success" => "Sikeres művelet."
                             ]);
+                            break;
+                        case 'switchaddon':
+                            $id = $_POST['id'];
+                            $enabled = $_POST['enabled'];
+
+                            $sql = '
+                                UPDATE installed_plugins SET enabled=:enabled WHERE id=:id
+                            ';
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':enabled' => $enabled,
+                                ':id' => $id,
+                            ]);
+
+                            redirect("admin/".$page,[
+                                "success" => "Sikeres művelet."
+                            ]);
+                            break;
+                        case 'checkforaddons':
+                            $directories = glob($_SERVER['DOCUMENT_ROOT'].$GLOBALS['settings']['root_folder'].'/plugins/*' , GLOB_ONLYDIR);
+                            foreach ($directories as $dir) {
+                                $arr = explode('/',$dir);
+                                if (count($arr)>0){
+                                    $name = end($arr);
+
+                                    $sql = 'SELECT id FROM installed_plugins WHERE name=:name';
+                                    $statement = $pdo->prepare($sql);
+                                    $statement->execute([
+                                        ':name' => $name
+                                    ]);
+
+                                    if ($statement->rowCount()==0 && is_file($dir.'/index.php') && is_file($dir.'/index.js')) {
+                                        $sql = 'INSERT INTO `installed_plugins`(`name`,`enabled`) VALUES (:name,0)';
+                                        $statement = $pdo->prepare($sql);
+                                        $statement->execute([
+                                            ':name' => $name
+                                        ]);
+                                    }
+                                }
+                            }
+                            redirect("admin/".$page,[]);
                             break;
                         default:
                             break;

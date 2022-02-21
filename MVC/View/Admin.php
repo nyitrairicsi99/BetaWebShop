@@ -31,7 +31,7 @@
                 ['view_orders',new NavbarItem(translate('orders'),"admin/orders",false,"fas fa-stream")],
                 ['view_permissions',new NavbarItem(translate('permissions'),"admin/permissions",false,"fas fa-users-cog")],
                 ['manage_settings',new NavbarItem(translate('settings'),"admin/settings",false,"fas fa-cog")],
-                ['view_statistics',new NavbarItem(translate('addons'),"admin/addons",false,"fas fa-puzzle-piece")],
+                ['manage_addons',new NavbarItem(translate('addons'),"admin/addons",false,"fas fa-puzzle-piece")],
                 ['admin_access',new NavbarItem(translate('back_to_shop'),"main",false,"fas fa-shopping-cart")],
             ];
             
@@ -136,6 +136,9 @@
                     $rank = $details['rank'];
                     include __DIR__ . "/themes/" . $theme . "/admin/permission/permission.html";
                     break;
+                case "addons":
+                    include __DIR__ . "/themes/" . $theme . "/admin/addons/addons.html";
+                    break;
                 default:
                    echo "Admin page not set.";
             }
@@ -159,6 +162,16 @@
         private function hasPermission($perm) {
             UserController::getInstance();
             return UserController::$loggedUser->rank->hasPermission($perm);
+        }
+
+        private function createAddons($details) {
+            $theme = "default";
+            foreach ($details as $row) {
+                $id = $row['id'];
+                $name = $row['name'];
+                $enabled = $row['enabled'];
+                include __DIR__ . "/themes/" . $theme . "/admin/addons/row.html";
+            }
         }
 
         private function createUsers($details) {

@@ -1,0 +1,14 @@
+<tr>
+  <th scope="row"><?php echo $id; ?></th>
+  <td><?php echo $name; ?></td>
+  <td>
+    <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/addons" method="post">
+      <input type="hidden" id="action" name="action" value="switchaddon">
+      <input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
+      <select class="form-control form-control-sm" name="enabled" id="enabled" onchange="this.form.submit()">
+        <option <?php echo $enabled ? '' : 'selected'; ?> value="0"><?php echo echotranslated("off"); ?></option>
+        <option <?php echo $enabled ? 'selected' : ''; ?> value="1"><?php echo echotranslated("on"); ?></option>
+      </select>
+    </form>
+  </td>
+</tr>

@@ -7,6 +7,7 @@
     use Model\Gallery;
     use Model\Currency;
     use Controller\UserController;
+    use Controller\AddonController;
     use PDO;
 
     class AdminController
@@ -24,7 +25,8 @@
             'coupons' => ['view_coupons'],
             'permissions' => ['view_permissions'],
             'permission' => ['view_permissions'],
-            'statistics' => ['view_statistics']
+            'statistics' => ['view_statistics'],
+            'addons' => ['manage_addons']
         ];
 
         public function __construct($page,$selectedPage,$selectedSubPage = null)
@@ -679,6 +681,10 @@
                         $details['rank'] = $rank['name'];
                         $details['id'] = $rank['id'];
 
+                        break;
+                    case 'addons':
+                        AddonController::getInstance();
+                        $details = AddonController::getAddons();
                         break;
                     default:
                         break;
