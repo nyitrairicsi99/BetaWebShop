@@ -3,25 +3,36 @@
 
     class Router
     {
-        private $routes = array();
-        private $noPathFunc;
-        private $noMethodFunc;
+        private static $routes = array();
+        private static $noPathFunc;
+        private static $noMethodFunc;
+        private static $instance = null;
 
         public function __construct()
-        {}
-
-        public function addRoute($route) 
         {
-            array_push($this->routes,$route);
         }
 
-        public function resolveRoute() {
+        public static function getInstance() {
+            if (self::$instance == null)
+            {
+                self::$instance = new Router();
+            }
+
+            return self::$instance;
+        }
+
+        public static function addRoute($route) 
+        {
+            array_push(self::$routes,$route);
+        }
+
+        public static function resolveRoute() {
             $target = formatRoute($_REQUEST['q']);
             $method = $_SERVER['REQUEST_METHOD'];
             $maxAnswer = 0;
             //check for all routes created, if matches with the target
-            foreach ($this->routes as &$value) {
-                $matches = $this->isRequestMatch($value,$target,$method);
+            foreach (self::$routes as &$value) {
+                $matches = self::isRequestMatch($value,$target,$method);
                 if ($matches==3) {
                     $routeArr = explode("/",$target);
                     array_splice($routeArr,0,1);
@@ -33,12 +44,12 @@
                 }
             }
             if ($maxAnswer<=1) {
-                if (isset($this->noPathFunc)) {
-                    ($this->noPathFunc)();
+                if (isset(self::$noPathFunc)) {
+                    (self::$noPathFunc)();
                 }
             } else if ($maxAnswer==2) {
-                if (isset($this->noMethodFunc)) {
-                    ($this->noMethodFunc)();
+                if (isset(self::$noMethodFunc)) {
+                    (self::$noMethodFunc)();
                 }
             }
         }
@@ -54,7 +65,7 @@
          * 2 = Path exists but method not.
          * 3 = Path and method correct.
          */
-        public function isRequestMatch($route,$routeStr,$method) {
+        public static function isRequestMatch($route,$routeStr,$method) {
             $routeCheck = explode("/",$routeStr);
             if (sizeof($routeCheck)==sizeof($route->route)){
                 $i = 0;
@@ -81,12 +92,12 @@
             return 1;
         }
 
-        public function setPathNotFound($func) {
-            $this->noPathFunc = $func;
+        public static function setPathNotFound($func) {
+            self::$noPathFunc = $func;
         }
 
-        public function setMethodNotFound($func) {
-            $this->noMethodFunc = $func;
+        public static function setMethodNotFound($func) {
+            self::$noMethodFunc = $func;
         }
     }
     

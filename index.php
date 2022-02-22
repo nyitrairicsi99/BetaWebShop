@@ -33,37 +33,37 @@
         }
     }
 
-    //singletons
+    
     use Controller\SearchController;
     use Controller\BasketController;
     use Controller\UserController;
-    use Controller\SettingsController;
     use Controller\DatabaseConnection;
     use Controller\CategoryController;
-    use Controller\LanguageController;
     use Controller\OrderController;
     use Controller\AddonController;
-    //normal classes
+    use Controller\ProductController;
     use Controller\ProfileController;
     use Controller\StoreController;
     use Controller\AdminController;
     use Controller\AdminActionController;
     use Controller\Router;
-    use Controller\ProductController;
+    use Controller\SettingsController;
+    use Controller\LanguageController;
+    
     use Model\Route;
 
 
     DatabaseConnection::getInstance();
     $pdo = DatabaseConnection::$connection;
 
-    $router = new Router();
+    Router::getInstance();
 
-    $router->addRoute(new Route("basket/[0-9]",function($routeVarArr){
+    Router::addRoute(new Route("basket/[0-9]",function($routeVarArr){
         BasketController::getInstance();
         BasketController::removeItem($routeVarArr[1]);
     },"POST"));
 
-    $router->addRoute(new Route("[a-z]",function($routeVarArr){
+    Router::addRoute(new Route("[a-z]",function($routeVarArr){
         switch ($routeVarArr[0]) {
             case 'login':
                 UserController::getInstance();
@@ -74,8 +74,8 @@
                 UserController::register();
                 break;
             case 'profile':
-                $profileController = new ProfileController();
-                $profileController->modify();
+                ProfileController::getInstance();
+                ProfileController::modify();
                 break;
             case 'basket':
                 BasketController::getInstance();
@@ -91,31 +91,37 @@
                 break;
             default:
                 $action = $_POST['action'];
-                new AdminActionController($routeVarArr[0],0,$action,"POST");
+                AdminActionController::getInstance();
+                AdminActionController::adminAction($routeVarArr[0],0,$action,"POST");
                 break;
         }
     },"POST"));
 
-    $router->addRoute(new Route("[a-z]/[0-9]",function($routeVarArr){
+    Router::addRoute(new Route("[a-z]/[0-9]",function($routeVarArr){
         $action = $_POST['action'];
-        new AdminActionController($routeVarArr[0],intval($routeVarArr[1]),$action,"POST");
+        AdminActionController::getInstance();
+        AdminActionController::adminAction($routeVarArr[0],intval($routeVarArr[1]),$action,"POST");
     },"POST"));
 
     
-    $router->addRoute(new Route("admin",function($routeVarArr){
-        new AdminController('statistics',1);
+    Router::addRoute(new Route("admin",function($routeVarArr){
+        AdminController::getInstance();
+        AdminController::createView('statistics',1);
     },"GET"));
 
-    $router->addRoute(new Route("admin/[a-z]",function($routeVarArr){
-        new AdminController($routeVarArr[1],1);
+    Router::addRoute(new Route("admin/[a-z]",function($routeVarArr){
+        AdminController::getInstance();
+        AdminController::createView($routeVarArr[1],1);
     },"GET"));
 
-    $router->addRoute(new Route("admin/[a-z]/[0-9]",function($routeVarArr){
-        new AdminController($routeVarArr[1],intval($routeVarArr[2]));
+    Router::addRoute(new Route("admin/[a-z]/[0-9]",function($routeVarArr){
+        AdminController::getInstance();
+        AdminController::createView($routeVarArr[1],intval($routeVarArr[2]));
     },"GET"));
 
-    $router->addRoute(new Route("admin/[a-z]/[0-9]/[0-9]",function($routeVarArr){
-        new AdminController($routeVarArr[1],intval($routeVarArr[2]),intval($routeVarArr[3]));
+    Router::addRoute(new Route("admin/[a-z]/[0-9]/[0-9]",function($routeVarArr){
+        AdminController::getInstance();
+        AdminController::createView($routeVarArr[1],intval($routeVarArr[2]),intval($routeVarArr[3]));
     },"GET"));
 
     CategoryController::getInstance();
@@ -123,86 +129,94 @@
     foreach ($categories as $main) {
         if (count($main["subcategories"])==0) {
             $path = $main["short"];
-            $router->addRoute(new Route($path,function($routeVarArr){
-                new StoreController($routeVarArr[0],1);
+            Router::addRoute(new Route($path,function($routeVarArr){
+                StoreController::getInstance();
+                StoreController::createView($routeVarArr[0],1);
             },"GET"));
     
-            $router->addRoute(new Route($path."/[0-9]",function($routeVarArr){
-                new StoreController($routeVarArr[0],$routeVarArr[1]);
+            Router::addRoute(new Route($path."/[0-9]",function($routeVarArr){
+                StoreController::getInstance();
+                StoreController::createView($routeVarArr[0],$routeVarArr[1]);
             },"GET"));
         } else {
             foreach ($main["subcategories"] as $sub) {
                 $path = $sub["short"];
-                $router->addRoute(new Route($path,function($routeVarArr){
-                    new StoreController($routeVarArr[0],1);
+                Router::addRoute(new Route($path,function($routeVarArr){
+                    StoreController::getInstance();
+                    StoreController::createView($routeVarArr[0],1);
                 },"GET"));
         
-                $router->addRoute(new Route($path."/[0-9]",function($routeVarArr){
-                    new StoreController($routeVarArr[0],$routeVarArr[1]);
+                Router::addRoute(new Route($path."/[0-9]",function($routeVarArr){
+                    StoreController::getInstance();
+                    StoreController::createView($routeVarArr[0],$routeVarArr[1]);
                 },"GET"));
             }
         }
     }
 
-    $router->addRoute(new Route("",function($routeVarArr){
-        new StoreController("main",1);
+    Router::addRoute(new Route("",function($routeVarArr){
+        StoreController::getInstance();
+        StoreController::createView("main",1);
     },"GET"));
 
-    $router->addRoute(new Route("main",function($routeVarArr){
-        new StoreController("main",1);
+    Router::addRoute(new Route("main",function($routeVarArr){
+        StoreController::getInstance();
+        StoreController::createView("main",1);
     },"GET"));
 
-    $router->addRoute(new Route("main/[0-9]",function($routeVarArr){
-        new StoreController("main",$routeVarArr[1]);
+    Router::addRoute(new Route("main/[0-9]",function($routeVarArr){
+        StoreController::getInstance();
+        StoreController::createView("main",$routeVarArr[1]);
     },"GET"));
     
-    $router->addRoute(new Route("product/[0-9]",function($routeVarArr){
-        new ProductController($routeVarArr[1]);
+    Router::addRoute(new Route("product/[0-9]",function($routeVarArr){
+        ProductController::getInstance();
+        ProductController::createView($routeVarArr[1]);
     },"GET"));
     
-    $router->addRoute(new Route("orders",function($routeVarArr){
+    Router::addRoute(new Route("orders",function($routeVarArr){
         OrderController::getInstance();
         OrderController::createListView();
     },"GET"));
 
-    $router->addRoute(new Route("orders/[0-9]",function($routeVarArr){
+    Router::addRoute(new Route("orders/[0-9]",function($routeVarArr){
         OrderController::getInstance();
         OrderController::createOrderView($routeVarArr[1]);
     },"GET"));
 
-    $router->addRoute(new Route("orderdetails",function($routeVarArr){
+    Router::addRoute(new Route("orderdetails",function($routeVarArr){
         OrderController::getInstance();
         OrderController::createView();
     },"GET"));
 
-    $router->addRoute(new Route("profile",function($routeVarArr){
+    Router::addRoute(new Route("profile",function($routeVarArr){
         $profileController = new ProfileController();
         $profileController->show();
     },"GET"));
 
-    $router->addRoute(new Route("basket",function($routeVarArr){
+    Router::addRoute(new Route("basket",function($routeVarArr){
         BasketController::getInstance();
         BasketController::createView();
     },"GET"));
     
-    $router->addRoute(new Route("logout",function($routeVarArr){
+    Router::addRoute(new Route("logout",function($routeVarArr){
         UserController::getInstance();
         UserController::logout();
     },"GET"));
 
 
-    $router->setPathNotFound(function(){
+    Router::setPathNotFound(function(){
         echo "no path";
     });
 
-    $router->setMethodNotFound(function(){
+    Router::setMethodNotFound(function(){
         http_response_code(405);
         exit;
     });
 
-    $router->resolveRoute();
-
+    
     AddonController::getInstance();
     AddonController::runAddons();
 
+    Router::resolveRoute();
 ?>

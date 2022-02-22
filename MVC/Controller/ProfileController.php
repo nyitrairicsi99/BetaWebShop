@@ -12,20 +12,29 @@
     
     class ProfileController
     {
-        private $pdo;
+        private static $pdo = null;
+        private static $instance = null;
 
         public function __construct()
         {
+            DatabaseConnection::getInstance();
+            self::$pdo = DatabaseConnection::$connection; 
+        }
+
+        public static function getInstance() {
+            if (self::$instance == null)
+            {
+                self::$instance = new ProfileController();
+            }
             UserController::getInstance();
             if (!UserController::$islogged) {
                 redirect("main");
             }
-
-            DatabaseConnection::getInstance();
-            $this->pdo = DatabaseConnection::$connection;
+            
+            return self::$instance;
         }
 
-        public function show() {
+        public static function show() {
             SettingsController::getInstance();
             $shopname = SettingsController::$shopname;
 
@@ -101,7 +110,7 @@
                     users.id=:i;
             ';
 
-            $statement = $this->pdo->prepare($sql);
+            $statement = self::$pdo->prepare($sql);
             $statement->bindValue(':i', (int) $id, PDO::PARAM_INT);
 
             $statement->execute();
@@ -130,19 +139,19 @@
             new Profile($details);
         }
 
-        public function modify() {
+        public static function modify() {
             $id = UserController::$loggedUser->id;
             $password = $_POST['passwordnow'];
 
             $sql = 'SELECT `password` FROM `users` WHERE `id`=:id';
-            $statement = $this->pdo->prepare($sql);
+            $statement = self::$pdo->prepare($sql);
             $statement->execute([
                 ':id' => $id
             ]);
             $user = $statement->fetch(PDO::FETCH_ASSOC);
 
             if (hashMatches($password,$user['password'])) {
-                $this->updateUserDetails($id,$_POST);
+                self::updateUserDetails($id,$_POST);
             } else {              
                 redirect("profile",[
                     "error" => "Hibás jelszó.",
@@ -150,7 +159,7 @@
             }
         }
 
-        private function updateUserDetails($id,$details) {
+        private static function updateUserDetails($id,$details) {
             $postcode = $details['postcode'];
             $city = $details['city'];
             $street = $details['street'];
@@ -168,7 +177,7 @@
             ) {
                 //postcode mentés
                 $sql = 'SELECT id FROM postcodes WHERE postcode=:postcode';
-                $statement = $this->pdo->prepare($sql);
+                $statement = self::$pdo->prepare($sql);
                 $statement->execute([
                     ':postcode' => $postcode
                 ]);
@@ -176,18 +185,18 @@
 
                 if (!$postcodeRow) {
                     $sql = 'INSERT INTO `postcodes`(`postcode`) VALUES (:postcode)';
-                    $statement = $this->pdo->prepare($sql);
+                    $statement = self::$pdo->prepare($sql);
                     $statement->execute([
                         ':postcode' => $postcode
                     ]);
-                    $postcodeId = $this->pdo->lastInsertId();
+                    $postcodeId = self::$pdo->lastInsertId();
                 } else {
                     $postcodeId = $postcodeRow['id'];
                 }
 
                 //city
                 $sql = 'SELECT id FROM cities WHERE name=:city AND postcodes_id=:postcode';
-                $statement = $this->pdo->prepare($sql);
+                $statement = self::$pdo->prepare($sql);
                 $statement->execute([
                     ':city' => $city,
                     ':postcode' => $postcodeId,
@@ -196,19 +205,19 @@
 
                 if (!$cityRow) {
                     $sql = 'INSERT INTO `cities`(`name`,`postcodes_id`) VALUES (:city,:postcode)';
-                    $statement = $this->pdo->prepare($sql);
+                    $statement = self::$pdo->prepare($sql);
                     $statement->execute([
                         ':city' => $city,
                         ':postcode' => $postcodeId,
                     ]);
-                    $cityId = $this->pdo->lastInsertId();
+                    $cityId = self::$pdo->lastInsertId();
                 } else {
                     $cityId = $cityRow['id'];
                 }
 
                 //street
                 $sql = 'SELECT id FROM streets WHERE street=:street';
-                $statement = $this->pdo->prepare($sql);
+                $statement = self::$pdo->prepare($sql);
                 $statement->execute([
                     ':street' => $street
                 ]);
@@ -216,18 +225,18 @@
                 
                 if (!$streetRow) {
                     $sql = 'INSERT INTO `streets`(`street`) VALUES (:street)';
-                    $statement = $this->pdo->prepare($sql);
+                    $statement = self::$pdo->prepare($sql);
                     $statement->execute([
                         ':street' => $street
                     ]);
-                    $streetId = $this->pdo->lastInsertId();
+                    $streetId = self::$pdo->lastInsertId();
                 } else {
                     $streetId = $streetRow['id'];
                 }
 
                 //house number
                 $sql = 'SELECT id FROM house_numbers WHERE number=:number';
-                $statement = $this->pdo->prepare($sql);
+                $statement = self::$pdo->prepare($sql);
                 $statement->execute([
                     ':number' => $housenumber
                 ]);
@@ -236,18 +245,18 @@
                 
                 if (!$houseNumberRow) {
                     $sql = 'INSERT INTO `house_numbers`(`number`) VALUES (:housenumber)';
-                    $statement = $this->pdo->prepare($sql);
+                    $statement = self::$pdo->prepare($sql);
                     $statement->execute([
                         ':housenumber' => $housenumber
                     ]);
-                    $houseNumberId = $this->pdo->lastInsertId();
+                    $houseNumberId = self::$pdo->lastInsertId();
                 } else {
                     $houseNumberId = $houseNumberRow['id'];
                 }
 
                 //address
                 $sql = 'SELECT id FROM addresses WHERE cities_id=:city AND streets_id=:street AND house_numbers_id=:housenumber';
-                $statement = $this->pdo->prepare($sql);
+                $statement = self::$pdo->prepare($sql);
                 $statement->execute([
                     ':city' => $cityId,
                     ':street' => $streetId,
@@ -257,20 +266,20 @@
 
                 if (!$addressRow) {
                     $sql = 'INSERT INTO `addresses`(`cities_id`,`streets_id`,`house_numbers_id`) VALUES (:city,:street,:housenumber)';
-                    $statement = $this->pdo->prepare($sql);
+                    $statement = self::$pdo->prepare($sql);
                     $statement->execute([
                         ':city' => $cityId,
                         ':street' => $streetId,
                         ':housenumber' => $houseNumberId
                     ]);
-                    $addressId = $this->pdo->lastInsertId();
+                    $addressId = self::$pdo->lastInsertId();
                 } else {
                     $addressId = $addressRow['id'];
                 }
                 
                 //person
                 $sql = 'SELECT people.id as id FROM people,users WHERE people.id=users.people_id AND users.id=:id';
-                $statement = $this->pdo->prepare($sql);
+                $statement = self::$pdo->prepare($sql);
                 $statement->execute([
                     ':id' => $id,
                 ]);
@@ -279,7 +288,7 @@
                 if ($personRow) {
                     $sql = 'UPDATE `people`,`users` SET people.`phone_number`=:phone,people.`addresses_id`=:address,people.`first_name`=:firstname,people.`last_name`=:lastname WHERE users.people_id=people.id AND users.id=:id';
 
-                    $statement = $this->pdo->prepare($sql);
+                    $statement = self::$pdo->prepare($sql);
         
                     $statement->execute([
                         ':id' => $id,
@@ -290,18 +299,18 @@
                     ]);
                 } else {
                     $sql = 'INSERT INTO `people`(`phone_number`, `addresses_id`, `first_name`, `last_name`) VALUES (:phone,:address,:firstname,:lastname)';
-                    $statement = $this->pdo->prepare($sql);
+                    $statement = self::$pdo->prepare($sql);
                     $statement->execute([
                         ':phone' => $phone,
                         ':address' => $addressId,
                         ':firstname' => $firstname,
                         ':lastname' => $lastname,
                     ]);
-                    $personId = $this->pdo->lastInsertId();
+                    $personId = self::$pdo->lastInsertId();
 
                     $sql = 'UPDATE `users` SET `people_id`=:person WHERE id=:id';
 
-                    $statement = $this->pdo->prepare($sql);
+                    $statement = self::$pdo->prepare($sql);
         
                     $statement->execute([
                         ':id' => $id,
@@ -317,7 +326,7 @@
                 $passCheck = passwordsAcceptable($pass1,$pass2);
                 if ($passCheck==0) {
                     $sql = 'UPDATE `users` SET `password`=:password WHERE id=:id';
-                    $statement = $this->pdo->prepare($sql);
+                    $statement = self::$pdo->prepare($sql);
                     $statement->execute([
                         ':id' => $id,
                         ':password' => hashPassword($pass1),
@@ -345,7 +354,7 @@
                 strlen($email)>0
             ) {
                 $sql = 'UPDATE `users` SET `email`=:email WHERE id=:id';
-                $statement = $this->pdo->prepare($sql);
+                $statement = self::$pdo->prepare($sql);
                 $statement->execute([
                     ':id' => $id,
                     ':email' => $email,

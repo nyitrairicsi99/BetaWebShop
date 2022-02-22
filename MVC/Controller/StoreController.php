@@ -17,8 +17,22 @@
     
     class StoreController
     {
-        public function __construct($category,$page)
+        private static $instance = null;
+
+        public function __construct()
         {
+        }
+
+        public static function getInstance() {
+            if (self::$instance == null)
+            {
+                self::$instance = new StoreController();
+            }
+
+            return self::$instance;
+        }
+
+        public static function createView($category,$page) {
             $itemsOnPage = 12;
 
             DatabaseConnection::getInstance();

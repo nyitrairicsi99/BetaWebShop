@@ -6,7 +6,7 @@
 
     class AdminActionController
     {
-        private $neededPermissions = [
+        private static $neededPermissions = [
             'password' => ['manage_users'],
             'updateuser' => ['manage_users'],
             'updatepersonal' => ['manage_users'],
@@ -34,15 +34,30 @@
             'switchaddon' => ['manage_addons'],
             'checkforaddons' => ['manage_addons']
         ];
+        
+        private static $instance = null;
 
-        public function __construct($page,$id,$action,$method)
+        public function __construct()
+        {
+        }
+
+        public static function getInstance() {
+            if (self::$instance == null)
+            {
+                self::$instance = new AdminActionController();
+            }
+
+            return self::$instance;
+        }
+
+        public static function adminAction($page,$id,$action,$method)
         {
             UserController::getInstance();
 
             if (UserController::$loggedUser->rank->hasPermission('admin_access')) {
                 
                 $foundPermission = false;
-                foreach ($this->neededPermissions[$action] as $perm) {
+                foreach (self::$neededPermissions[$action] as $perm) {
                     if (UserController::$loggedUser->rank->hasPermission($perm)) {
                         $foundPermission = true;
                     }

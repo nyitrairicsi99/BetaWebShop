@@ -16,10 +16,22 @@
 
     class ProductController
     {
+        private static $instance = null;
 
-
-        public function __construct($id)
+        public function __construct()
         {
+        }
+
+        public static function getInstance() {
+            if (self::$instance == null)
+            {
+                self::$instance = new ProductController();
+            }
+
+            return self::$instance;
+        }
+
+        public static function createView($id) {
             DatabaseConnection::getInstance();
             $pdo = DatabaseConnection::$connection;
  

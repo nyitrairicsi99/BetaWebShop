@@ -12,7 +12,7 @@
 
     class AdminController
     {
-        private $neededPermissions = [
+        private static $neededPermissions = [
             'users' => ['view_users','manage_users'],
             'user' => ['manage_users'],
             'orders' => ['view_orders','manage_orders'],
@@ -29,7 +29,22 @@
             'addons' => ['manage_addons']
         ];
 
-        public function __construct($page,$selectedPage,$selectedSubPage = null)
+        private static $instance = null;
+
+        public function __construct()
+        {
+        }
+
+        public static function getInstance() {
+            if (self::$instance == null)
+            {
+                self::$instance = new AdminController();
+            }
+
+            return self::$instance;
+        }
+
+        public static function createView($page,$selectedPage,$selectedSubPage = null)
         {
             $itemsOnPage = 10;
 
@@ -39,7 +54,7 @@
             if (UserController::$loggedUser->rank->hasPermission('admin_access')) {
                 
                 $foundPermission = false;
-                foreach ($this->neededPermissions[$page] as $perm) {
+                foreach (self::$neededPermissions[$page] as $perm) {
                     if (UserController::$loggedUser->rank->hasPermission($perm)) {
                         $foundPermission = true;
                     }
