@@ -1,6 +1,7 @@
 <?php
     namespace View;
     use Controller\SettingsController;
+    use Controller\UserController;
 
     class Basket
     {
@@ -8,9 +9,10 @@
 
         public function __construct($basket)
         {
+            UserController::getInstance();
             SettingsController::getInstance();
             $this->theme = SettingsController::$theme;
-
+            $loggedin = UserController::$islogged;
             include __DIR__ . "/themes/" . $this->theme . "/basket/basket.html";
         }
 

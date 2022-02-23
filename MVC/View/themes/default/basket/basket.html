@@ -18,11 +18,13 @@
             </table>
         </div>
         <br />
+        <?php if($loggedin): ?>
         <div class="container">
             <div class="col-md-12 text-center">
                 <a class="btn btn-primary" href="<?php echo $GLOBALS['settings']['root_folder']."/orderdetails"; ?>" role="button"><?php echo echotranslated('redirect_to_shipping'); ?></a>
             </div>
         </div>
         <br />
+        <?php endif; ?>
     </div>
 </section>

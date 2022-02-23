@@ -40,6 +40,10 @@
             $street = $_POST['street'];
             $housenumber = $_POST['housenumber'];
             $paytype = $_POST['paytype'];
+            $firstname = $_POST['firstname'];
+            $lastname = $_POST['lastname'];
+            $phone = $_POST['phone'];
+            $coupon = $_POST['coupon'];
             $user = null;
             if (UserController::$loggedUser!=null) {
                 $user = UserController::$loggedUser->id;
@@ -153,35 +157,77 @@
                 $addressId = $addressRow['id'];
             }
 
-            $sql = 'INSERT INTO `orders`(`state_id`, `users_id`, `pay_types_id`, `addresses_id`) VALUES (1,:user,:pay_type,:address)';
+            $sql = 'INSERT INTO `people`(`phone_number`, `addresses_id`, `first_name`, `last_name`) VALUES (:phone,NULL,:firstname,:lastname)';
+
+            $statement = $pdo->prepare($sql);
+    
+            $statement->execute([
+                ':phone' => $phone,
+                ':firstname' => $firstname,
+                ':lastname' => $lastname,
+            ]);
+            $peopleId = $pdo->lastInsertId();
+
+            $sql = 'INSERT INTO `orders`(`state_id`, `users_id`, `pay_types_id`, `addresses_id`, `people_id`) VALUES (1,:user,:pay_type,:address,:people)';
             $statement = $pdo->prepare($sql);
             $statement->execute([
                 ':user' => $user,
                 ':pay_type' => $paytype,
-                ':address' => $addressId
+                ':address' => $addressId,
+                ':people' => $peopleId,
             ]);
             $orderId = $pdo->lastInsertId();
 
+            $sql = '
+            SELECT
+                coupons.id,
+                coupons.discount
+            FROM
+                `used_coupons`
+            RIGHT JOIN
+                `coupons`
+            ON
+                used_coupons.coupons_id = coupons.id
+            WHERE (
+                used_coupons.users_id IS NULL OR
+                NOT(used_coupons.users_id=:user)) AND
+                coupons.code=:code AND
+                NOT(coupons.code="")
+            ';
             
+            
+            $statement = $pdo->prepare($sql);
+            $statement->execute([
+                ':code' => $coupon,
+                ':user' => $user,
+            ]);
+            $codes = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $discount = 0;
+            if ($statement->rowCount()!=0) {
+                $discount = $codes[0]['discount'];
+                $id = $codes[0]['id'];
+
+                $sql = 'INSERT INTO `used_coupons`(`coupons_id`, `users_id`) VALUES (:coupon,:user)';
+                $statement = $pdo->prepare($sql);
+                $statement->execute([
+                    ':coupon' => $id,
+                    ':user' => $user,
+                ]);
+            }
+
             $basket = BasketController::getItems();
             foreach ($basket as $basketitem) {
-                $sql = 'INSERT INTO `product_order`(`products_id`, `orders_id`, `discounts_id`, `piece`) VALUES (:product,:order,NULL,:piece)';
+                $sql = 'INSERT INTO `product_order`(`products_id`, `orders_id`, `discounts_id`, `piece`, `discount_percent`) VALUES (:product,:order,NULL,:piece,:discount)';
                 $statement = $pdo->prepare($sql);
                 $statement->execute([
                     ':product' => $basketitem->id,
                     ':order' => $orderId,
-                    ':piece' => $basketitem->piece
+                    ':piece' => $basketitem->piece,
+                    ':discount' => $discount
                 ]);
             }
 
             BasketController::clearItems();
-
-            //TODO: KUPON ÉRVÉNYESÍTÉS
-            //TODO: KUPON BESZÚRÁSA
-
-            //TODO: NÉV, TELEFONSZÁM MENTÉS
-
-
         }
 
         public static function createListView() {
@@ -195,7 +241,7 @@
                 SELECT  
                     orders.id as id,
                     orders.order_time as date,
-                    SUM(products.price * product_order.piece) as price,
+                    SUM(products.price * product_order.piece * ((100-product_order.discount_percent)/100)) as price,
                     currencies.sign as sign
                 FROM
                     orders,
@@ -276,7 +322,7 @@
                 orders.order_time as order_time,
                 pay_types.type as pay_type,
                 product_order.piece as piece,
-                products.price as price,
+                products.price * ((100-product_order.discount_percent)/100) as price,
                 currencies.sign as sign,
                 products.name as name,
                 order_states.name as order_state

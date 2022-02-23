@@ -202,6 +202,8 @@
                 $price = $row['price'];
                 $state = $row['state'];
                 $sign = $row['sign'];
+                $address = $row['address'];
+                $name = $row['name'];
                 include __DIR__ . "/themes/" . $theme . "/admin/orders/row.html";
             }
         }

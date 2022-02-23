@@ -195,10 +195,16 @@
                                 orders.id as id,
                                 orders.order_time as date,
                                 users.email as email,
-                                SUM(products.price * product_order.piece) as price,
+                                SUM(products.price * product_order.piece * ((100-product_order.discount_percent)/100)) as price,
                                 pay_types.type as type,
                                 orders.state_id as state,
-                                currencies.sign as sign
+                                currencies.sign as sign,
+                                postcodes.postcode as postcode,
+                                cities.name as city,
+                                streets.street as street,
+                                house_numbers.number as house_number,
+                                people.first_name as first_name,
+                                people.last_name as last_name
                             FROM
                                 orders,
                                 order_states,
@@ -206,14 +212,26 @@
                                 pay_types,
                                 product_order,
                                 products,
-                                currencies
+                                currencies,
+                                postcodes,
+                                cities,
+                                streets,
+                                house_numbers,
+                                addresses,
+                                people
                             WHERE
                                 orders.state_id=order_states.id AND
                                 users.id = orders.users_id AND
                                 orders.pay_types_id=pay_types.id AND
                                 product_order.orders_id=orders.id AND
                                 products.id = product_order.products_id AND
-                                products.currencies_id = currencies.id
+                                products.currencies_id = currencies.id AND
+                                postcodes.id = cities.postcodes_id AND
+                                cities.id = addresses.cities_id AND
+                                streets.id = addresses.streets_id AND
+                                house_numbers.id = addresses.house_numbers_id AND
+                                addresses.id=orders.addresses_id AND
+                                orders.people_id = people.id
                             GROUP BY
                                 orders.id
                             LIMIT
@@ -239,6 +257,8 @@
                                     "type" => $order["type"],
                                     "state" => $order["state"],
                                     "sign" => $order["sign"],
+                                    "address" => $order["postcode"].' '.$order["city"].' '.$order["street"].' '.$order["house_number"],
+                                    "name" => $order["first_name"].' '.$order["last_name"],
                                 ]);
                             }
                         }
