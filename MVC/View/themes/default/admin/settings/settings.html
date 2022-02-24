@@ -15,6 +15,16 @@
     </div>
 </form>
 <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post">
+    <input type="hidden" id="action" name="action" value="checkforthemes">
+    <div class="form-group row">
+        <label for="themeLabel" class="col-2"></label>
+        <div class="col-4 text">
+            <input class="btn btn-primary col" type="submit" value="<?php echo echotranslated('check_for_themes'); ?>">
+        </div>
+    </div>
+</form>
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post">
+    <br />
     <input type="hidden" id="action" name="action" value="updatename">
     <div class="form-group row">
         <label for="name" class="col-2"><?php echo echotranslated('name'); ?></label>

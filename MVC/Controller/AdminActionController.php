@@ -32,7 +32,8 @@
             'deleterank' => ['manage_permissions'],
             'editrank' => ['manage_permissions'],
             'switchaddon' => ['manage_addons'],
-            'checkforaddons' => ['manage_addons']
+            'checkforaddons' => ['manage_addons'],
+            'checkforthemes' => ['manage_settings']
         ];
         
         private static $instance = null;
@@ -835,6 +836,34 @@
                                         $statement = $pdo->prepare($sql);
                                         $statement->execute([
                                             ':name' => $name
+                                        ]);
+                                    }
+                                }
+                            }
+                            redirect("admin/".$page,[]);
+                            break;
+                        case 'checkforthemes':
+                            $directories = glob($_SERVER['DOCUMENT_ROOT'].$GLOBALS['settings']['root_folder'].'/MVC/View/themes/*' , GLOB_ONLYDIR);
+                            foreach ($directories as $dir) {
+                                $arr = explode('/',$dir);
+                                if (count($arr)>0 && is_file($dir.'/name') && is_file($dir.'/version')){
+                                    $name = file_get_contents($dir.'/name');
+                                    $version = file_get_contents($dir.'/version');
+                                    $folder = end($arr);
+
+                                    $sql = 'SELECT id FROM themes WHERE folder=:folder';
+                                    $statement = $pdo->prepare($sql);
+                                    $statement->execute([
+                                        ':folder' => $folder
+                                    ]);
+
+                                    if ($statement->rowCount()==0) {
+                                        $sql = 'INSERT INTO `themes`(`name`, `folder`, `version`) VALUES (:name,:folder,:version)';
+                                        $statement = $pdo->prepare($sql);
+                                        $statement->execute([
+                                            ':name' => $name,
+                                            ':folder' => $folder,
+                                            ':version' => $version,
                                         ]);
                                     }
                                 }
