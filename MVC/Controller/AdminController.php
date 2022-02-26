@@ -721,6 +721,108 @@
                         AddonController::getInstance();
                         $details = AddonController::getAddons();
                         break;
+                    case 'statistics':
+                        $details['visitors_daily'] = [];
+                        $details['visitors_monthly'] = [];
+                        $details['orders_daily'] = [];
+                        $details['orders_monthly'] = [];
+                        //látogató 1 hónap alatt (napi)
+                        $sql = '
+                            SELECT
+                                CONCAT(YEAR(date),"-",MONTH(date),"-",DAY(date)) as d,
+                                COUNT(1) as c
+                            FROM
+                                visitors
+                            WHERE
+                                DATE_SUB(NOW(),INTERVAL 1 MONTH)<=date
+                            GROUP BY
+                                d
+                            ORDER BY
+                                date DESC
+                        ';
+                        $statement = $pdo->prepare($sql);
+                        $statement->execute();
+                        $stats = $statement->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($stats as $stat) {
+                            array_push($details['visitors_daily'],[
+                                "tag" => $stat['d'],
+                                "count" => $stat['c'],
+                            ]);
+                        }
+
+                        //látogató 1 év alatt (havi)
+                        $sql = '
+                            SELECT
+                                CONCAT(YEAR(date),"-",MONTH(date)) as d,
+                                COUNT(1) as c
+                            FROM
+                                visitors
+                            WHERE
+                                DATE_SUB(NOW(),INTERVAL 1 YEAR)<=date
+                            GROUP BY
+                                d
+                            ORDER BY
+                                date DESC
+                        ';
+                        $statement = $pdo->prepare($sql);
+                        $statement->execute();
+                        $stats = $statement->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($stats as $stat) {
+                            array_push($details['visitors_monthly'],[
+                                "tag" => $stat['d'],
+                                "count" => $stat['c'],
+                            ]);
+                        }
+
+                        //vásárlások 1 hónap alatt (napi)
+                        $sql = '
+                            SELECT
+                                CONCAT(YEAR(order_time),"-",MONTH(order_time),"-",DAY(order_time)) as d,
+                                COUNT(1) as c
+                            FROM
+                                orders
+                            WHERE
+                                DATE_SUB(NOW(),INTERVAL 1 MONTH)<=order_time
+                            GROUP BY
+                                d
+                            ORDER BY
+                                order_time DESC
+                        ';
+                        $statement = $pdo->prepare($sql);
+                        $statement->execute();
+                        $stats = $statement->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($stats as $stat) {
+                            array_push($details['orders_daily'],[
+                                "tag" => $stat['d'],
+                                "count" => $stat['c'],
+                            ]);
+                        }
+                        
+                        //vásárlások 1 év alatt (havi)
+                        $sql = '
+                            SELECT
+                                CONCAT(YEAR(order_time),"-",MONTH(order_time)) as d,
+                                COUNT(1) as c
+                            FROM
+                                orders
+                            WHERE
+                                DATE_SUB(NOW(),INTERVAL 1 YEAR)<=order_time
+                            GROUP BY
+                                d
+                            ORDER BY
+                                order_time DESC
+                        ';
+                        $statement = $pdo->prepare($sql);
+                        $statement->execute();
+                        $stats = $statement->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($stats as $stat) {
+                            array_push($details['orders_monthly'],[
+                                "tag" => $stat['d'],
+                                "count" => $stat['c'],
+                            ]);
+                        }
+
+                        break;
                     default:
                         break;
                 }

@@ -46,6 +46,7 @@
     use Controller\StoreController;
     use Controller\AdminController;
     use Controller\AdminActionController;
+    use Controller\StatisticsController;
     use Controller\Router;
     use Controller\SettingsController;
     use Controller\LanguageController;
@@ -219,4 +220,7 @@
     AddonController::runAddons();
 
     Router::resolveRoute();
+
+    StatisticsController::getInstance();
+    StatisticsController::saveVisitor();
 ?>

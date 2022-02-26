@@ -139,6 +139,28 @@
                 case "addons":
                     include __DIR__ . "/themes/" . $theme . "/admin/addons/addons.html";
                     break;
+                case "statistics":
+                    echo "<section class='statistics'>";
+                        $key = "visitors_daily";
+                        $header = "visitors_daily";
+                        include __DIR__ . "/themes/" . $theme . "/admin/statistics/visitors.html";
+                    echo "</section>";
+                    echo "<section class='statistics'>";
+                        $key = "visitors_monthly";
+                        $header = "visitors_monthly";
+                        include __DIR__ . "/themes/" . $theme . "/admin/statistics/visitors.html";
+                    echo "</section>";
+                    echo "<section class='statistics'>";
+                        $key = "orders_daily";
+                        $header = "orders_daily";
+                        include __DIR__ . "/themes/" . $theme . "/admin/statistics/orders.html";
+                    echo "</section>";
+                    echo "<section class='statistics'>";
+                        $key = "orders_monthly";
+                        $header = "orders_monthly";
+                        include __DIR__ . "/themes/" . $theme . "/admin/statistics/orders.html";
+                    echo "</section>";
+                    break;
                 default:
                    echo "Admin page not set.";
             }
@@ -162,6 +184,15 @@
         private function hasPermission($perm) {
             UserController::getInstance();
             return UserController::$loggedUser->rank->hasPermission($perm);
+        }
+
+        private function createStats($details) {
+            $theme = "default";
+            foreach ($details as $row) {
+                $tag = $row['tag'];
+                $count = $row['count'];
+                include __DIR__ . "/themes/" . $theme . "/admin/statistics/row.html";
+            }
         }
 
         private function createAddons($details) {
