@@ -1,0 +1,39 @@
+html {
+    min-height: -webkit-fill-available;
+    height: 100%;
+}
+
+body{
+    height: 100%;
+}
+
+body {
+    background: #141E30;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+div#install {
+    height: 880px;
+    width: 700px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -440px 0 0 -350px;
+    background-color: white;
+    border-radius: 8px;
+    border-radius: 8px;
+}
+
+div#install form {
+    width: 90%;
+    margin-left: 5%;
+}
+
+div#install h3 {
+    margin-top: 10px;
+}
+
+div#install b#error {
+    color: red;
+}

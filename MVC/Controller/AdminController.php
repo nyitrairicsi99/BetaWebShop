@@ -306,7 +306,7 @@
                         }
                         break;
                     case 'settings':
-                        $sql = "SELECT `themes_id`, `languages_id`, `license_hash`, `webshop_name`, `root_directory` FROM `settings`";
+                        $sql = "SELECT `themes_id`, `languages_id`, `license_hash`, `webshop_name` FROM `settings`";
                         $statement = $pdo->prepare($sql);
                         $statement->execute();
 

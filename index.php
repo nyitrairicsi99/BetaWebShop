@@ -4,7 +4,9 @@
     ini_set('file_uploads', 'On');
     ini_set('post_max_size', '100M');
     ini_set('upload_max_filesize', '100M');
-    /*phpinfo();*/
+    
+    use Controller\Router;
+    use Model\Route;
 
     $loadFolders = array('utility','MVC/*');
     foreach ($loadFolders as $folder) {
@@ -13,13 +15,37 @@
         } 
     }
     global $settings;
-
-    if ($GLOBALS['settings']['showErrors']) {
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
+    if (isset($GLOBALS['settings'])) {
+        if ($GLOBALS['settings']['showErrors']) {
+            error_reporting(E_ALL);
+            ini_set('display_errors', 1);
+        } else {
+            error_reporting(0);
+            ini_set('display_errors', 0);
+        }
     } else {
-        error_reporting(0);
-        ini_set('display_errors', 0);
+
+        Router::addRoute(new Route("install",function($routeVarArr){
+            include __DIR__ . "/setup/index.php";
+        },"GET"));
+
+        Router::addRoute(new Route("install",function($routeVarArr){
+            include __DIR__ . "/setup/index.php";
+        },"POST"));
+
+        
+        Router::setPathNotFound(function(){
+            echo "Webshop not installed. Please install at http://yourserver.com/pathtoshop/install";
+        });
+
+        Router::setMethodNotFound(function(){
+            http_response_code(405);
+            exit;
+        });
+
+        Router::resolveRoute();
+
+        die();
     }
 
     $neededExtensions = array('pdo_mysql');
@@ -47,11 +73,9 @@
     use Controller\AdminController;
     use Controller\AdminActionController;
     use Controller\StatisticsController;
-    use Controller\Router;
     use Controller\SettingsController;
     use Controller\LanguageController;
     
-    use Model\Route;
 
 
     DatabaseConnection::getInstance();
@@ -204,7 +228,6 @@
         UserController::getInstance();
         UserController::logout();
     },"GET"));
-
 
     Router::setPathNotFound(function(){
         echo "no path";

@@ -1,20 +1,3 @@
--- MariaDB dump 10.19  Distrib 10.4.20-MariaDB, for Win64 (AMD64)
---
--- Host: localhost    Database: webshop
--- ------------------------------------------------------
--- Server version	10.4.20-MariaDB
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
 --
 -- Table structure for table `2fa_codes`
 --
@@ -66,7 +49,7 @@ CREATE TABLE `addresses` (
   CONSTRAINT `addresses_ibfk_7` FOREIGN KEY (`house_numbers_id`) REFERENCES `house_numbers` (`id`),
   CONSTRAINT `addresses_ibfk_8` FOREIGN KEY (`streets_id`) REFERENCES `streets` (`id`),
   CONSTRAINT `addresses_ibfk_9` FOREIGN KEY (`cities_id`) REFERENCES `cities` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +58,6 @@ CREATE TABLE `addresses` (
 
 LOCK TABLES `addresses` WRITE;
 /*!40000 ALTER TABLE `addresses` DISABLE KEYS */;
-INSERT INTO `addresses` VALUES (1,1,1,1),(2,4,2,2),(3,5,2,2),(4,6,3,3),(5,7,2,2),(6,7,2,4);
 /*!40000 ALTER TABLE `addresses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,7 +77,7 @@ CREATE TABLE `categories` (
   PRIMARY KEY (`id`),
   KEY `parentcategory` (`parentcategory`),
   CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`parentcategory`) REFERENCES `categories` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,7 +86,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` VALUES (1,NULL,'Shoes','shoes',1),(2,1,'Boots','boots',1),(3,1,'Sandals','sandals',1),(4,NULL,'Books','books',1),(5,4,'Fantasy','fantasy',1),(6,4,'Horror','horror',1),(7,NULL,'Games','games',1),(8,4,'Action','action',1),(10,7,'Videogame','videogame',1),(11,7,'Table games','tablegames',1);
+INSERT INTO `categories` VALUES (1,NULL,'All','all',1);
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -121,7 +103,7 @@ CREATE TABLE `cities` (
   `postcodes_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `postcodes_id` (`postcodes_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +112,6 @@ CREATE TABLE `cities` (
 
 LOCK TABLES `cities` WRITE;
 /*!40000 ALTER TABLE `cities` DISABLE KEYS */;
-INSERT INTO `cities` VALUES (1,'Pécs',1),(4,'Edenderry',4),(5,'Edenderry',5),(6,'Gádoros',6),(7,'Edenderry',7);
 /*!40000 ALTER TABLE `cities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +130,7 @@ CREATE TABLE `coupons` (
   `discount` int(11) NOT NULL DEFAULT 0,
   `singleuse` tinyint(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +139,6 @@ CREATE TABLE `coupons` (
 
 LOCK TABLES `coupons` WRITE;
 /*!40000 ALTER TABLE `coupons` DISABLE KEYS */;
-INSERT INTO `coupons` VALUES (1,'CODE01','2022-01-31 16:15:04','2022-01-31 16:15:04',80,0),(2,'CODE02','2022-01-31 15:39:14','2022-01-31 15:39:14',0,1),(3,'CODE03','2022-01-31 15:39:14','2022-01-31 15:39:14',0,1),(5,'CODE05','2022-01-31 15:39:14','2022-01-31 15:39:14',0,1),(7,'CODE06','2022-01-31 16:00:26','2022-01-31 16:00:26',0,1),(8,'CODE07','2022-01-31 15:39:14','2022-01-31 15:39:14',0,1),(9,'CODE08','2022-01-31 15:39:14','2022-01-31 15:39:14',0,1),(10,'CODE09','2022-01-31 15:39:14','2022-01-31 15:39:14',0,1),(12,'CODE11','2022-01-31 15:39:14','2022-01-31 15:39:14',0,1),(14,'NEWYEAR','2022-01-30 23:00:00','2034-01-30 23:00:00',30,1);
 /*!40000 ALTER TABLE `coupons` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,7 +164,7 @@ CREATE TABLE `currencies` (
 
 LOCK TABLES `currencies` WRITE;
 /*!40000 ALTER TABLE `currencies` DISABLE KEYS */;
-INSERT INTO `currencies` VALUES (1,'Ft','Forint','Ft'),(2,'Euro','Euro','€'),(3,'Dollar','Dollar','$');
+INSERT INTO `currencies` VALUES (1,'HUF','Forint','Ft'),(2,'EUR','Euro','€'),(3,'USD','Dollar','$');
 /*!40000 ALTER TABLE `currencies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -199,7 +179,7 @@ CREATE TABLE `house_numbers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `number` varchar(6) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -208,7 +188,6 @@ CREATE TABLE `house_numbers` (
 
 LOCK TABLES `house_numbers` WRITE;
 /*!40000 ALTER TABLE `house_numbers` DISABLE KEYS */;
-INSERT INTO `house_numbers` VALUES (1,'10'),(2,'44'),(3,'3/A'),(4,'45');
 /*!40000 ALTER TABLE `house_numbers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,7 +203,7 @@ CREATE TABLE `installed_plugins` (
   `name` varchar(255) DEFAULT NULL,
   `enabled` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -233,7 +212,6 @@ CREATE TABLE `installed_plugins` (
 
 LOCK TABLES `installed_plugins` WRITE;
 /*!40000 ALTER TABLE `installed_plugins` DISABLE KEYS */;
-INSERT INTO `installed_plugins` VALUES (1,'example',1),(2,'testimport',1);
 /*!40000 ALTER TABLE `installed_plugins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,7 +227,7 @@ CREATE TABLE `languages` (
   `shortname` varchar(255) DEFAULT NULL,
   `longname` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -258,7 +236,7 @@ CREATE TABLE `languages` (
 
 LOCK TABLES `languages` WRITE;
 /*!40000 ALTER TABLE `languages` DISABLE KEYS */;
-INSERT INTO `languages` VALUES (2,'EN','English'),(5,'HU','Hungarian');
+INSERT INTO `languages` VALUES (1,'EN','English');
 /*!40000 ALTER TABLE `languages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -310,7 +288,7 @@ CREATE TABLE `orders` (
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`pay_types_id`) REFERENCES `pay_types` (`id`),
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`addresses_id`) REFERENCES `addresses` (`id`),
   CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`people_id`) REFERENCES `people` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -319,7 +297,6 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,1,16,'2022-02-06 17:38:36',1,6,0),(2,1,16,'2022-02-06 17:49:24',1,6,0),(3,2,16,'2022-02-06 22:34:16',1,6,0),(4,1,16,'2022-02-23 22:30:18',1,6,4),(5,1,16,'2022-02-23 23:39:39',1,6,5);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -334,7 +311,7 @@ CREATE TABLE `pay_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -343,7 +320,7 @@ CREATE TABLE `pay_types` (
 
 LOCK TABLES `pay_types` WRITE;
 /*!40000 ALTER TABLE `pay_types` DISABLE KEYS */;
-INSERT INTO `pay_types` VALUES (1,'cash_on_delivery'),(2,'paypal');
+INSERT INTO `pay_types` VALUES (1,'cash_on_delivery');
 /*!40000 ALTER TABLE `pay_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -362,7 +339,7 @@ CREATE TABLE `people` (
   `last_name` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `addresses_id` (`addresses_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -371,7 +348,6 @@ CREATE TABLE `people` (
 
 LOCK TABLES `people` WRITE;
 /*!40000 ALTER TABLE `people` DISABLE KEYS */;
-INSERT INTO `people` VALUES (1,'+36308961902',1,'Richard','Nyitrai'),(2,'0894972173',6,'Stewie','Highmountain'),(3,'+36721234567',4,'Zoltán','Vámosi'),(4,'0894972173',NULL,'Stewie','Highmountain'),(5,'0894972171',NULL,'Stewie2','Highmountain2');
 /*!40000 ALTER TABLE `people` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -422,7 +398,7 @@ CREATE TABLE `phrases` (
 
 LOCK TABLES `phrases` WRITE;
 /*!40000 ALTER TABLE `phrases` DISABLE KEYS */;
-INSERT INTO `phrases` VALUES (1,1,'search','Keresés'),(2,2,'search','Search'),(4,4,'search','Traži'),(5,5,'search','Keresés'),(6,6,'search','Keresés'),(7,5,'webshop','Webáruház'),(38,1,'statistics','Statisztikák'),(39,2,'statistics','Statistics'),(40,5,'user_details','Felhasználói adatok'),(41,5,'username','Felhasználónév'),(42,5,'email','E-mail'),(43,5,'password','Jelszó'),(44,5,'new_password','Új jelszó'),(45,5,'password_again','Jelszó újra'),(46,5,'password_now','Jelenlegi jelszó'),(47,5,'personal_informations','Személyes adatok'),(48,5,'name','Név'),(49,5,'first_name','Keresztnév'),(50,5,'last_name','Vezetéknév'),(51,5,'phone_number','Telefonszám'),(52,5,'address','Cím'),(53,5,'postcode','Irányítószám'),(54,5,'city','Város'),(55,5,'street','Utca'),(56,5,'housenumber','Házszám'),(57,5,'save','Mentés'),(58,5,'piece','Darab'),(59,5,'basket_add','Kosárhoz ad'),(60,5,'login','Bejelenetkezés'),(61,5,'rememberme','Jegyezz meg'),(62,5,'register','Regisztráció'),(63,5,'basket','Kosár'),(64,5,'price','Ár'),(65,5,'edit','Szerkesztés'),(66,5,'redirect_to_shipping','Tovább a szállításhoz'),(67,5,'delete','Törlés'),(68,5,'id','Azonosító'),(69,5,'rank','Rang'),(70,5,'modify','Módosítás'),(71,5,'admin','Admin'),(72,5,'theme','Téma'),(73,5,'edit_categories','Kategóriák szerkesztése'),(74,5,'webshop_language','Webáruház nyelve'),(75,5,'edit_language','Nyelv szerkesztés'),(76,5,'import_language','Nyelv importálása'),(77,5,'import','Importálás'),(78,5,'export_language','Nyelv exportálás'),(79,5,'export','Exportálás'),(80,5,'stock','Raktár'),(81,5,'add','Hozzáadás'),(82,5,'back','Vissza'),(83,5,'edit_product','Termék szerkesztése'),(84,5,'delete_product','Termék törlése'),(85,5,'description','Leírás'),(86,5,'add_new_images','Új képek hozzáadása'),(87,5,'available','Elérhető'),(88,5,'appear','Megjelenés'),(89,5,'disappear','Eltűnés'),(90,5,'webshop_details','Webáruház adatok'),(91,5,'theme','Téma'),(92,5,'edit_categories','Kategóriák szerkesztése'),(93,5,'webshop_language','Webáruház nyelve'),(94,5,'edit_language','Nyelv szerkesztés'),(95,5,'import_language','Nyelv importálása'),(96,5,'import','Importálás'),(97,5,'export_language','Nyelv exportálás'),(98,5,'export','Exportálás'),(99,5,'stock','Raktár'),(100,5,'add','Hozzáadás'),(101,5,'back','Vissza'),(102,5,'edit_product','Termék szerkesztése'),(103,5,'delete_product','Termék törlése'),(104,5,'description','Leírás'),(105,5,'add_new_images','Új képek hozzáadása'),(106,5,'available','Elérhető'),(107,5,'appear','Megjelenés'),(108,5,'disappear','Eltűnés'),(109,5,'always_available','Mindig elérhető'),(110,5,'first','Első'),(111,5,'last','Utolsó'),(112,5,'phrase','Kifejezés'),(113,5,'translated','Fordított'),(114,5,'delete_language','Nyelv törlése'),(115,5,'show','Megjelenítés'),(116,5,'new','Új'),(117,5,'category','Kategória'),(118,5,'main_category','Fő kategória'),(119,5,'unused_categories','Nem használt kategóriák'),(120,5,'used_categories','Használt kategóriák'),(121,5,'remove','Eltávolítás'),(122,5,'create_product','Termék létrehozása'),(123,5,'images','Képek'),(124,5,'create','Létrehozás'),(125,5,'statistics','Statisztikák'),(126,5,'coupons','Kuponok'),(127,5,'products','Termékek'),(128,5,'users','Felhasználók'),(129,5,'orders','Rendelések'),(130,5,'permissions','Jogok'),(131,5,'bans','Tiltások'),(132,5,'settings','Beállítások'),(133,5,'addons','Bővítmények'),(134,5,'back_to_shop','Vissza az áruházhoz'),(135,5,'profile','Profil'),(136,5,'logout','Kilépés'),(137,5,'profile_operations','Profil műveletek'),(138,5,'code','Kód'),(139,5,'available_from','-tól elérhető'),(140,5,'available_to','-ig elérhető'),(141,5,'uses','Felhasználások'),(142,5,'discount','Kedvezmény'),(143,5,'single_use','Egyszer használható'),(144,5,'new_coupon','Új kupon'),(145,5,'coupon','Kuponkód'),(146,5,'order','Rendelés'),(147,5,'cash_on_delivery','Utánvét'),(148,5,'paypal','Paypal'),(149,5,'ordered','Megrendelve'),(150,5,'date','Dátum'),(151,5,'done','Kész'),(152,2,'add','Add'),(153,2,'addons','Addons'),(154,2,'address','Address'),(155,2,'add_new_images','Add new images'),(156,2,'admin','Admin'),(157,2,'always_available','Always available'),(158,2,'appear','Appear'),(159,2,'available','Available'),(160,2,'available_from','Available from'),(161,2,'available_to','Available to'),(162,2,'back','Back'),(163,2,'back_to_shop','Back to shop'),(164,2,'bans','Bans'),(165,2,'basket','Basket'),(166,2,'basket_add','Add to basket'),(167,2,'cash_on_delivery','Cash on delivery'),(168,2,'category','Category'),(169,2,'city','City'),(170,2,'code','Code'),(171,2,'coupon','Coupon'),(172,2,'coupons','Coupons'),(173,2,'create','Create'),(174,2,'create_product','Create product'),(175,2,'date','Date'),(176,2,'delete','Delete'),(177,2,'delete_language','Delete language'),(178,2,'delete_product','Delete product'),(179,2,'description','Description'),(180,2,'disappear','Disappear'),(181,2,'discount','Discount'),(182,2,'done','Done'),(183,2,'edit','Edit'),(184,2,'edit_categories','Edit categories'),(185,2,'edit_language','Edit language'),(186,2,'edit_product','Edit product'),(187,2,'email','Email'),(188,2,'export','Export'),(189,2,'export_language','Export language'),(190,2,'first','First'),(191,2,'first_name','First name'),(192,2,'housenumber','House number'),(193,2,'id','Id'),(194,2,'images','Images'),(195,2,'import','Import'),(196,2,'import_language','Import language'),(197,2,'last','Last'),(198,2,'last_name','Last name'),(199,2,'login','Login'),(200,2,'logout','Logout'),(201,2,'main_category','Main category'),(202,2,'modify','Modify'),(203,2,'name','Name'),(204,2,'new','New'),(205,2,'new_coupon','New coupon'),(206,2,'new_password','New password'),(207,2,'order','Order'),(208,2,'ordered','Ordered'),(209,2,'orders','Orders'),(210,2,'password','Password'),(211,2,'password_again','Password again'),(212,2,'password_now','Password now'),(213,2,'paypal','PayPal'),(214,2,'permissions','Permissions'),(215,2,'personal_informations','Personal informations'),(216,2,'phone_number','Phone number'),(217,2,'phrase','Phrase'),(218,2,'piece','Quantity'),(219,2,'postcode','Postcode'),(220,2,'price','Price'),(221,2,'products','Products'),(222,2,'profile','Profile'),(223,2,'profile_operations','Profile operations'),(224,2,'rank','Rank'),(225,2,'redirect_to_shipping','Redirect to shipping'),(226,2,'register','Register'),(227,2,'rememberme','Remember me'),(228,2,'remove','Remove'),(229,2,'save','Save'),(230,2,'settings','Settings'),(231,2,'show','Show'),(232,2,'single_use','Single use'),(233,2,'stock','Stock'),(235,2,'street','Street'),(236,2,'theme','Theme'),(237,2,'translated','Translated'),(238,2,'unused_categories','Unused categories'),(239,2,'used_categories','Used categories'),(240,2,'username','Username'),(241,2,'users','Users'),(242,2,'user_details','User details'),(243,2,'uses','Uses'),(244,2,'webshop','Webshop'),(245,2,'webshop_details','Webshop details'),(246,2,'webshop_language','Webshop language'),(247,5,'details','Adatok'),(248,2,'details','Details'),(249,5,'order_state','Megrendelés állapota'),(250,5,'pay_type','Fizetés típusa'),(251,2,'pay_type','Pay type'),(252,2,'order_state','Order state'),(253,5,'edit_permission','Jogok szerkesztése'),(254,2,'edit_permission','Edit permission'),(255,5,'perm_admin_access',''),(256,5,'perm_ignore_ban',''),(257,5,'perm_view_statistics',''),(258,5,'perm_view_coupons',''),(259,5,'perm_manage_coupons',''),(260,5,'perm_view_products',''),(261,5,'perm_create_product',''),(262,5,'perm_manage_products',''),(263,5,'perm_delete_product',''),(264,5,'perm_view_users',''),(265,5,'perm_manage_users',''),(266,5,'perm_view_permissions',''),(267,5,'perm_manage_permissions',''),(268,5,'perm_manage_settings',''),(269,5,'perm_manage_addons',''),(270,5,'perm_desc_admin_access',''),(271,5,'perm_desc_ignore_ban',''),(272,5,'perm_desc_view_statistics',''),(273,5,'perm_desc_view_coupons',''),(274,5,'perm_desc_manage_coupons',''),(275,5,'perm_desc_view_products',''),(276,5,'perm_desc_create_product',''),(277,5,'perm_desc_manage_products',''),(278,5,'perm_desc_delete_product',''),(279,5,'perm_desc_view_users',''),(280,5,'perm_desc_manage_users',''),(281,5,'perm_desc_view_permissions',''),(282,5,'perm_desc_manage_permissions',''),(283,5,'perm_desc_manage_settings',''),(284,5,'perm_desc_manage_addons',''),(285,2,'perm_admin_access','View admin interface'),(286,2,'perm_create_product','Create product'),(287,2,'perm_delete_product','Delete product'),(288,2,'perm_ignore_ban','Ignore ban'),(289,2,'perm_manage_addons','Manage addons'),(290,2,'perm_manage_coupons','Manage coupons'),(291,2,'perm_manage_permissions','Manage permissions'),(292,2,'perm_manage_products','Manage products'),(293,2,'perm_manage_settings','Manage settings'),(294,2,'perm_manage_users','Manage users'),(295,2,'perm_view_coupons','View coupons'),(296,2,'perm_view_permissions','View permissions'),(297,2,'perm_view_products','View products'),(298,2,'perm_view_statistics','View statistics'),(299,2,'perm_view_users','View users'),(300,5,'perm_view_orders',''),(301,5,'perm_manage_orders',''),(302,5,'perm_desc_view_orders',''),(303,5,'perm_desc_manage_orders',''),(304,2,'perm_manage_orders','Manage orders'),(305,2,'perm_view_orders','View orders'),(306,5,'check_for_addons','Bővítmény keresés'),(307,5,'check_for_themes','Témák keresés'),(308,5,'visitors','Látogatók'),(309,5,'banned','Kitiltva'),(310,5,'on','Bekapcsolva'),(311,5,'off','Kikapcsolva'),(312,5,'visitors_daily','Napi látogatók'),(313,5,'visitors_monthly','Havi látogatók'),(314,5,'orders_daily','Napi rendelések'),(315,5,'orders_monthly','Havi rendelések'),(316,2,'banned','Banned'),(317,2,'check_for_addons','Check for addons'),(318,2,'check_for_themes','Check for themes'),(319,2,'off','Off'),(320,2,'on','On'),(321,2,'orders_daily','Daily orders'),(322,2,'orders_monthly','Monthly orders'),(323,2,'visitors','Visitors'),(324,2,'visitors_daily','Daily visitors'),(325,2,'visitors_monthly','Monthly visitors');
+INSERT INTO `phrases` VALUES (2,1,'search','Search'),(39,1,'statistics','Statistics'),(152,1,'add','Add'),(153,1,'addons','Addons'),(154,1,'address','Address'),(155,1,'add_new_images','Add new images'),(156,1,'admin','Admin'),(157,1,'always_available','Always available'),(158,1,'appear','Appear'),(159,1,'available','Available'),(160,1,'available_from','Available from'),(161,1,'available_to','Available to'),(162,1,'back','Back'),(163,1,'back_to_shop','Back to shop'),(164,1,'bans','Bans'),(165,1,'basket','Basket'),(166,1,'basket_add','Add to basket'),(167,1,'cash_on_delivery','Cash on delivery'),(168,1,'category','Category'),(169,1,'city','City'),(170,1,'code','Code'),(171,1,'coupon','Coupon'),(172,1,'coupons','Coupons'),(173,1,'create','Create'),(174,1,'create_product','Create product'),(175,1,'date','Date'),(176,1,'delete','Delete'),(177,1,'delete_language','Delete language'),(178,1,'delete_product','Delete product'),(179,1,'description','Description'),(180,1,'disappear','Disappear'),(181,1,'discount','Discount'),(182,1,'done','Done'),(183,1,'edit','Edit'),(184,1,'edit_categories','Edit categories'),(185,1,'edit_language','Edit language'),(186,1,'edit_product','Edit product'),(187,1,'email','Email'),(188,1,'export','Export'),(189,1,'export_language','Export language'),(190,1,'first','First'),(191,1,'first_name','First name'),(192,1,'housenumber','House number'),(193,1,'id','Id'),(194,1,'images','Images'),(195,1,'import','Import'),(196,1,'import_language','Import language'),(197,1,'last','Last'),(198,1,'last_name','Last name'),(199,1,'login','Login'),(200,1,'logout','Logout'),(201,1,'main_category','Main category'),(202,1,'modify','Modify'),(203,1,'name','Name'),(204,1,'new','New'),(205,1,'new_coupon','New coupon'),(206,1,'new_password','New password'),(207,1,'order','Order'),(208,1,'ordered','Ordered'),(209,1,'orders','Orders'),(210,1,'password','Password'),(211,1,'password_again','Password again'),(212,1,'password_now','Password now'),(213,1,'paypal','PayPal'),(214,1,'permissions','Permissions'),(215,1,'personal_informations','Personal informations'),(216,1,'phone_number','Phone number'),(217,1,'phrase','Phrase'),(218,1,'piece','Quantity'),(219,1,'postcode','Postcode'),(220,1,'price','Price'),(221,1,'products','Products'),(222,1,'profile','Profile'),(223,1,'profile_operations','Profile operations'),(224,1,'rank','Rank'),(225,1,'redirect_to_shipping','Redirect to shipping'),(226,1,'register','Register'),(227,1,'rememberme','Remember me'),(228,1,'remove','Remove'),(229,1,'save','Save'),(230,1,'settings','Settings'),(231,1,'show','Show'),(232,1,'single_use','Single use'),(233,1,'stock','Stock'),(235,1,'street','Street'),(236,1,'theme','Theme'),(237,1,'translated','Translated'),(238,1,'unused_categories','Unused categories'),(239,1,'used_categories','Used categories'),(240,1,'username','Username'),(241,1,'users','Users'),(242,1,'user_details','User details'),(243,1,'uses','Uses'),(244,1,'webshop','Webshop'),(245,1,'webshop_details','Webshop details'),(246,1,'webshop_language','Webshop language'),(248,1,'details','Details'),(251,1,'pay_type','Pay type'),(252,1,'order_state','Order state'),(254,1,'edit_permission','Edit permission'),(285,1,'perm_admin_access','View admin interface'),(286,1,'perm_create_product','Create product'),(287,1,'perm_delete_product','Delete product'),(288,1,'perm_ignore_ban','Ignore ban'),(289,1,'perm_manage_addons','Manage addons'),(290,1,'perm_manage_coupons','Manage coupons'),(291,1,'perm_manage_permissions','Manage permissions'),(292,1,'perm_manage_products','Manage products'),(293,1,'perm_manage_settings','Manage settings'),(294,1,'perm_manage_users','Manage users'),(295,1,'perm_view_coupons','View coupons'),(296,1,'perm_view_permissions','View permissions'),(297,1,'perm_view_products','View products'),(298,1,'perm_view_statistics','View statistics'),(299,1,'perm_view_users','View users'),(304,1,'perm_manage_orders','Manage orders'),(305,1,'perm_view_orders','View orders'),(316,1,'banned','Banned'),(317,1,'check_for_addons','Check for addons'),(318,1,'check_for_themes','Check for themes'),(319,1,'off','Off'),(320,1,'on','On'),(321,1,'orders_daily','Daily orders'),(322,1,'orders_monthly','Monthly orders'),(323,1,'visitors','Visitors'),(324,1,'visitors_daily','Daily visitors'),(325,1,'visitors_monthly','Monthly visitors');
 /*!40000 ALTER TABLE `phrases` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -437,7 +413,7 @@ CREATE TABLE `postcodes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `postcode` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -446,7 +422,6 @@ CREATE TABLE `postcodes` (
 
 LOCK TABLES `postcodes` WRITE;
 /*!40000 ALTER TABLE `postcodes` DISABLE KEYS */;
-INSERT INTO `postcodes` VALUES (1,'7632'),(4,'0'),(5,'R45W328'),(6,'5932'),(7,'R45W329');
 /*!40000 ALTER TABLE `postcodes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -463,7 +438,7 @@ CREATE TABLE `product_images` (
   `url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `products_id` (`products_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -472,7 +447,6 @@ CREATE TABLE `product_images` (
 
 LOCK TABLES `product_images` WRITE;
 /*!40000 ALTER TABLE `product_images` DISABLE KEYS */;
-INSERT INTO `product_images` VALUES (24,1,'IMG_4240.JPG'),(26,1,'1642262473istockphoto-1249496770-170667a.jpg');
 /*!40000 ALTER TABLE `product_images` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -494,7 +468,7 @@ CREATE TABLE `product_order` (
   KEY `discounts_id` (`discounts_id`),
   KEY `products_id` (`products_id`),
   KEY `orders_id` (`orders_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -503,7 +477,6 @@ CREATE TABLE `product_order` (
 
 LOCK TABLES `product_order` WRITE;
 /*!40000 ALTER TABLE `product_order` DISABLE KEYS */;
-INSERT INTO `product_order` VALUES (1,36,3,NULL,1,0),(2,36,3,NULL,5,0),(3,34,3,NULL,10,0),(4,1,4,NULL,10,0),(5,1,5,NULL,11,30);
 /*!40000 ALTER TABLE `product_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -532,7 +505,7 @@ CREATE TABLE `products` (
   KEY `currencies_id` (`currencies_id`),
   KEY `categories_id` (`categories_id`),
   CONSTRAINT `products_ibfk_1` FOREIGN KEY (`categories_id`) REFERENCES `categories` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -541,7 +514,6 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'Sztyuji telefonja','Ha megveszed elrakathatod a halál faszára a telefonját és nem fog hívni.',20000,2,NULL,111,'2022-01-14 23:00:00','2034-01-10 23:00:00',0,7,0),(32,'','',0,1,NULL,0,'2022-01-15 16:11:07','2034-01-10 23:00:00',0,2,1),(33,'','',0,1,NULL,0,'2022-01-15 16:11:09','2034-01-10 23:00:00',0,2,1),(34,'light','asddasaddaasd',101010,1,NULL,110,'2022-01-10 23:00:00','2034-01-10 23:00:00',1,5,0),(35,'asSS','SADAD',2313,1,NULL,32,'2022-01-15 16:22:56','2034-01-10 23:00:00',1,2,1),(36,'Sztyuji telefonja','Ha megveszed elrakathatod a halál faszára a telefonját és nem fog hívni.',20000,1,NULL,1000,'2022-01-10 23:00:00','2034-01-10 23:00:00',1,2,0),(37,'','',0,1,NULL,0,'2022-01-15 16:11:22','2034-01-14 23:00:00',1,2,1),(38,'','',0,1,NULL,0,'2022-01-15 16:11:23','2034-01-14 23:00:00',1,2,1);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -559,7 +531,7 @@ CREATE TABLE `rank_permission` (
   PRIMARY KEY (`id`),
   KEY `permissions_id` (`permissions_id`),
   KEY `ranks_id` (`ranks_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -568,7 +540,7 @@ CREATE TABLE `rank_permission` (
 
 LOCK TABLES `rank_permission` WRITE;
 /*!40000 ALTER TABLE `rank_permission` DISABLE KEYS */;
-INSERT INTO `rank_permission` VALUES (45,2,1),(46,2,2),(47,2,3),(48,2,4),(49,2,5),(50,2,6),(51,2,7),(52,2,8),(53,2,9),(54,2,10),(55,2,11),(56,2,12),(57,2,13),(58,2,14),(59,2,15),(60,2,16),(61,2,17),(79,5,1),(80,5,2),(81,5,3),(82,5,4),(83,5,6),(84,5,8),(85,5,10),(86,5,11),(87,5,12),(88,5,16);
+INSERT INTO `rank_permission` VALUES (1,2,1),(2,2,2),(3,2,3),(4,2,4),(5,2,5),(6,2,6),(7,2,7),(8,2,8),(9,2,9),(10,2,10),(11,2,11),(12,2,12),(13,2,13),(14,2,14),(15,2,15),(16,2,16),(17,2,17);
 /*!40000 ALTER TABLE `rank_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -592,7 +564,7 @@ CREATE TABLE `ranks` (
 
 LOCK TABLES `ranks` WRITE;
 /*!40000 ALTER TABLE `ranks` DISABLE KEYS */;
-INSERT INTO `ranks` VALUES (1,'user'),(2,'admin'),(5,'moderator');
+INSERT INTO `ranks` VALUES (1,'user'),(2,'admin');
 /*!40000 ALTER TABLE `ranks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -607,8 +579,7 @@ CREATE TABLE `settings` (
   `themes_id` int(11) DEFAULT NULL,
   `languages_id` int(11) DEFAULT NULL,
   `license_hash` varchar(255) DEFAULT NULL,
-  `webshop_name` varchar(255) DEFAULT NULL,
-  `root_directory` varchar(255) DEFAULT NULL
+  `webshop_name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -618,7 +589,7 @@ CREATE TABLE `settings` (
 
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` VALUES (1,2,NULL,'Szakdolgozat webshop',NULL);
+INSERT INTO `settings` VALUES (1,1,NULL,'Szakdolgozat webshop');
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -633,7 +604,7 @@ CREATE TABLE `streets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `street` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -642,7 +613,6 @@ CREATE TABLE `streets` (
 
 LOCK TABLES `streets` WRITE;
 /*!40000 ALTER TABLE `streets` DISABLE KEYS */;
-INSERT INTO `streets` VALUES (1,'Gadó u.'),(2,'st Patriks Wood'),(3,'Bajcsy-Zsilinszky utca');
 /*!40000 ALTER TABLE `streets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -659,7 +629,7 @@ CREATE TABLE `themes` (
   `folder` varchar(255) DEFAULT NULL,
   `version` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -668,7 +638,7 @@ CREATE TABLE `themes` (
 
 LOCK TABLES `themes` WRITE;
 /*!40000 ALTER TABLE `themes` DISABLE KEYS */;
-INSERT INTO `themes` VALUES (1,'Default','default','1.0'),(3,'Dark theme','dark','1.0');
+INSERT INTO `themes` VALUES (1,'Default','default','1.0');
 /*!40000 ALTER TABLE `themes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -710,7 +680,7 @@ CREATE TABLE `used_coupons` (
   PRIMARY KEY (`id`),
   KEY `coupons_id` (`coupons_id`),
   KEY `users_id` (`users_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -719,7 +689,6 @@ CREATE TABLE `used_coupons` (
 
 LOCK TABLES `used_coupons` WRITE;
 /*!40000 ALTER TABLE `used_coupons` DISABLE KEYS */;
-INSERT INTO `used_coupons` VALUES (1,1,15),(2,1,16),(3,14,16);
 /*!40000 ALTER TABLE `used_coupons` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -741,7 +710,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   KEY `people_id` (`people_id`),
   KEY `ranks_id` (`ranks_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -750,7 +719,6 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (15,'William','$2y$10$kiBqHALNfO.tNigrp1TlDeniiD08jQHU1futht6tmc7N6xWLsOUA6','admin@webshop.hu',1,5,0),(16,'admin','$2y$10$KZ/Z.VOStTVGIBt6o3DKhOr0wLVaTWkFB8m6ntJbJLcd0kFSK2hdm','admin@webshop.hu1',2,2,0),(17,'user1234','$2y$10$m0r5URVj.osEQ4cEenjLcOn68S/Sg1Yxtw.QrUseGODuxLcB152Wi','valami@valami.hu',3,2,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -767,7 +735,7 @@ CREATE TABLE `visitors` (
   `country` varchar(255) DEFAULT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -776,7 +744,6 @@ CREATE TABLE `visitors` (
 
 LOCK TABLES `visitors` WRITE;
 /*!40000 ALTER TABLE `visitors` DISABLE KEYS */;
-INSERT INTO `visitors` VALUES (2,'54.37.88.104','FR','2022-02-24 18:27:37'),(3,'54.37.88.104','FR','2022-02-26 18:27:59'),(4,'','','2022-02-26 18:34:31'),(5,'54.37.88.104','FR','2022-01-29 19:48:41'),(6,'','','2022-02-26 21:00:28'),(7,'','','2022-02-27 16:30:32'),(8,'','','2022-02-27 18:35:31'),(9,'','','2022-02-27 19:41:31');
 /*!40000 ALTER TABLE `visitors` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -789,4 +756,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-27 21:43:09
+-- Dump completed on 2022-02-27 21:55:06

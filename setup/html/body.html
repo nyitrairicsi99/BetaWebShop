@@ -1,0 +1,42 @@
+<div id="install">
+    <form action="<?php echo $shopdir ?>/install" method="post">
+        <h3>Install webshop</h3>
+        <b id="error"><?php echo $error; ?></b>
+        <h5>Database settings</h5>
+        <div class="form-group">
+            <label for="dbhost">Database host</label>
+            <input type="text" class="form-control" id="dbhost" aria-describedby="dbhost" placeholder="Database host" name="dbhost" value="<?php echo $dbhost; ?>">
+        </div>
+        <div class="form-group">
+            <label for="dbname">Database table</label>
+            <input type="text" class="form-control" id="dbname" aria-describedby="dbname" placeholder="Database table" name="dbname" value="<?php echo $dbname; ?>">
+        </div>
+        <div class="form-group">
+            <label for="dbuser">Database user</label>
+            <input type="text" class="form-control" id="dbuser" aria-describedby="dbuser" placeholder="Database username" name="dbuser" value="<?php echo $dbuser; ?>">
+        </div>
+        <div class="form-group">
+            <label for="dbpass">Database password</label>
+            <input type="password" class="form-control" id="dbpass" aria-describedby="dbpass" placeholder="Database password" name="dbpass" value="<?php echo $dbpass; ?>">
+        </div>
+        <br />
+        <h5>Admin user</h5>
+        <div class="form-group">
+            <label for="username">Admin username</label>
+            <input type="text" class="form-control" id="username" aria-describedby="username" placeholder="Admin username" name="username" value="<?php echo $username; ?>">
+        </div>
+        <div class="form-group">
+            <label for="password">Admin password</label>
+            <input type="password" class="form-control" id="password" aria-describedby="password" placeholder="Admin password" name="password" value="<?php echo $password; ?>">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" id="password2" aria-describedby="password2" placeholder="Admin password again" name="password2" value="">
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-primary" onclick="generatePassword()">Generate password</button>
+            <span id="generatedpassword"></span>
+        </div>
+
+        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
