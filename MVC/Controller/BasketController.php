@@ -96,6 +96,7 @@
                 $desc = $res[0]['description'];
                 $price = $res[0]['price'];
                 $id = $res[0]['id'];
+                $stock = $res[0]['stock'];
                 $currency = new Currency($res[0]['longname'],$res[0]['shortname'],$res[0]['sign']);
                 $gallery = new Gallery();
                 foreach($res as $img) {
@@ -120,6 +121,12 @@
                             "error" => "Csak azonos valutájú tárgyak rakhatók egy kosárba.",
                         ]);
                     }
+                }
+
+                if ($stock<$piece) {
+                    redirect("product/".$id,[
+                        "error" => "Nincs elég raktárkészlet a rendeléshez.",
+                    ]);
                 }
 
                 self::$basket->addItem(new BasketItem($id,$piece,$product));

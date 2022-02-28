@@ -18,6 +18,7 @@
             $description = $this->product->description;
             $price = $this->product->price;
             $sign = $this->product->currency->sign;
+            $stock = $this->product->stock;
 
             include __DIR__ . "/themes/" . $this->theme . "/product/product.html";
         }

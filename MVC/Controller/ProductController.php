@@ -112,6 +112,7 @@
                 $desc = $res[0]['description'];
                 $price = $res[0]['price'];
                 $id = $res[0]['id'];
+                $stock = $res[0]['stock'];
                 $currency = new Currency($res[0]['longname'],$res[0]['shortname'],$res[0]['sign']);
                 $gallery = new Gallery();
                 foreach($res as $img) {
@@ -125,7 +126,7 @@
                     $gallery->addImage(0,"none.jpg");
                 }
     
-                new ProductDetails(new Product($id,$name,$price,$currency,$gallery,null,$desc));
+                new ProductDetails(new Product($id,$name,$price,$currency,$gallery,null,$desc,null,$stock));
             } else {
                 redirect("main",[
                     "error" => "Nem található termék."

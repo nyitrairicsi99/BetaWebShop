@@ -35,6 +35,22 @@
             DatabaseConnection::getInstance();
             $pdo = DatabaseConnection::$connection;
 
+            
+            $basket = BasketController::getItems();
+            foreach ($basket as $basketitem) {
+                $sql = 'SELECT stock FROM products WHERE id=:id';
+                $statement = $pdo->prepare($sql);
+                $statement->execute([
+                    ':id' => $basketitem->id,
+                ]);
+                $stock = $statement->fetch(PDO::FETCH_ASSOC);
+                if (!$stock['stock'] || $stock['stock'] < $basketitem->piece) {
+                    redirect("basket",[
+                        "error" => "Nincs elég termék raktáron az egyik termékből."
+                    ]);
+                }
+            }
+
             $postcode = $_POST['postcode'];
             $city = $_POST['city'];
             $street = $_POST['street'];
@@ -225,9 +241,19 @@
                     ':piece' => $basketitem->piece,
                     ':discount' => $discount
                 ]);
+                $sql = 'UPDATE products SET stock=stock-:stock WHERE id=:id';
+                $statement = $pdo->prepare($sql);
+                $statement->execute([
+                    ':stock' => $basketitem->piece,
+                    ':id' => $basketitem->id,
+                ]);
             }
 
             BasketController::clearItems();
+
+            redirect("main",[
+                "success" => "Sikeres rendelés."
+            ]);
         }
 
         public static function createListView() {

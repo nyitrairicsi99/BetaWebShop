@@ -195,6 +195,10 @@ section#storemain.product p,section#storemain.product h1 {
     max-height: 200px;
 }
 
+section#storemain.product i {
+    padding-left: 15px;
+}
+
 section#productbottom {
     position: absolute;
     right: 0;
