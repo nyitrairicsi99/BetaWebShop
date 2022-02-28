@@ -1,4 +1,3 @@
 utility/settings.php
 MVC/View/themes/default/src/images/upload/
-MVC/View/themes/
-!MVC/View/themes/default
+!MVC/View/themes/default/src/images/upload/none.jpg
