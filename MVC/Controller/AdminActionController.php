@@ -105,8 +105,8 @@
                             $statement->execute([
                                 ':id' => $id
                             ]);
-                            $rank = $statement->fetch(PDO::FETCH_ASSOC);
-                            $modifyRank = $rank['rank']!=$rank;
+                            $rankrow = $statement->fetch(PDO::FETCH_ASSOC);
+                            $modifyRank = $rankrow['ranks_id']!=$rank;
                             if (($modifyRank && !UserController::$loggedUser->rank->hasPermission('manage_permissions'))) {
                                 redirect("admin",[
                                     "error"=>"Nincs jogod ehhez a művelethez."
