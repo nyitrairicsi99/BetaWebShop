@@ -85,11 +85,11 @@
                                 $statement->bindParam(':password', hashPassword($password));
                                 $statement->execute();
                                 redirect("admin/".$page."/".$id,[
-                                    "success" => "Sikeres művelet."
+                                    "success" => translate("notification_success_operation")
                                 ]);
                             } else {
                                 redirect("admin/".$page."/".$id,[
-                                    "error" => "Jelszó túl rövid."
+                                    "error" => translate("notification_short_password")
                                 ]);
                             }
                             break;
@@ -136,7 +136,7 @@
                                 ]);
 
                                 redirect("admin/".$page."/".$id,[
-                                    "success" => "Sikeres művelet."
+                                    "success" => translate("notification_success_operation")
                                 ]);
                             }
                             break;
@@ -150,7 +150,7 @@
                             $lastname = $_POST['lastname'];
                             if (!isset($postcode) || !isset($city) || !isset($street) || !isset($housenumber) || !isset($phone) || !isset($firstname) || !isset($lastname)) {
                                 redirect("admin/".$page."/".$id,[
-                                    "error" => "Hiányzó paraméterek."
+                                    "error" => translate("notification_missing_parameters")
                                 ]);
                                 return;
                             }
@@ -299,7 +299,7 @@
                             }
                             
                             redirect("admin/".$page."/".$id,[
-                                "success" => "Sikeres művelet."
+                                "success" => translate("notification_success_operation")
                             ]);
 
                             break;
@@ -315,11 +315,11 @@
                                 ]);
         
                                 redirect("admin/".$page,[
-                                    "success" => "Sikeres művelet."
+                                    "success" => translate("notification_success_operation")
                                 ]);
                             } else {
                                 redirect("admin/".$page,[
-                                    "error" => "Hiányzó paraméterek."
+                                    "error" => translate("notification_missing_parameters")
                                 ]);
                             }
                             break;
@@ -339,11 +339,11 @@
                                 ]);
                                 
                                 redirect("admin/".$page,[
-                                    "success" => "Sikeres művelet."
+                                    "success" => translate("notification_success_operation")
                                 ]);
                             } else {
                                 redirect("admin/".$page,[
-                                    "error" => "Hiányzó paraméterek."
+                                    "error" => translate("notification_missing_parameters")
                                 ]);
                             }
                             break;
@@ -363,11 +363,11 @@
                                 ]);
                                 
                                 redirect("admin/".$page,[
-                                    "success" => "Sikeres művelet."
+                                    "success" => translate("notification_success_operation")
                                 ]);
                             } else {
                                 redirect("admin/".$page,[
-                                    "error" => "Hiányzó paraméterek."
+                                    "error" => translate("notification_missing_parameters")
                                 ]);
                             }
                             break;
@@ -388,11 +388,11 @@
                             LanguageController::getInstance();
                             if (LanguageController::createLanguage($data)) {
                                 redirect("admin/".$page,[
-                                    "success" => "Sikeres művelet."
+                                    "success" => translate("notification_success_operation")
                                 ]);
                             } else {
                                 redirect("admin/".$page,[
-                                    "error" => "Hiba a művelet végrehajtása során."
+                                    "error" => translate("notification_error")
                                 ]);
                             }
                             break;
@@ -441,7 +441,7 @@
                                 ':id' => $language,
                             ]);
                             redirect("admin",[
-                                "success" => "Sikeres művelet."
+                                "success" => translate("notification_success_operation")
                             ]);
                             break;
                         case 'removecategory':
@@ -457,7 +457,7 @@
                             ]);
                             
                             redirect("admin/".$page,[
-                                "success" => "Sikeres művelet."
+                                "success" => translate("notification_success_operation")
                             ]);
 
                             break;
@@ -474,7 +474,7 @@
                             ]);
                             
                             redirect("admin/".$page,[
-                                "success" => "Sikeres művelet."
+                                "success" => translate("notification_success_operation")
                             ]);
                             break;
                         case 'managecategory':
@@ -493,7 +493,7 @@
                             ]);
                             
                             redirect("admin/".$page,[
-                                "success" => "Sikeres művelet."
+                                "success" => translate("notification_success_operation")
                             ]);
 
                             break;
@@ -511,7 +511,7 @@
                             ]);
                             
                             redirect("admin/".$page,[
-                                "success" => "Sikeres művelet."
+                                "success" => translate("notification_success_operation")
                             ]);
 
                             break;
@@ -532,7 +532,7 @@
                             
                             if (count($uploadedNames)==0) {
                                 redirect("admin/".$page,[
-                                    "error" => "Kép nélkül nem hozható létre termék."
+                                    "error" => translate("notification_image_needed")
                                 ]);
                             }
 
@@ -570,7 +570,7 @@
                             }
                             
                             redirect("admin/".$page,[
-                                "success" => "Sikeres művelet."
+                                "success" => translate("notification_success_operation")
                             ]);
 
                             break;
@@ -652,7 +652,7 @@
 
                             
                             redirect("admin/".$page."/".$id,[
-                                "success" => "Sikeres művelet."
+                                "success" => translate("notification_success_operation")
                             ]);
 
                             break;
@@ -669,7 +669,7 @@
                             ]);
                             
                             redirect("admin/".$page,[
-                                "success" => "Sikeres művelet."
+                                "success" => translate("notification_success_operation")
                             ]);
 
                             break;
@@ -687,7 +687,7 @@
                             ]);
 
                             redirect("admin/".$page,[
-                                "success" => "Sikeres művelet."
+                                "success" => translate("notification_success_operation")
                             ]);
                             break;
                         case 'createcoupon':
@@ -711,7 +711,7 @@
                             ]);
 
                             redirect("admin/".$page,[
-                                "success" => "Sikeres művelet."
+                                "success" => translate("notification_success_operation")
                             ]);
                             break;
                         case 'modifyorderstate':
@@ -727,7 +727,7 @@
                                 ':id' => $id,
                             ]);
                             redirect("admin/".$page,[
-                                "success" => "Sikeres művelet."
+                                "success" => translate("notification_success_operation")
                             ]);
 
 
@@ -744,7 +744,7 @@
                             ]);
 
                             redirect("admin/".$page,[
-                                "success" => "Sikeres művelet."
+                                "success" => translate("notification_success_operation")
                             ]);
                             break;
                         case 'deleterank':
@@ -767,7 +767,7 @@
                             ]);
 
                             redirect("admin/".$page,[
-                                "success" => "Sikeres művelet."
+                                "success" => translate("notification_success_operation")
                             ]);
                             break;
                         case 'editrank':
@@ -798,7 +798,7 @@
                             }
                             
                             redirect("admin/".$page."/".$rankid,[
-                                "success" => "Sikeres művelet."
+                                "success" => translate("notification_success_operation")
                             ]);
                             break;
                         case 'switchaddon':
@@ -815,7 +815,7 @@
                             ]);
 
                             redirect("admin/".$page,[
-                                "success" => "Sikeres művelet."
+                                "success" => translate("notification_success_operation")
                             ]);
                             break;
                         case 'checkforaddons':

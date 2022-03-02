@@ -94,16 +94,16 @@
                     $_SESSION["loggedUser"] = serialize(self::$loggedUser);
 
                     redirect("main",[
-                        "success" => "Sikeres bejelentkezés.",
+                        "success" => translate("notification_success_login"),
                     ]);
                 } else {                    
                     redirect("main",[
-                        "error" => "Felhasználónév vagy jelszó hibás.",
+                        "error" => translate("notification_incorrect_username_or_password"),
                     ]);
                 }
             } else {
                 redirect("main",[
-                    "error" => "Felhasználónév vagy jelszó hibás.",
+                    "error" => translate("notification_incorrect_username_or_password"),
                 ]);
             }
 
@@ -138,23 +138,23 @@
                     ]);
                     $user_id = $pdo->lastInsertId();
                     redirect("main",[
-                        "success" => "Sikeres regisztráció.",
+                        "success" => translate("notification_success_register"),
                     ]);
                 } else {
                     redirect("main",[
-                        "error" => "Felhasználónév vagy email cím már foglalt.",
+                        "error" => translate("notification_reserved_username_or_email"),
                     ]);
                 }
             } else {
                 switch ($passCheck) {
                     case 1:
                         redirect("main",[
-                            "error" => "A megadott jelszavak nem egyeznek.",
+                            "error" => translate("notification_passwords_not_match"),
                         ]);
                         break;
                     case 2:
                         redirect("main",[
-                            "error" => "Jelszó túl rövid.",
+                            "error" => translate("notification_short_password"),
                         ]);
                         break;
                     default:

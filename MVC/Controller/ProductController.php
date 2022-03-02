@@ -129,7 +129,7 @@
                 new ProductDetails(new Product($id,$name,$price,$currency,$gallery,null,$desc,null,$stock));
             } else {
                 redirect("main",[
-                    "error" => "Nem található termék."
+                    "error" => translate("notification_product_not_found")
                 ]);
             }
         }
