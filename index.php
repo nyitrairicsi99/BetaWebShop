@@ -35,7 +35,14 @@
 
         
         Router::setPathNotFound(function(){
-            echo "Webshop not installed. Please install at http://yourserver.com/pathtoshop/install";
+            $rootdir = str_replace("\\","/",$_SERVER['DOCUMENT_ROOT']);
+            $filedir = str_replace("\\","/",dirname(__FILE__));
+            $webdir = str_replace($rootdir,"",$filedir);
+        
+            $shopdir = str_replace("/setup","",$webdir);
+            $shopdir = str_replace("/install","",$shopdir);
+            
+            header('Location: '.$shopdir.'/install');
         });
 
         Router::setMethodNotFound(function(){
