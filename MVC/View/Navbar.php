@@ -56,7 +56,7 @@
             BasketController::getInstance();
             $countItems = BasketController::getPieceSum();
             $countText = $countItems == 0 ? '' : ('('.$countItems.')');
-            if (UserController::$islogged && UserController::$loggedUser->rank->hasPermission('admin_access')) {
+            if (UserController::$islogged && UserController::$loggedUser->hasPermission('admin_access')) {
                 include __DIR__ . "/themes/" . $this->theme . "/navbar/profile_admin.html";
             } else if (UserController::$islogged) {
                 include __DIR__ . "/themes/" . $this->theme . "/navbar/profile.html";

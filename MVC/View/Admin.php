@@ -37,7 +37,7 @@
             
             foreach($navbar as $row) {
                 $perm = $row[0];
-                if (UserController::$loggedUser->rank->hasPermission($perm)) {
+                if (UserController::$loggedUser->hasPermission($perm)) {
                     $item = $row[1];
                     $url = $item->link;
                     $name = $item->title;
@@ -183,7 +183,7 @@
 
         private function hasPermission($perm) {
             UserController::getInstance();
-            return UserController::$loggedUser->rank->hasPermission($perm);
+            return UserController::$loggedUser->hasPermission($perm);
         }
 
         private function createStats($details) {

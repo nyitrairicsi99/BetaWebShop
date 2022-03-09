@@ -73,6 +73,7 @@
         $str .= '$settings["db_password"] = "'.$dbpass.'";'."\n";
         $str .= '$settings["db_prefix"] = "ws_";'."\n";
         $str .= '$settings["root_folder"] = "'.$shopdir.'";'."\n";
+        $str .= '$settings["superuser"] = "'.$username.'";'."\n";
 
         $file = fopen($rootdir."/".$shopdir."/utility/settings.php", 'w');    
         fwrite($file, $str);

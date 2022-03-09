@@ -55,11 +55,11 @@
         {
             UserController::getInstance();
 
-            if (UserController::$loggedUser->rank->hasPermission('admin_access')) {
+            if (UserController::$loggedUser->hasPermission('admin_access')) {
                 
                 $foundPermission = false;
                 foreach (self::$neededPermissions[$action] as $perm) {
-                    if (UserController::$loggedUser->rank->hasPermission($perm)) {
+                    if (UserController::$loggedUser->hasPermission($perm)) {
                         $foundPermission = true;
                     }
                 }
@@ -107,7 +107,7 @@
                             ]);
                             $rankrow = $statement->fetch(PDO::FETCH_ASSOC);
                             $modifyRank = $rankrow['ranks_id']!=$rank;
-                            if (($modifyRank && !UserController::$loggedUser->rank->hasPermission('manage_permissions'))) {
+                            if (($modifyRank && !UserController::$loggedUser->hasPermission('manage_permissions'))) {
                                 redirect("admin",[
                                     "error"=>"Nincs jogod ehhez a művelethez."
                                 ]);

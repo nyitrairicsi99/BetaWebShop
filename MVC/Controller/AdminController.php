@@ -51,11 +51,11 @@
             UserController::getInstance();
             DatabaseConnection::getInstance();
 
-            if (UserController::$loggedUser->rank->hasPermission('admin_access')) {
+            if (UserController::$loggedUser->hasPermission('admin_access')) {
                 
                 $foundPermission = false;
                 foreach (self::$neededPermissions[$page] as $perm) {
-                    if (UserController::$loggedUser->rank->hasPermission($perm)) {
+                    if (UserController::$loggedUser->hasPermission($perm)) {
                         $foundPermission = true;
                     }
                 }
