@@ -118,14 +118,14 @@
                     $firstItem = $firstItem->product;
                     if ($firstItem->currency->shortName!=$currency->shortName) {
                         redirect("product/".$id,[
-                            "error" => "Csak azonos valutájú tárgyak rakhatók egy kosárba.",
+                            "error" => translate("notification_currency_not_same"),
                         ]);
                     }
                 }
 
                 if ($stock<$piece) {
                     redirect("product/".$id,[
-                        "error" => "Nincs elég raktárkészlet a rendeléshez.",
+                        "error" => translate("notification_stock_not_enough"),
                     ]);
                 }
 
@@ -133,11 +133,11 @@
                 self::saveBasket();
 
                 redirect("product/".$id,[
-                    "success" => "Sikeres művelet.",
+                    "success" => translate("notification_success_operation"),
                 ]);
             } else {
                 redirect("product/".$id,[
-                    "error" => "Hiba a kosárba rakás során.",
+                    "error" => translate("notification_could_not_add_basket"),
                 ]);
             }
 
@@ -159,7 +159,7 @@
             self::$basket->removeItem($index);
             self::saveBasket();
             redirect("basket",[
-                "success" => "Sikeres művelet.",
+                "success" => translate("notification_success_operation"),
             ]);
         }
 

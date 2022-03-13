@@ -46,7 +46,7 @@
                 $stock = $statement->fetch(PDO::FETCH_ASSOC);
                 if (!$stock['stock'] || $stock['stock'] < $basketitem->piece) {
                     redirect("basket",[
-                        "error" => "Nincs elég termék raktáron az egyik termékből."
+                        "error" => translate("notification_stock_not_enough_to_buy")
                     ]);
                 }
             }
@@ -67,7 +67,7 @@
             
             if (!isset($postcode) || !isset($city) || !isset($street) || !isset($housenumber)) {
                 redirect("orderdetails",[
-                    "error" => "Hiányzó paraméterek."
+                    "error" => translate("notification_missing_parameters")
                 ]);
                 return;
             }
@@ -252,7 +252,7 @@
             BasketController::clearItems();
 
             redirect("main",[
-                "success" => "Sikeres rendelés."
+                "success" => translate("notification_success_order")
             ]);
         }
 

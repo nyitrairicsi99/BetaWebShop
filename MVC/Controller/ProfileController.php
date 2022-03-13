@@ -154,7 +154,7 @@
                 self::updateUserDetails($id,$_POST);
             } else {              
                 redirect("profile",[
-                    "error" => "Hibás jelszó.",
+                    "error" => translate("notification_incorrect_password"),
                 ]);
             }
         }
@@ -335,12 +335,12 @@
                     switch ($passCheck) {
                         case 1:
                             redirect("profile",[
-                                "error" => "A megadott jelszavak nem egyeznek.",
+                                "error" => translate("notification_passwords_not_match"),
                             ]);
                             break;
                         case 2:
                             redirect("profile",[
-                                "error" => "Jelszó túl rövid.",
+                                "error" => translate("notification_short_password"),
                             ]);
                             break;
                         default:
@@ -362,7 +362,7 @@
             }
                    
             redirect("profile",[
-                "success" => "Sikeres művelet.",
+                "success" => translate("notification_success_operation"),
             ]);
         }
         
