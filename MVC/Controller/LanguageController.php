@@ -81,7 +81,7 @@
         $details = json_decode($json,true);
 
         if ($details) {
-          if (isset($details['longname']) && isset($details['longname']) && isset($details['longname'])) {
+          if (isset($details['longname']) && isset($details['shortname']) && isset($details['phrases'])) {
             $longname = $details['longname'];
             $shortname = $details['shortname'];
 

@@ -38,7 +38,7 @@
                 redirect("main");
         }
 
-        public static function login() {
+        public static function login($fromregitser = false) {
             $rememberme = isset($_POST['rememberme']);
             $username = $_POST['username'];
             $password = $_POST['password'];
@@ -92,10 +92,11 @@
 
 
                     $_SESSION["loggedUser"] = serialize(self::$loggedUser);
-
-                    redirect("main",[
-                        "success" => "Sikeres bejelentkezés.",
-                    ]);
+                    if (!$fromregitser) {
+                        redirect("main",[
+                            "success" => "Sikeres bejelentkezés.",
+                        ]);
+                    }
                 } else {                    
                     redirect("main",[
                         "error" => "Felhasználónév vagy jelszó hibás.",
@@ -137,6 +138,7 @@
                         ':email' => $email,
                     ]);
                     $user_id = $pdo->lastInsertId();
+                    self::login(true);
                     redirect("main",[
                         "success" => "Sikeres regisztráció.",
                     ]);
