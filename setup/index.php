@@ -63,6 +63,9 @@
         $sqlquery = file_get_contents($rootdir."/".$shopdir."/setup/install.sql");
         $conn->query($sqlquery);
 
+        $prefix = generateRandomString(8);
+        $suffix = generateRandomString(8);
+
         $str = "";
         $str .= '<?php'."\n";
         $str .= '$settings = array();'."\n";
@@ -74,6 +77,8 @@
         $str .= '$settings["db_prefix"] = "ws_";'."\n";
         $str .= '$settings["root_folder"] = "'.$shopdir.'";'."\n";
         $str .= '$settings["superuser"] = "'.$username.'";'."\n";
+        $str .= '$settings["pass_prefix"] = "'.$prefix.'";'."\n";
+        $str .= '$settings["pass_suffix"] = "'.$suffix.'";'."\n";
 
         $file = fopen($rootdir."/".$shopdir."/utility/settings.php", 'w');    
         fwrite($file, $str);
@@ -81,12 +86,11 @@
 
         //create admin user
 
-        $password = hashPassword($password);
         $sql = 'INSERT INTO `users`(`username`, `password`, `email`, `people_id`, `ranks_id`, `banned`) VALUES(:username,:password,"",NULL,2,0)';
         $statement = $conn->prepare($sql);
         $statement->execute([
             ':username' => $username,
-            ':password' => $password,
+            ':password' => hashPassword($password,$prefix,$suffix),
         ]);
 
         header('Location: '.$shopdir.'/');

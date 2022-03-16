@@ -24,10 +24,24 @@
         }
     }
 
-    function hashPassword($password) {
-        return password_hash($password, PASSWORD_DEFAULT);
+    function hashPassword($password,$prefix = null,$suffix = null) {
+        $prefix = $prefix==null ? $GLOBALS['settings']['pass_prefix'] : $prefix;
+        $suffix = $suffix==null ? $GLOBALS['settings']['pass_suffix'] : $suffix;
+        return password_hash($prefix.$password.$suffix, PASSWORD_DEFAULT);
     }
 
     function hashMatches($password,$hash) {
-        return password_verify($password, $hash);
+        $prefix = $GLOBALS['settings']['pass_prefix'];
+        $suffix = $GLOBALS['settings']['pass_suffix'];
+        return password_verify($prefix.$password.$suffix, $hash);
+    }
+
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
