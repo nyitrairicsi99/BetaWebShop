@@ -65,7 +65,24 @@
                 $user = UserController::$loggedUser->id;
             }
             
-            if (!isset($postcode) || !isset($city) || !isset($street) || !isset($housenumber)) {
+            if (
+                !isset($postcode) || 
+                !isset($city) || 
+                !isset($street) || 
+                !isset($housenumber) || 
+                !isset($paytype) || 
+                !isset($firstname) || 
+                !isset($lastname) || 
+                !isset($phone) || 
+                $postcode == "" || 
+                $city == "" || 
+                $street == "" || 
+                $housenumber == "" || 
+                $paytype == "" || 
+                $firstname == "" || 
+                $lastname == "" || 
+                $phone == ""
+            ) {
                 redirect("orderdetails",[
                     "error" => translate("notification_missing_parameters")
                 ]);
