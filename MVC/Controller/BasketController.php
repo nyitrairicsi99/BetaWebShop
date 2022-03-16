@@ -44,6 +44,12 @@
             $id = $_POST['id'];
             $piece = $_POST['piece'];
 
+            if ($piece<=0) {
+                redirect("product/".$id,[
+                    "error" => translate("notification_invalid_piece"),
+                ]);
+            }
+
             $product = null;
 
 
