@@ -327,7 +327,7 @@
 
         private function createMainRows($categories) {
             $theme = 'default';
-            $name = "Nincs";
+            $name = translate("none");
             $id = 0;
             include __DIR__ . "/themes/" . $theme . "/admin/categories/mainoption.html";
             foreach($categories as $category) {
