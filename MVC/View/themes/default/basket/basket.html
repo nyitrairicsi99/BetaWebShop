@@ -24,7 +24,13 @@
                 <a class="btn btn-primary" href="<?php echo $GLOBALS['settings']['root_folder']."/orderdetails"; ?>" role="button"><?php echo echotranslated('redirect_to_shipping'); ?></a>
             </div>
         </div>
-        <br />
+        <?php else : ?>
+        <div class="container">
+            <div class="col-md-12 text-center">
+                <?php echo echotranslated('register_or_login_to_order'); ?>
+            </div>
+        </div>
         <?php endif; ?>
+        <br />
     </div>
 </section>
