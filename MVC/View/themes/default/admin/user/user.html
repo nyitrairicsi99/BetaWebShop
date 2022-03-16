@@ -1,7 +1,8 @@
-<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/user/<?php echo $id ?>" method="post">
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/user" method="post">
     <h1><?php echo echotranslated('user_details'); ?></h1>
     <br />
     <input type="hidden" id="action" name="action" value="updateuser">
+    <input type="hidden" id="id" name="id" value="<?php echo $id ?>">
     <div class="form-group row">
         <label for="idLabel" class="col-2 col-form-label col-form-label"><?php echo echotranslated('id'); ?></label>
         <div class="col-10">
@@ -46,9 +47,10 @@
     <br />
 </form>
 <hr />
-<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/user/<?php echo $id ?>" method="post">
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/user" method="post">
     <div class="form-group row">
         <input type="hidden" id="action" name="action" value="password">
+        <input type="hidden" id="id" name="id" value="<?php echo $id ?>">
         <label for="password" class="col-2 col-form-label col-form-label"><?php echo echotranslated('password'); ?></label>
         <div class="col-7">
             <input type="password" class="form-control form-control" id="password" name="password" placeholder="<?php echo echotranslated('password'); ?>">

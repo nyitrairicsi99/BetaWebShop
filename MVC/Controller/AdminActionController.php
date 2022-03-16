@@ -51,7 +51,7 @@
             return self::$instance;
         }
 
-        public static function adminAction($page,$id,$action,$method)
+        public static function adminAction($page,$action,$method)
         {
             UserController::getInstance();
 
@@ -76,6 +76,7 @@
                     switch ($action) {
                         case 'password':
                             $password = $_POST['password'];
+                            $id = $_POST['id'];
                             if (isset($password) && passwordsAcceptable($password,$password)==0) {
                                 $sql = 'UPDATE users SET password = :password WHERE id = :id';
 
@@ -97,6 +98,7 @@
                             $username = $_POST['username'];
                             $email = $_POST['email'];
                             $rank = $_POST['rank'];
+                            $id = $_POST['id'];
                             $banned = isset($_POST['banned']);
 
                             $modifyRank = false;
@@ -148,6 +150,8 @@
                             $phone = $_POST['phone'];
                             $firstname = $_POST['firstname'];
                             $lastname = $_POST['lastname'];
+                            $id = $_POST['id'];
+
                             if (!isset($postcode) || !isset($city) || !isset($street) || !isset($housenumber) || !isset($phone) || !isset($firstname) || !isset($lastname)) {
                                 redirect("admin/".$page."/".$id,[
                                     "error" => translate("notification_missing_parameters")

@@ -124,17 +124,10 @@
             default:
                 $action = $_POST['action'];
                 AdminActionController::getInstance();
-                AdminActionController::adminAction($routeVarArr[0],0,$action,"POST");
+                AdminActionController::adminAction($routeVarArr[0],$action,"POST");
                 break;
         }
     },"POST"));
-
-    Router::addRoute(new Route("[a-z]/[0-9]",function($routeVarArr){
-        $action = $_POST['action'];
-        AdminActionController::getInstance();
-        AdminActionController::adminAction($routeVarArr[0],intval($routeVarArr[1]),$action,"POST");
-    },"POST"));
-
     
     Router::addRoute(new Route("admin",function($routeVarArr){
         AdminController::getInstance();

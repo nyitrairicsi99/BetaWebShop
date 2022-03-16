@@ -1,5 +1,6 @@
-<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/user/<?php echo $id ?>" method="post">
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/user" method="post">
     <input type="hidden" id="action" name="action" value="updatepersonal">
+    <input type="hidden" id="id" name="id" value="<?php echo $id ?>">
     <h1><?php echo echotranslated('personal_informations'); ?></h1>
     <label for="firstname"><?php echo echotranslated('name'); ?></label>
     <div class="form-row">
