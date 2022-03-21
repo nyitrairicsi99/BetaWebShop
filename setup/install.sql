@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS `2fa_codes`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `2fa_codes` (
   `id` int(11) NOT NULL,
-  `code` varchar(255) DEFAULT NULL,
+  `code` varchar(16) DEFAULT NULL,
   `users_id` int(11) DEFAULT NULL,
   `expiry` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
@@ -76,8 +76,8 @@ DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parentcategory` int(11) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `short` varchar(255) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `short` varchar(64) DEFAULT NULL,
   `display_navbar` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `parentcategory` (`parentcategory`),
@@ -129,7 +129,7 @@ DROP TABLE IF EXISTS `coupons`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `coupons` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(255) DEFAULT NULL,
+  `code` varchar(64) DEFAULT NULL,
   `start_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `end_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `discount` int(11) NOT NULL DEFAULT 0,
@@ -156,9 +156,9 @@ DROP TABLE IF EXISTS `currencies`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `currencies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `shortname` varchar(255) DEFAULT NULL,
-  `longname` varchar(255) DEFAULT NULL,
-  `sign` varchar(255) DEFAULT NULL,
+  `shortname` varchar(32) DEFAULT NULL,
+  `longname` varchar(32) DEFAULT NULL,
+  `sign` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -205,7 +205,7 @@ DROP TABLE IF EXISTS `installed_plugins`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `installed_plugins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(128) DEFAULT NULL,
   `enabled` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -229,8 +229,8 @@ DROP TABLE IF EXISTS `languages`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `languages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `shortname` varchar(255) DEFAULT NULL,
-  `longname` varchar(255) DEFAULT NULL,
+  `shortname` varchar(64) DEFAULT NULL,
+  `longname` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -254,7 +254,7 @@ DROP TABLE IF EXISTS `order_states`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order_states` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -314,7 +314,7 @@ DROP TABLE IF EXISTS `pay_types`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pay_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` varchar(255) DEFAULT NULL,
+  `type` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -390,8 +390,8 @@ DROP TABLE IF EXISTS `phrases`;
 CREATE TABLE `phrases` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `languages_id` int(11) DEFAULT NULL,
-  `phrase` varchar(255) DEFAULT NULL,
-  `translated` varchar(255) DEFAULT NULL,
+  `phrase` varchar(128) DEFAULT NULL,
+  `translated` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `languages_id` (`languages_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=326 DEFAULT CHARSET=utf8mb4;
@@ -440,7 +440,7 @@ DROP TABLE IF EXISTS `product_images`;
 CREATE TABLE `product_images` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `products_id` int(11) DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL,
+  `url` varchar(512) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `products_id` (`products_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -494,8 +494,8 @@ DROP TABLE IF EXISTS `products`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
+  `name` varchar(128) DEFAULT NULL,
+  `description` varchar(512) DEFAULT NULL,
   `price` double DEFAULT NULL,
   `currencies_id` int(11) DEFAULT NULL,
   `units_id` int(11) DEFAULT NULL,
@@ -558,7 +558,7 @@ DROP TABLE IF EXISTS `ranks`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ranks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -583,8 +583,8 @@ DROP TABLE IF EXISTS `settings`;
 CREATE TABLE `settings` (
   `themes_id` int(11) DEFAULT NULL,
   `languages_id` int(11) DEFAULT NULL,
-  `license_hash` varchar(255) DEFAULT NULL,
-  `webshop_name` varchar(255) DEFAULT NULL
+  `license_hash` varchar(1024) DEFAULT NULL,
+  `webshop_name` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -630,9 +630,9 @@ DROP TABLE IF EXISTS `themes`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `themes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `folder` varchar(255) DEFAULT NULL,
-  `version` varchar(255) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `folder` varchar(64) DEFAULT NULL,
+  `version` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -656,8 +656,8 @@ DROP TABLE IF EXISTS `units`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `units` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `short` varchar(255) DEFAULT NULL,
+  `name` varchar(32) DEFAULT NULL,
+  `short` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -707,7 +707,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
+  `password` varchar(60) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `people_id` int(11) DEFAULT NULL,
   `ranks_id` int(11) DEFAULT NULL,
@@ -737,8 +737,8 @@ DROP TABLE IF EXISTS `visitors`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `visitors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ip` varchar(255) DEFAULT NULL,
-  `country` varchar(255) DEFAULT NULL,
+  `ip` varchar(32) DEFAULT NULL,
+  `country` varchar(3) DEFAULT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
