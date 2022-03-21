@@ -230,7 +230,7 @@
     },"GET"));
 
     Router::setPathNotFound(function(){
-        echo "no path";
+        redirect("");
     });
 
     Router::setMethodNotFound(function(){
