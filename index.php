@@ -238,6 +238,8 @@
         exit;
     });
 
+    UserController::getInstance();
+    UserController::checklogincookie();
     
     AddonController::getInstance();
     AddonController::runAddons();

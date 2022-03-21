@@ -712,6 +712,7 @@ CREATE TABLE `users` (
   `people_id` int(11) DEFAULT NULL,
   `ranks_id` int(11) DEFAULT NULL,
   `banned` tinyint(1) NOT NULL DEFAULT 0,
+  `logincookie` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `people_id` (`people_id`),
   KEY `ranks_id` (`ranks_id`)

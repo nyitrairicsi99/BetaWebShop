@@ -2,7 +2,7 @@
     namespace Model;
 
     class User {
-        public $id;
+        public $id = null;
         public $username;
         public $email;
         public $rank;

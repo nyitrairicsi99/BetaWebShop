@@ -11,20 +11,25 @@
         public static $islogged = false;
         private function __construct()
         {
-            if (isset($_SESSION["loggedUser"])) {
-                self::$loggedUser = unserialize($_SESSION["loggedUser"]);
-                self::$islogged = true;
-            } else {
-                self::$loggedUser = new User();
-                self::$loggedUser->rank = new Rank('user');
-                self::$islogged = false;
-            }
         }
 
         public static function getInstance() {
             if (self::$instance == null)
             {
                 self::$instance = new UserController();
+
+                if (isset($_SESSION["loggedUser"])) {
+                    self::$loggedUser = unserialize($_SESSION["loggedUser"]);
+                    if (self::$loggedUser->id==null) {
+                        self::$islogged = false;
+                    } else {
+                        self::$islogged = true;
+                    }
+                } else {
+                    self::$loggedUser = new User();
+                    self::$loggedUser->rank = new Rank('user');
+                    self::$islogged = false;
+                }
             }
 
             return self::$instance;
@@ -34,8 +39,65 @@
             self::$loggedUser = null;
             self::$islogged = false;
             unset($_SESSION["loggedUser"]);
-            if (!$noredirect)
+            if (!$noredirect) {
+                self::deletelogincookie();
                 redirect("main");
+            }
+        }
+
+        private static function saveloggeddatas($user) {
+            DatabaseConnection::getInstance();
+            $pdo = DatabaseConnection::$connection;
+
+            self::$loggedUser = new User();
+            self::$islogged = true;
+
+            
+            //basic informations
+            self::$loggedUser->id = $user['id'];
+            self::$loggedUser->username = $user['username'];
+            self::$loggedUser->email = $user['email'];
+            self::$loggedUser->banned = $user['banned']==1;
+            if (self::$loggedUser->banned) {
+                http_response_code(403);
+                die();
+            }
+
+            //rank
+            $sql = 'SELECT permissions.name as name,ranks.name as rank FROM ranks,rank_permission,permissions WHERE ranks.id=rank_permission.ranks_id AND rank_permission.permissions_id=permissions.id AND ranks.id=:rank';
+            $statement = $pdo->prepare($sql);
+            $statement->execute([
+                ':rank' => $user['ranks_id']
+            ]);
+            $perms = $statement->fetchAll(PDO::FETCH_ASSOC);
+            if ($perms) {
+                self::$loggedUser->rank = new Rank($perms[0]["rank"]);
+                foreach ($perms as $perm) {
+                    self::$loggedUser->rank->addPermission($perm['name']);
+                }
+            } else {
+                self::$loggedUser->rank = new Rank('user');
+            }
+            $_SESSION["loggedUser"] = serialize(self::$loggedUser);
+        }
+
+        private static function updatelogincookie($id) {
+            DatabaseConnection::getInstance();
+            $pdo = DatabaseConnection::$connection;
+
+            $logincookie = generateRandomString(128);
+            $sql = 'UPDATE users SET logincookie=:logincookie WHERE id=:id';
+            $statement = $pdo->prepare($sql);
+            $statement->execute([
+                ':logincookie' => $logincookie,
+                ':id' => $id,
+            ]);
+            setcookie("logincookie", $logincookie, time() + (86400 * 30 * 6));
+        }
+
+        private static function deletelogincookie() {
+            setcookie('logincookie', '', time()-1000);
+            unset($_COOKIE['logincookie']);
         }
 
         public static function login($fromregitser = false) {
@@ -60,41 +122,15 @@
             if ($users && sizeof($users)==1) {
                 $user = $users[0];
                 if (hashMatches($password,$user['password'])) {
-                    self::$loggedUser = new User();
-                    self::$islogged = true;
+                    self::saveloggeddatas($user);
 
-                    
-                    //basic informations
-                    self::$loggedUser->id = $user['id'];
-                    self::$loggedUser->username = $user['username'];
-                    self::$loggedUser->email = $user['email'];
-                    self::$loggedUser->banned = $user['banned']==1;
-                    if (self::$loggedUser->banned) {
-                        http_response_code(403);
-                        die();
+                    if ($rememberme) {
+                        self::updatelogincookie(self::$loggedUser->id);
                     }
 
-                    //rank
-                    $sql = 'SELECT permissions.name as name,ranks.name as rank FROM ranks,rank_permission,permissions WHERE ranks.id=rank_permission.ranks_id AND rank_permission.permissions_id=permissions.id AND ranks.id=:rank';
-                    $statement = $pdo->prepare($sql);
-                    $statement->execute([
-                        ':rank' => $user['ranks_id']
-                    ]);
-                    $perms = $statement->fetchAll(PDO::FETCH_ASSOC);
-                    if ($perms) {
-                        self::$loggedUser->rank = new Rank($perms[0]["rank"]);
-                        foreach ($perms as $perm) {
-                            self::$loggedUser->rank->addPermission($perm['name']);
-                        }
-                    } else {
-                        self::$loggedUser->rank = new Rank('user');
-                    }
-
-
-                    $_SESSION["loggedUser"] = serialize(self::$loggedUser);
                     if (!$fromregitser) {
                         redirect("main",[
-                            "success" => "Sikeres bejelentkezés.",
+                            "success" => translate("notification_success_login"),
                         ]);
                     }
                 } else {                    
@@ -108,6 +144,29 @@
                 ]);
             }
 
+        }
+
+        public static function checklogincookie() {
+            if (!(self::$islogged)) {
+                DatabaseConnection::getInstance();
+                $pdo = DatabaseConnection::$connection;
+
+                $logincookie = $_COOKIE['logincookie'];
+
+                if (isset($logincookie)) {
+                    $sql = 'SELECT `id`, `username`, `password`, `email`, `people_id`, `ranks_id`, `banned` FROM `users` WHERE `logincookie`=:logincookie';
+                    $statement = $pdo->prepare($sql);
+                    $statement->execute([
+                        ':logincookie' => $logincookie
+                    ]);
+                    $users = $statement->fetchAll(PDO::FETCH_ASSOC);
+                    if ($users && sizeof($users)==1) {
+                        $user = $users[0];
+                        self::saveloggeddatas($user);
+                    }
+                }
+            }
+            
         }
 
         
