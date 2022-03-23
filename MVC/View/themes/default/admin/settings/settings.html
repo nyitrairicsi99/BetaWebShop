@@ -105,3 +105,31 @@
         </div>
     </div>
 </form>
+<form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/settings" method="post">
+    <br />
+    <input type="hidden" id="action" name="action" value="updatesmtp">
+    <div class="form-group row">
+        <label for="smtp_host" class="col-2"><?php echo echotranslated('smtp_host'); ?></label>
+        <div class="col-10">
+            <input type="text" class="form-control form-control" id="smtp_host" name="smtp_host" placeholder="<?php echo echotranslated('smtp_host'); ?>" value="<?php echo $smtp_host; ?>">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="smtp_user" class="col-2"><?php echo echotranslated('smtp_user'); ?></label>
+        <div class="col-10">
+            <input type="text" class="form-control form-control" id="smtp_user" name="smtp_user" placeholder="<?php echo echotranslated('smtp_user'); ?>" value="<?php echo $smtp_user; ?>">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="smtp_pass" class="col-2"><?php echo echotranslated('smtp_pass'); ?></label>
+        <div class="col-10">
+            <input type="password" class="form-control form-control" id="smtp_pass" name="smtp_pass" placeholder="<?php echo echotranslated('smtp_pass'); ?>" value="<?php echo $smtp_pass; ?>">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="themeLabel" class="col-2"></label>
+        <div class="col-4 text">
+            <input class="btn btn-primary col" type="submit" value="<?php echo echotranslated('modify'); ?>">
+        </div>
+    </div>
+</form>

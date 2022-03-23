@@ -33,7 +33,8 @@
             'editrank' => ['manage_permissions'],
             'switchaddon' => ['manage_addons'],
             'checkforaddons' => ['manage_addons'],
-            'checkforthemes' => ['manage_settings']
+            'checkforthemes' => ['manage_settings'],
+            'updatesmtp' => ['manage_settings'],
         ];
         
         private static $instance = null;
@@ -874,13 +875,25 @@
                             }
                             redirect("admin/".$page,[]);
                             break;
+                        case 'updatesmtp':
+                            $smtp_host = $_POST['smtp_host'];
+                            $smtp_user = $_POST['smtp_user'];
+                            $smtp_pass = $_POST['smtp_pass'];
+                            $sql = 'UPDATE settings SET smtp_host=:smtp_host, smtp_user=:smtp_user, smtp_pass=:smtp_pass';
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':smtp_host' => $smtp_host,
+                                ':smtp_user' => $smtp_user,
+                                ':smtp_pass' => $smtp_pass,
+                            ]);
+
+                            redirect("admin/".$page,[
+                                "success" => translate("notification_success_operation")
+                            ]);
+                            break;
                         default:
                             break;
                     }
-                } else if ($method=="PUT") {
-
-                } else if ($method=="DELETE") {
-
                 }
                 
             } else {

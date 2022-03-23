@@ -306,7 +306,7 @@
                         }
                         break;
                     case 'settings':
-                        $sql = "SELECT `themes_id`, `languages_id`, `webshop_name` FROM `settings`";
+                        $sql = "SELECT `themes_id`, `languages_id`, `webshop_name`, `smtp_host`, `smtp_user`, `smtp_pass` FROM `settings`";
                         $statement = $pdo->prepare($sql);
                         $statement->execute();
 
@@ -315,6 +315,9 @@
                             $details['shopname'] = $settings['webshop_name'];
                             $details['theme'] = $settings['themes_id'];
                             $details['language'] = $settings['languages_id'];
+                            $details['smtp_host'] = $settings['smtp_host']==null ? "" : $settings['smtp_host'];
+                            $details['smtp_user'] = $settings['smtp_user']==null ? "" : $settings['smtp_user'];
+                            $details['smtp_pass'] = $settings['smtp_pass']==null ? "" : $settings['smtp_pass'];
                         }
 
                         $details['themes'] = [];

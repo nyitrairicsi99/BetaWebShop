@@ -78,6 +78,9 @@
                     break;
                 case "settings":
                     $shopname = $details['shopname'];
+                    $smtp_host = $details['smtp_host'];
+                    $smtp_user = $details['smtp_user'];
+                    $smtp_pass = $details['smtp_pass'];
                     include __DIR__ . "/themes/" . $theme . "/admin/settings/settings.html";
                     break;
                 case "categories":
