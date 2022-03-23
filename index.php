@@ -8,7 +8,7 @@
     use Controller\Router;
     use Model\Route;
 
-    $loadFolders = array('utility','MVC/*');
+    $loadFolders = array('utility','MVC/*','PHPMailer');
     foreach ($loadFolders as $folder) {
         foreach (glob( __DIR__ . '/'.$folder.'/*.php') as $file) {
             require($file);   
@@ -82,8 +82,8 @@
     use Controller\StatisticsController;
     use Controller\SettingsController;
     use Controller\LanguageController;
+    use Controller\MailController;
     
-
 
     DatabaseConnection::getInstance();
     $pdo = DatabaseConnection::$connection;

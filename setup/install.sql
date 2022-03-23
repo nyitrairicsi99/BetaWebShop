@@ -583,8 +583,10 @@ DROP TABLE IF EXISTS `settings`;
 CREATE TABLE `settings` (
   `themes_id` int(11) DEFAULT NULL,
   `languages_id` int(11) DEFAULT NULL,
-  `license_hash` varchar(1024) DEFAULT NULL,
-  `webshop_name` varchar(64) DEFAULT NULL
+  `webshop_name` varchar(64) DEFAULT NULL,
+  `smtp_host` varchar(128) DEFAULT NULL,
+  `smtp_user` varchar(128) DEFAULT NULL,
+  `smtp_pass` varchar(128) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -594,7 +596,7 @@ CREATE TABLE `settings` (
 
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` VALUES (1,1,NULL,'Szakdolgozat webshop');
+INSERT INTO `settings` VALUES (1,1,'Szakdolgozat webshop',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
