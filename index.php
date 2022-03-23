@@ -90,6 +90,15 @@
 
     Router::getInstance();
 
+    Router::addRoute(new Route("2fa",function($routeVarArr){
+        if (isset($_POST['code'])) {
+            $code = $_POST['code'];
+    
+            UserController::getInstance();
+            UserController::insert2fa($code);
+        }
+    },"POST"));
+
     Router::addRoute(new Route("basket/[0-9]",function($routeVarArr){
         BasketController::getInstance();
         BasketController::removeItem($routeVarArr[1]);

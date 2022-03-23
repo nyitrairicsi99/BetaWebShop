@@ -61,8 +61,10 @@
             $phone = $_POST['phone'];
             $coupon = $_POST['coupon'];
             $user = null;
-            if (UserController::$loggedUser!=null) {
+            if (UserController::$loggedUser!=null && UserController::$loggedUser->twoFAPassed) {
                 $user = UserController::$loggedUser->id;
+            } else {
+                redirect("main");
             }
             
             if (

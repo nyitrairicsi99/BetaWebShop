@@ -24,6 +24,7 @@
             $city = $details['city'];
             $street  = $details['street'];
             $house_number  = $details['house_number'];
+            $twoFA  = $details['2fa_enabled'];
 
             include __DIR__ . "/themes/" . $this->theme . "/profile/profile.html";
         }

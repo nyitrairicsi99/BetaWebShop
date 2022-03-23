@@ -6,12 +6,16 @@
         public $username;
         public $email;
         public $rank;
-        public $basket;
+        public $twoFAPassed = true;
+        
         public function __construct()
         {
         }
 
         public function hasPermission($perm) {
+            if (!$this->twoFAPassed) {
+                return false;
+            }
             if (isset($GLOBALS['settings']['superuser']) && $GLOBALS['settings']['superuser']==$this->username) {
                 return true;
             } else {

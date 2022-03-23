@@ -35,6 +35,11 @@
         }
 
         public static function show() {
+            
+            if (UserController::$loggedUser==null || !UserController::$loggedUser->twoFAPassed) {
+                redirect("main");
+            }
+
             SettingsController::getInstance();
             $shopname = SettingsController::$shopname;
 
@@ -71,6 +76,7 @@
                     users.username as username,
                     users.email as email,
                     users.ranks_id as ranks_id,
+                    users.2fa_enabled as 2fa_enabled,
                     people.postcode as postcode,
                     people.city as city,
                     people.street as street,
@@ -129,6 +135,7 @@
                     "phone" => $user['phone'],
                     "first_name" => $user['first_name'],
                     "last_name" => $user['last_name'],
+                    "2fa_enabled" => $user['2fa_enabled'],
                 ];
 
             } else {
@@ -170,6 +177,7 @@
             $pass1 = $details['password1'];
             $pass2 = $details['password2'];
             $email = $details['email'];
+            $twoFA = isset($details['2fa']) ? 1 : 0;
 
             if (
                 isset($postcode) && isset($city) && isset($street) && isset($housenumber) && isset($phone) && isset($firstname) && isset($lastname) &&
@@ -353,11 +361,19 @@
                 isset($email) &&
                 strlen($email)>0
             ) {
-                $sql = 'UPDATE `users` SET `email`=:email WHERE id=:id';
+                $sql = 'UPDATE `users` SET `email`=:email, 2fa_enabled=:twofa WHERE id=:id';
                 $statement = self::$pdo->prepare($sql);
                 $statement->execute([
                     ':id' => $id,
                     ':email' => $email,
+                    ':twofa' => $twoFA,
+                ]);
+            } else {
+                $sql = 'UPDATE `users` SET 2fa_enabled=:twofa WHERE id=:id';
+                $statement = self::$pdo->prepare($sql);
+                $statement->execute([
+                    ':id' => $id,
+                    ':twofa' => $twoFA,
                 ]);
             }
                    
