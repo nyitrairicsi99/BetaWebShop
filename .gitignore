@@ -1,4 +1,4 @@
-utility/settings.php
-!MVC/View/themes/default/src/images/upload/*
-MVC/View/themes/default/src/images/upload/*
-!MVC/View/themes/default/src/images/upload/none.jpg
+app/utility/settings.php
+!app/MVC/View/themes/default/src/images/upload/*
+app/MVC/View/themes/default/src/images/upload/*
+!app/MVC/View/themes/default/src/images/upload/none.jpg

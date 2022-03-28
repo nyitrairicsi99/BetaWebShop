@@ -1,0 +1,14 @@
+{
+    "require": {
+        "phpunit/phpunit": "^9"
+    },
+
+    "autoload": {
+        "classmap": ["app/MVC/"],
+        "psr-4": {
+            "Model\\": "app/MVC/Model",
+            "View\\": "app/MVC/View",
+            "Controller\\": "app/MVC/Controller"
+        }
+    }
+}
