@@ -96,6 +96,22 @@
                             $id = $_POST['id'];
                             $banned = isset($_POST['banned']);
 
+                            
+                            $modifyRank = false;
+                            $sql = 'SELECT ranks_id as rank FROM users WHERE id=:id';
+                            $statement = $pdo->prepare($sql);
+                            $statement->execute([
+                                ':id' => $id
+                            ]);
+                            $rankrow = $statement->fetch(PDO::FETCH_ASSOC);
+
+                            $modifyRank = $rankrow['rank']!=$rank;
+                            if (($modifyRank && !UserController::$loggedUser->hasPermission('manage_permissions'))) {
+                                redirect("admin",[
+                                    "error"=>"Nincs jogod ehhez a művelethez."
+                                ]);
+                            }
+
                             if (self::updateUserInformations($id,$rank,$username,$email,$banned)) {
                                 redirect("admin/".$page."/".$id,[
                                     "success" => translate("notification_success_operation")
@@ -556,18 +572,6 @@
             DatabaseConnection::getInstance();
             $pdo = DatabaseConnection::$connection;
 
-            $modifyRank = false;
-            $sql = 'SELECT ranks_id as rank FROM users WHERE id=:id';
-            $statement = $pdo->prepare($sql);
-            $statement->execute([
-                ':id' => $userid
-            ]);
-            $rankrow = $statement->fetch(PDO::FETCH_ASSOC);
-            $modifyRank = $rankrow['ranks_id']!=$rank;
-            if (($modifyRank && !UserController::$loggedUser->hasPermission('manage_permissions'))) {
-                return false;
-            }
-
             if ($username && $email && $rank) {
                 $sql = '
                     UPDATE
@@ -752,6 +756,8 @@
                 ]);
 
             }
+
+            return true;
         }
 
         public static function updateShopName($name) {
@@ -801,7 +807,6 @@
             $pdo = DatabaseConnection::$connection;
             
             if ($language != null) {
-                $language = $_POST['language'];
                 $sql = '
                     UPDATE
                         settings

@@ -1,1 +1,1 @@
-{"version":1,"defects":{"AdminActionControllerTest::test":4},"times":{"AdminActionControllerTest::test":0.098}}
+{"version":1,"defects":{"AdminActionControllerTest::test":4,"AppTest::test":4},"times":{"AdminActionControllerTest::test":0.123,"AppTest::test":0.285}}

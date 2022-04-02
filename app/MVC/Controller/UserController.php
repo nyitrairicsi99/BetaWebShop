@@ -43,6 +43,7 @@
                 self::deletelogincookie();
                 redirect("main");
             }
+            return true;
         }
 
         private static function saveloggeddatas($user) {
@@ -191,36 +192,12 @@
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-            DatabaseConnection::getInstance();
-            $pdo = DatabaseConnection::$connection;
+            $result = self::loginUser($username,$password,$rememberme,$fromregitser);
 
-            $sql = 'SELECT `id`, `username`, `password`, `email`, `people_id`, `ranks_id`, `banned`, `2fa_enabled` FROM `users` WHERE `username`=:username OR `email`=:username';
-            $statement = $pdo->prepare($sql);
-            $statement->execute([
-                ':username' => $username
-            ]);
-            $users = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-            if ($users && sizeof($users)==1) {
-                $user = $users[0];
-                if (hashMatches($password,$user['password'])) {
-                    if (!$fromregitser) {
-                        redirect("main",[
-                            "success" => translate("notification_success_login"),
-                        ],true);
-                    }
-
-                    self::saveloggeddatas($user);
-
-                    if ($rememberme) {
-                        self::updatelogincookie(self::$loggedUser->id);
-                    }
-
-                } else {                    
-                    redirect("main",[
-                        "error" => translate("notification_incorrect_username_or_password"),
-                    ]);
-                }
+            if ($result) {
+                redirect("main",[
+                    "success" => translate("notification_success_login"),
+                ],true);
             } else {
                 redirect("main",[
                     "error" => translate("notification_incorrect_username_or_password"),
@@ -258,6 +235,69 @@
             $username = $_POST['username'];
             $email = $_POST['email'];
 
+            $result = self::registerUser($password1,$password2,$username,$email);
+            
+            switch ($result) {
+                case 1:
+                    redirect("main",[
+                        "error" => translate("notification_passwords_not_match"),
+                    ]);
+                    break;
+                case 2:
+                    redirect("main",[
+                        "error" => translate("notification_short_password"),
+                    ]);
+                    break;
+                case 3:
+                    self::login(true);
+                    redirect("main",[
+                        "success" => translate("notification_success_register"),
+                    ]);
+                    break;
+                case 4:
+                    redirect("main",[
+                        "error" => translate("notification_reserved_username_or_email"),
+                    ]);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public static function loginUser($username,$password,$rememberme,$fromregitser) {
+            DatabaseConnection::getInstance();
+            $pdo = DatabaseConnection::$connection;
+
+            $sql = 'SELECT `id`, `username`, `password`, `email`, `people_id`, `ranks_id`, `banned`, `2fa_enabled` FROM `users` WHERE `username`=:username OR `email`=:username';
+            $statement = $pdo->prepare($sql);
+            $statement->execute([
+                ':username' => $username
+            ]);
+            $users = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($users && sizeof($users)==1) {
+                $user = $users[0];
+                if (hashMatches($password,$user['password'])) {
+
+                    self::saveloggeddatas($user);
+
+                    if ($rememberme) {
+                        self::updatelogincookie(self::$loggedUser->id);
+                    }
+
+                    if (!$fromregitser) {
+                        return true;
+                    }
+
+                } else {       
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+        public static function registerUser($password1,$password2,$username,$email) {
             $passCheck = passwordsAcceptable($password1,$password2);
             if ($passCheck==0) {
                 DatabaseConnection::getInstance();
@@ -279,26 +319,17 @@
                         ':email' => $email,
                     ]);
                     $user_id = $pdo->lastInsertId();
-                    self::login(true);
-                    redirect("main",[
-                        "success" => translate("notification_success_register"),
-                    ]);
+                    return 3;
                 } else {
-                    redirect("main",[
-                        "error" => translate("notification_reserved_username_or_email"),
-                    ]);
+                    return 4;
                 }
             } else {
                 switch ($passCheck) {
                     case 1:
-                        redirect("main",[
-                            "error" => translate("notification_passwords_not_match"),
-                        ]);
+                        return 1;
                         break;
                     case 2:
-                        redirect("main",[
-                            "error" => translate("notification_short_password"),
-                        ]);
+                        return 2;
                         break;
                     default:
                         break;
