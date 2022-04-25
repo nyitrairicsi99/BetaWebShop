@@ -22,9 +22,8 @@
 
         public function create() {
             $webshopName = $this->pageTitle;
-            include __DIR__ . "/themes/" . $this->theme . "/navbar/nav.html";
-            
             include __DIR__ . "/themes/" . $this->theme . "/navbar/modals.html";
+            include __DIR__ . "/themes/" . $this->theme . "/navbar/nav.html";
         }
 
         public function addItem($element) {

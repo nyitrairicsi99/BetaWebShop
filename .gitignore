@@ -1,3 +1,5 @@
+composer.phar
+/vendor/
 app/utility/settings.php
 !app/MVC/View/themes/default/src/images/upload/*
 app/MVC/View/themes/default/src/images/upload/*

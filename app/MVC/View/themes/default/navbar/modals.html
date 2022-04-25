@@ -1,17 +1,86 @@
-<nav>
-    <div id="imgcontainer">
-        <img src="https://static.bstn.com/version1635397766/frontend/BSTN/blank_child/en_US/images/bstn-store-hamburg.png" class="img-fluid" alt="Responsive image">
-    </div>
-    <div class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="<?php echo$GLOBALS['settings']['root_folder']; ?>"><strong><?php echo $webshopName; ?></strong></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <?php $this->createItems(); ?>
-            </ul>
-            <?php $this->createUserDropdown(); ?>
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel"><?php echo echotranslated('login'); ?></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+                <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/login" method="post">
+                    <div class="form-group">
+                        <label for="username"><?php echo echotranslated('username'); ?></label>
+                        <input type="text" class="form-control" id="username" placeholder="<?php echo echotranslated('username'); ?>" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password"><?php echo echotranslated('password'); ?></label>
+                        <input type="password" class="form-control" id="password" placeholder="<?php echo echotranslated('password'); ?>" name="password">
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberme">
+                        <label class="form-check-label" for="rememberMe"><?php echo echotranslated('rememberme'); ?></label>
+                    </div>
+                    <button type="submit" class="btn btn-primary"><?php echo echotranslated('login'); ?></button>
+                </form>
+        </div>
         </div>
     </div>
-</nav>
+</div>
+
+
+<div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="regModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="regModalLabel"><?php echo echotranslated('register'); ?></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+                <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/register" method="post">
+                    <div class="form-group">
+                        <label for="email"><?php echo echotranslated('email'); ?></label>
+                        <input type="email" class="form-control" id="email" placeholder="<?php echo echotranslated('email'); ?>" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="username"><?php echo echotranslated('username'); ?></label>
+                        <input type="text" class="form-control" id="username" placeholder="<?php echo echotranslated('username'); ?>" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password"><?php echo echotranslated('password'); ?></label>
+                        <input type="password" class="form-control" id="password" placeholder="<?php echo echotranslated('password'); ?>" name="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="password2"><?php echo echotranslated('password_again'); ?></label>
+                        <input type="password" class="form-control" id="password2" placeholder="<?php echo echotranslated('password'); ?>" name="password2">
+                    </div>
+                    <button type="submit" class="btn btn-primary"><?php echo echotranslated('register'); ?></button>
+                </form>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="2faModal" tabindex="-1" role="dialog" aria-labelledby="2faModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="2faModalLabel"><?php echo echotranslated('2fa'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="<?php echo $GLOBALS['settings']['root_folder'] ?>/2fa" method="post">
+                    <div class="form-group">
+                        <label for="code"><?php echo echotranslated('code'); ?></label>
+                        <input type="code" class="form-control" id="code" placeholder="<?php echo echotranslated('code'); ?>" name="code">
+                    </div>
+                    <button type="submit" class="btn btn-primary"><?php echo echotranslated('insert'); ?></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
