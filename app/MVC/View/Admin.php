@@ -25,13 +25,13 @@
 
             $navbar = [
                 ['view_statistics',new NavbarItem(translate('statistics'),"admin/statistics",false,"fas fa-chart-area")],
-                ['view_coupons',new NavbarItem(translate('coupons'),"admin/coupons",false,"fas fa-tags")],
                 ['view_products',new NavbarItem(translate('products'),"admin/products",false,"fas fa-bars")],
                 ['view_users',new NavbarItem(translate('users'),"admin/users",false,"fas fa-users")],
+                ['manage_settings',new NavbarItem(translate('settings'),"admin/settings",false,"fas fa-cog")],
                 ['view_orders',new NavbarItem(translate('orders'),"admin/orders",false,"fas fa-stream")],
                 ['view_permissions',new NavbarItem(translate('permissions'),"admin/permissions",false,"fas fa-users-cog")],
-                ['manage_settings',new NavbarItem(translate('settings'),"admin/settings",false,"fas fa-cog")],
                 ['manage_addons',new NavbarItem(translate('addons'),"admin/addons",false,"fas fa-puzzle-piece")],
+                ['view_coupons',new NavbarItem(translate('coupons'),"admin/coupons",false,"fas fa-tags")],
                 ['admin_access',new NavbarItem(translate('back_to_shop'),"main",false,"fas fa-shopping-cart")],
             ];
             

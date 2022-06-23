@@ -68,7 +68,7 @@
       }
 
       public static function getString() {
-        echo json_encode([
+        return json_encode([
           "longname" => self::$longname,
           "shortname" => self::$shortname,
           "phrases" => self::$phrases,

@@ -193,16 +193,18 @@
             $password = $_POST['password'];
 
             $result = self::loginUser($username,$password,$rememberme,$fromregitser);
-
-            if ($result) {
-                redirect("main",[
-                    "success" => translate("notification_success_login"),
-                ],true);
-            } else {
-                redirect("main",[
-                    "error" => translate("notification_incorrect_username_or_password"),
-                ]);
-            }
+			
+			if (!$fromregitser) {
+				if ($result) {
+					redirect("main",[
+						"success" => translate("notification_success_login"),
+					],true);
+				} else {
+					redirect("main",[
+						"error" => translate("notification_incorrect_username_or_password"),
+					]);
+				}
+			}
 
         }
 

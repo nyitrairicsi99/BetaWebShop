@@ -23,6 +23,7 @@
             'product' => ['view_products'],
             'languages' => ['manage_settings'],
             'coupons' => ['view_coupons'],
+            'createcoupon' => ['view_coupons'],
             'permissions' => ['view_permissions'],
             'permission' => ['view_permissions'],
             'statistics' => ['view_statistics'],
